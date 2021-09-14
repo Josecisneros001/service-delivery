@@ -18,6 +18,9 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
+    "build:tailwind": "postcss src/tailwindcss.css -o src/tailwindcss.min.css",
+    "prestart": "npm run build:tailwind",
+    "prebuild": "npm run build:tailwind",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -40,5 +43,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/autoprefixer": "^10.2.0",
+    "@types/tailwindcss": "^2.2.1",
+    "autoprefixer": "^10.2.6",
+    "postcss": "^8.3.5",
+    "postcss-cli": "^8.3.1",
+    "tailwindcss": "^2.2.0"
   }
 }
