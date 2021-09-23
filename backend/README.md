@@ -18,6 +18,12 @@ Back-end application for Service Delivery Application.
 	https://github.com/Josecisneros001/service-delivery.git
 	```
 
+2. Enter backend directory
+
+	```bash
+	$ cd backend
+	```
+
 2. You will need to create the node_modules directory needed to run react apps.
 
 	```bash
