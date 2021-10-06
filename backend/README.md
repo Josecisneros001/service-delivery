@@ -24,7 +24,7 @@ Back-end application for Service Delivery Application.
 	$ cd backend
 	```
 
-2. You will need to create the node_modules directory needed to run react apps.
+2. You will need to create the node_modules directory needed to run node app.
 
 	```bash
 	$ npm install
@@ -35,7 +35,7 @@ Back-end application for Service Delivery Application.
 In your terminal, run:
 
  ```bash
-	$ npm start
+	$ npm run start
 ```
 
 To stop process :
