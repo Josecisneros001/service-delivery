@@ -21,15 +21,18 @@ export const executeQuery = (query: string): Promise<CustomResponse> => {
   return new Promise((resolve, reject) => {
       pool.getConnection(function(err: MysqlError, connection: PoolConnection){
           if(err){
-              console.log(err);
               resolve(failResponse("SQL-ERROR", err));
-              connection.release();
+              if (connection) {
+                connection.release();
+              }
           }
-          connection.query( query, (err: MysqlError, result : Object) => {
-              err ? resolve(failResponse("SQL-ERROR", err)) : 
-              resolve(successReponse("Success", result));
-              connection.release();
-          });
+          if (connection) {
+            connection.query( query, (err: MysqlError, result : Object) => {
+                err ? resolve(failResponse("SQL-ERROR", err)) : 
+                resolve(successReponse("Success", result));
+                connection.release();
+            });
+          }
       });
   });
 }

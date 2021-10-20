@@ -37,7 +37,7 @@ CREATE TABLE `appointments` (
   `address_info` varchar(70) COLLATE utf8mb4_unicode_ci NOT NULL,
   `location_lat` float NOT NULL,
   `location_lng` float NOT NULL,
-  `registred_on` datetime NOT NULL
+  `registered_on` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -52,7 +52,7 @@ CREATE TABLE `chat_message` (
   `user_receiver_id` int(11) NOT NULL,
   `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `attachment_url` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `registred_on` datetime NOT NULL
+  `registered_on` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -69,7 +69,7 @@ CREATE TABLE `reviews` (
   `appointment_id` int(11) NOT NULL,
   `comment` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `rate` int(11) NOT NULL,
-  `registred_on` datetime NOT NULL
+  `registered_on` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -88,7 +88,7 @@ CREATE TABLE `services` (
   `location_lng` float NOT NULL,
   `location_radius` float NOT NULL,
   `is_service_fee_per_hour` tinyint(1) NOT NULL,
-  `registred_on` datetime NOT NULL
+  `registered_on` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -152,7 +152,7 @@ CREATE TABLE `work_hours` (
   `day` int(11) NOT NULL,
   `hour` int(11) NOT NULL,
   `duration` int(11) NOT NULL,
-  `registred_on` datetime NOT NULL
+  `registered_on` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
