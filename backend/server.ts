@@ -7,7 +7,7 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
-import { dummyRouter } from './routes/dummy';
+import { ServiceCategories as ServiceCategoriesRouter } from './routes/ServiceCategories';
 
 const router = express.Router();
 
@@ -26,7 +26,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api/v1/dummy', dummyRouter);
+app.use('/api/v1/service_categories', ServiceCategoriesRouter);
 
 app.use(function (_req: Request, _res: Response, next: NextFunction) {
     next(createError(404));
