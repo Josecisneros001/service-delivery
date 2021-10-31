@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import './UserSignUp.css';
+import FormField from './UserSignUpFormField/UserSignUpFormField'
 
 class UserSignUp extends Component {
     render() {
         return (
             <div className='square'>
-            <div className='header'>
+            <div className='header'> Welcome to Service Delivery!
+            <FormField instruction='First Name(s)' larger={false} /></div>
             
-                Welcome to Service Delivery!
-                
-            </div>
             </div>
         );
     }
