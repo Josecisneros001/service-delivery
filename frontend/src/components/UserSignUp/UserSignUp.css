@@ -6,4 +6,14 @@
     font-family: 'Poppins', sans-serif;
     padding-top: 70px;
     padding-left: 800px;
+    white-space: nowrap;
+}
+
+.square {
+    background-color: #6BA5FF;
+    position: absolute;
+    width: 640px;
+    height: 1080px;
+    left: 0px;
+    top: 0px;
 }
