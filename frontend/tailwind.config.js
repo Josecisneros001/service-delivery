@@ -20,6 +20,7 @@ module.exports = {
       pink: colors.pink,
       transparent: 'transparent',
       current: 'currentColor',
+      primaryColor: '#6BA5FF',
     },
     extend: {
       colors: {
@@ -34,13 +35,9 @@ module.exports = {
           '700': '#507cbf', 
           '800': '#406399', 
           '900': '#34517d'
-      },
+        },
         'custom-white': '#FAFAFA',
       },
-      width: {
-        '872': '872px',
-        '365': '365px',
-      }
     },
   },
   variants: {
