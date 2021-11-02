@@ -140,6 +140,10 @@ CREATE TABLE `users` (
   `registered_on` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE VIEW `users_no_password` AS
+SELECT `id`, `first_name`, `last_name`, `email`, `recovery_email`, `phone_number`, `alt_phone_number`, `profile_picture`, `file_id`, `file_proof_of_address`, `is_service_provider`, `registered_on`
+FROM `users`;
+
 -- --------------------------------------------------------
 
 --
