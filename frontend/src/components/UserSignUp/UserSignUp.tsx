@@ -33,7 +33,8 @@ class UserSignUp extends Component {
                     </div>
                     <div className="flex">
                         <FormField label='Alt Phone # (optional)' />
-                        <div className="w-1/6"/>
+                        <div className="w-1/4"/>
+                        <div className="w-1/3"/>
                     </div>
                     <div className="items-center">
                         <button className="button button1">Confirm</button>
