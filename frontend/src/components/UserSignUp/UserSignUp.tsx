@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import '../../tailwindcss.css';
 import './UserSignUp.css';
 import FormField from './FormField/FormField'
 
@@ -8,7 +9,7 @@ class UserSignUp extends Component {
             <div className="flex flex-row h-full">
                 <div className='w-1/3 bg-primaryColor' />
                 <div className='flex-1 px-20'>
-                    <div className="text-xl md:text-2xl">Welcome to Service Delivery!</div>
+                    <div className="lg:text-5xl py-16 sm:text-base">Welcome to <br/> Service Delivery!</div>
                     <div className="flex">
                         <FormField label='First Name(s)' />
                         <div className="w-1/6"/>
@@ -18,6 +19,24 @@ class UserSignUp extends Component {
                         <FormField label='Last Name(s)' />
                         <div className="w-1/6"/>
                         <FormField label='Phone #' />
+                    </div>
+                    <div className="flex">
+                        <FormField label='Email' />
+                    </div>
+                    <div className="flex">
+                        <FormField label='Password' />
+                        <div className="w-1/6"/>
+                        <FormField label='Confirm Password' />
+                    </div>
+                    <div className="flex">
+                        <FormField label='Recovery Email' />
+                    </div>
+                    <div className="flex">
+                        <FormField label='Alt Phone # (optional)' />
+                        <div className="w-1/6"/>
+                    </div>
+                    <div className="items-center">
+                        <button className="button button1">Confirm</button>
                     </div>
                 </div>
             </div>
