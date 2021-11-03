@@ -14,19 +14,23 @@ class UserLogin extends Component {
             <button className="text-2xl p-4 underline">click here</button>
           </div>
         </div>
-        <div className="w-2/5 m-auto bg-gray-50">
+        <div className="flex flex-col w-2/5 m-auto bg-gray-50 mt-16 shadow-lg">
           <div className="text-5xl py-16 ">Welcome!</div>
 
-          <div className="flex">
+          <div className="w-3/5 m-auto">
             <FormField label="Email" />
           </div>
 
-          <div className="flex">
-            <FormField label="Recovery Email" />
+          <div className="w-3/5 m-auto">
+            <FormField label="Password" />
           </div>
 
-          <div className="items-center">
+          <div className="items-center py-2">
             <button className="button button1">Confirm</button>
+          </div>
+          <div className="line m-auto"></div>
+          <div className="items-center py-2">
+            <button className="button button2">Create new account</button>
           </div>
         </div>
       </div>
