@@ -20,8 +20,24 @@ module.exports = {
       pink: colors.pink,
       transparent: 'transparent',
       current: 'currentColor',
+      primaryColor: '#6BA5FF',
     },
     extend: {
+      colors: {
+        'cornflower-blue': {
+          '50': '#f8fbff', 
+          '100': '#f0f6ff', 
+          '200': '#dae9ff', 
+          '300': '#c4dbff', 
+          '400': '#97c0ff', 
+          '500': '#6ba5ff', 
+          '600': '#6095e6', 
+          '700': '#507cbf', 
+          '800': '#406399', 
+          '900': '#34517d'
+        },
+        'custom-white': '#FAFAFA',
+      },
     },
   },
   variants: {
