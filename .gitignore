@@ -18,6 +18,7 @@ node_modules
 .env.production.local
 
 # files
+backend/files/*
 tailwindcss.min.css
 
 npm-debug.log*
