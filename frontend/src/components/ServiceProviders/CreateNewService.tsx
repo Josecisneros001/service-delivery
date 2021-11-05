@@ -1,30 +1,16 @@
 import React, { Component } from 'react';
-import NavbarScroller from '../components/NavbarScroller'
-
-const navigation = {
-  brand: { name: 'Service Delivery', to: '/' },
-  links: [
-    { name: 'Current Requests', to: '/' },
-    { name: 'Weekly Calendar', to: '/' },
-    { name: 'Chat', to: '/' },
-  ]
-};
 
 export default class CreateNewService extends Component {
 
   handleSubmit(event: any){
     event?.preventDefault();
+    // TODO: Backend API Implemenation.
     console.log("Service Created");
   }
 
   public render() {
-    const { brand, links } = navigation;
-
-    return (
-      <div className="h-screen">
-        <NavbarScroller brand={brand} links={links} />
-        
-        <div className="flex justify-center items-center w-full md:w-1/2 border-2 border-red-50 mt-10 p-3 md:mx-auto">
+    return (       
+        <div className="flex justify-center items-center w-full md:w-2/3 lg:w-1/2 border-2 border-red-50 mt-10 p-3 md:mx-auto">
           <form action="./" onSubmit={this.handleSubmit}>
             {/* NAME OF SERVICE INPUT */}
             <label className="font-bold">Name of service</label>
@@ -34,55 +20,55 @@ export default class CreateNewService extends Component {
             <div className="flex flex-col">
               <span className="font-bold">Categories</span>
 
-              {/* TODO: Agregar categorias dinámicamente */}
+              {/* TODO: Add categories dinamically */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 <label htmlFor="gardening" className="mt-2 ml-3 cursor-pointer">
-                  <input type="checkbox" id="gardening" className="" />
+                  <input type="checkbox" id="gardening" />
                   <span className="ml-2">Gardening</span>
                 </label>
 
                 <label htmlFor="cleaning" className="mt-2 ml-3 cursor-pointer">
-                  <input type="checkbox" id="cleaning" className="" />
+                  <input type="checkbox" id="cleaning" />
                   <span className="ml-2">Cleaning</span>
                 </label>
 
                 <label htmlFor="exterminator" className="mt-2 ml-3 cursor-pointer">
-                  <input type="checkbox" id="exterminator" className="" />
+                  <input type="checkbox" id="exterminator" />
                   <span className="ml-2">Exterminator</span>
                 </label>
 
                 <label htmlFor="electrician" className="mt-2 ml-3 cursor-pointer">
-                  <input type="checkbox" id="electrician" className="" />
+                  <input type="checkbox" id="electrician" />
                   <span className="ml-2">Electrician</span>
                 </label>
 
                 <label htmlFor="mechanic" className="mt-2 ml-3 cursor-pointer">
-                  <input type="checkbox" id="mechanic" className="" />
+                  <input type="checkbox" id="mechanic" />
                   <span className="ml-2">Mechanic</span>
                 </label>
 
                 <label htmlFor="tutoring" className="mt-2 ml-3 cursor-pointer">
-                  <input type="checkbox" id="tutoring" className="" />
+                  <input type="checkbox" id="tutoring" />
                   <span className="ml-2">Tutoring</span>
                 </label>
 
                 <label htmlFor="chef" className="mt-2 ml-3 cursor-pointer">
-                  <input type="checkbox" id="chef" className="" />
+                  <input type="checkbox" id="chef" />
                   <span className="ml-2">Chef</span>
                 </label>
 
                 <label htmlFor="catering" className="mt-2 ml-3 cursor-pointer">
-                  <input type="checkbox" id="catering" className="" />
+                  <input type="checkbox" id="catering" />
                   <span className="ml-2">Catering</span>
                 </label>
 
                 <label htmlFor="babysitting" className="mt-2 ml-3 cursor-pointer">
-                  <input type="checkbox" id="babysitting" className="" />
+                  <input type="checkbox" id="babysitting" />
                   <span className="ml-2">Babysitting</span>
                 </label>
 
                 <label htmlFor="moving-out" className="mt-2 ml-3 cursor-pointer">
-                  <input type="checkbox" id="moving-out" className="" />
+                  <input type="checkbox" id="moving-out" />
                   <span className="ml-2">Moving out</span>
                 </label>
               </div>
@@ -117,7 +103,6 @@ export default class CreateNewService extends Component {
 
           </form>
         </div>
-      </div>
     );
   }
 }
