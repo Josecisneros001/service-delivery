@@ -9,12 +9,12 @@
 .button1 {
   background-color: white;
   color: black;
-  border: 2px solid #6BA5FF;
+  border: 2px solid #6ba5ff;
   border-radius: 15px;
 }
 
 .button1:hover {
-  background-color: #6BA5FF;
+  background-color: #6ba5ff;
   color: white;
 }
 
