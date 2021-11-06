@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import UserLogin from '../components/UserLogin/UserLogin';
 import Navbar from '../components/Users/UsersNavbar';
 
 export default class Users extends Component {
@@ -6,9 +8,11 @@ export default class Users extends Component {
   public render() {
     return (
       <div className="h-screen">
-        <Navbar />
         
         {/* TODO: Handle all Users Components */}
+        <Routes>
+          <Route path="/login" element={<UserLogin/>} />
+        </Routes>
 
       </div>
     );

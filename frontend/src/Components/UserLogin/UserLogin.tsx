@@ -1,20 +1,15 @@
 import { Component } from "react";
 import "../../tailwindcss.css";
 import "./UserLogin.css";
+import UsersNavbarLogin from "../Users/UsersNavbarLogin";
 import FormField from "./FormField/FormField";
 
 class UserLogin extends Component {
   render() {
     return (
-      <div>
-        <div className="flex flex-row justify-between bg-primaryColor">
-          <div className="text-5xl p-5">Service Delivery</div>
-          <div className="text-2xl p-4">
-            Are you a service provider?
-            <button className="text-2xl p-4 underline">click here</button>
-          </div>
-        </div>
-        <div className="flex flex-col w-2/5 m-auto bg-gray-50 mt-16 shadow-lg">
+      <>
+        <UsersNavbarLogin/>
+        <div className="flex flex-col w-2/5 m-auto bg-gray-50 mt-16 shadow-lg text-center">
           <div className="text-5xl py-16 ">Welcome!</div>
           <div className="w-3/5 m-auto">
             <FormField label="Email" />
@@ -34,7 +29,7 @@ class UserLogin extends Component {
             <button className="button button2">Create new account</button>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 }
