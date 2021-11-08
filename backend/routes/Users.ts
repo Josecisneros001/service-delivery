@@ -44,7 +44,7 @@ Users.post('/files/:id', async function (req: Request, res: Response, next: Next
   if (response.data.length == 0) {
     return res.status(200).json(failResponse("User doesn't exist", false));
   }
-
+  const currentUser = response.data[0];
   return filesUpload(req, res, async function (err) {
     if (err instanceof multer.MulterError) {
       return res.status(200).json(failResponse("Error saving File, Try Again", false));
@@ -57,6 +57,14 @@ Users.post('/files/:id', async function (req: Request, res: Response, next: Next
     let filesObj = {} as {[key:string]: string};
     const files = req.files as {[fieldname: string]: Express.Multer.File[];};
     for (const fileName in files) {
+      if (currentUser[fileName].length > 4) {
+        fs.stat(currentUser[fileName], function (err, stats) {
+          if(err) return;
+          fs.unlink(currentUser[fileName], function(err){
+              if(err) return;
+          });  
+        });
+      }
       filesObj[fileName] = files[fileName][0].path.replace(/\\/g, '/');
     }
     const response = await Controller.update(parseInt(req.params.id), filesObj);
