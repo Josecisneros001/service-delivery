@@ -1,5 +1,5 @@
 export const buildWhereClause = (filters: any, params: string[], dbRelations: string[], types: string[]): string => {
-	let paramsValues = []
+	let paramsValues = [];
 	for (let index = 0; index < params.length; index++) {
 		const param = params[index]
 		const dbRelation = dbRelations[index]

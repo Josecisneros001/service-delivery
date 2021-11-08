@@ -10,7 +10,7 @@ export const Users = express.Router();
 
 const storage = multer.diskStorage({
   destination: function (req: Request, _file: Express.Multer.File, cb) {
-    const dir = './files/' + req.params.id + '/';
+    const dir = './files/users/' + req.params.id + '/';
     if (!fs.existsSync(dir)){
         fs.mkdirSync(dir, { recursive: true });
     }
