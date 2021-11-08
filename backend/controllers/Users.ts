@@ -68,7 +68,11 @@ export const Users = {
         if (!id) {
             return failResponse("Missing Parameters", false);
         }
-        return this.getAll({ id: id });
+        const response = await this.getAll({ id: id });
+        if (response.data.length == 0) {
+            return failResponse("Record doesn't exists", false);
+        }
+        return successReponse("Record exists", response.data[0]);
     },
     /**
      * Function that delete a record by id.
