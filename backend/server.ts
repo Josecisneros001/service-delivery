@@ -8,6 +8,7 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
 import { ServiceCategories as ServiceCategoriesRouter } from './routes/ServiceCategories';
+import { Services as ServicesRouter } from './routes/Services';
 import { Users as UsersRouter } from './routes/Users';
 
 const router = express.Router();
@@ -27,6 +28,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/api/v1/services', ServicesRouter);
 app.use('/api/v1/service_categories', ServiceCategoriesRouter);
 app.use('/api/v1/users', UsersRouter);
 app.use('/files', express.static('files'));

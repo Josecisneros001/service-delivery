@@ -64,3 +64,31 @@ export const buildUpdate = (id: number, filters: any, fields: string[], dbTableN
 	});
 	return `UPDATE ${dbTableName} SET ${setClause.join(',')} WHERE id = ${id}`;
 }
+
+import { ServiceCategories } from "../controllers/ServiceCategories";
+import { Users } from "../controllers/Users";
+import { Services } from "../controllers/Services";
+import { CustomResponse } from "../interfaces/CustomResponse"
+import { failResponse, successReponse } from "./response"
+export const checkIfExists = async (fields: string[], controllers: string[],  values: any) : Promise<CustomResponse> => {
+	for(const index in fields) {
+		const field = fields[index];
+		const controller = controllers[index];
+		let response;
+		switch (controller) {
+			case 'Users':
+				response = await Users.getById(values[field]);
+			break;
+			case 'Services':
+				response = await Services.getById(values[field]);
+			break;
+			case 'ServiceCategories':
+				response = await ServiceCategories.getById(values[field]);
+			break;
+		}
+		if (response?.status != 200) {
+			return failResponse(`${field} doesn't exists`, false);
+		}
+	}
+	return successReponse(`All exists`, true);
+}
