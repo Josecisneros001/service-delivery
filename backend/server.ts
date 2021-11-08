@@ -29,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/v1/service_categories', ServiceCategoriesRouter);
 app.use('/api/v1/users', UsersRouter);
+app.use('/files', express.static('files'));
 
 app.use(function (_req: Request, _res: Response, next: NextFunction) {
     next(createError(404));

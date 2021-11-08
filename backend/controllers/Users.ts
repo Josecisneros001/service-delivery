@@ -50,7 +50,7 @@ export const Users = {
      * Function that update a record.
     */
     update: async function (id: number, filters: Model): Promise<CustomResponse> {
-        const params = ["first_name", "last_name", "email", "recovery_email", "phone_number", "alt_phone_number", "is_service_provider", "registred_on"];
+        const params = ["first_name", "last_name", "email", "recovery_email", "phone_number", "alt_phone_number", "is_service_provider", "registred_on", "profile_picture", "file_id", "file_proof_of_address"];
         const query = buildUpdate(id, filters, params, dbTableName);
         if (query.length == 0) {
             return failResponse("Bad Request", false);
