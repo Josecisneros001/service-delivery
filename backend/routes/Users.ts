@@ -42,7 +42,7 @@ const filesUpload = upload.fields([{ name: 'profile_picture', maxCount: 1 }, { n
 Users.post('/files/:id', async function (req: Request, res: Response, next: NextFunction) {
   const response = await Controller.getById(parseInt(req.params.id));
   if (response.status != 200) {
-    return res.status(200).json(failResponse("User doesn't exist", false));
+    return res.status(200).json(failResponse("User doesn't exists", false));
   }
   const currentUser = response.data;
   return filesUpload(req, res, async function (err) {
