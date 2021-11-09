@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
-import Navbar from '../components/Users/UsersNavbar';
+import { Routes, Route } from 'react-router-dom';
+import UserLogin from '../components/UserLogin/UserLogin';
 
 export default class Users extends Component {
 
   public render() {
     return (
       <div className="h-screen">
-        <Navbar />
         
         {/* TODO: Handle all Users Components */}
+        <Routes>
+          <Route path="/login" element={<UserLogin/>} />
+        </Routes>
 
       </div>
     );
