@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import "../../../tailwindcss.css";
-import "../ServiceProviderEditProfile.css";
+import "./ServiceProviderEditProfile.css";
 {/* import ServiceProviderNavbar from "../ServiceProviders/ServiceProviderNavbar";*/}
 
 class ServiceProviderEditProfile extends Component {

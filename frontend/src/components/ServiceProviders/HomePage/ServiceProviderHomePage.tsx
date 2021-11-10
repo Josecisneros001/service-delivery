@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import "../../../tailwindcss.css";
-import "../ServiceProviderHomePage.css";
+import "./ServiceProviderHomePage.css";
 import coverProfile from "../../../images/garden.jpeg"
 import profilePic from "../../../images/profilePic.png"
 {/* import ServiceProviderNavbar from "../ServiceProviders/ServiceProviderNavbar";*/}
