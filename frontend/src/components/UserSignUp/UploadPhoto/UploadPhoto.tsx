@@ -47,6 +47,7 @@ export default function UploadPhoto() {
                         type="file"
                         style={{display: "none"}}
                         ref={fileInputRef}
+                        name="profile_picture"
                         accept="image/*"
                         onChange={(event) => {
                             const file = event.target.files![0];

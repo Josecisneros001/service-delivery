@@ -1,22 +1,22 @@
-import { useRef, useState, useEffect} from 'react';
+import { useRef, useState} from 'react';
 import UploadFileI from '../../../interfaces/UserSignUp/UploadFile';
 import '../../../tailwindcss.css';
 
-export default function UploadID({label}:UploadFileI){
+export default function UploadID({label, id, name}:UploadFileI){
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [image, setImage] = useState<File|null|undefined>();
     const [fileName, setFileName] = useState<any|null>();
 
       return (
-        <div className="flex flex-col">
+        <div className="flex items-center flex-col">
           <label className="font-semibold tracking-wider">{label}</label>
-          <br/>
           <div className = "flex items-center flex-row ">
-            <label className="tracking-wider">Choose file:</label>
-            <label htmlFor="upload-id" className="border-primaryColor border-2 rounded-md text-primaryColor m-1 p-1 text-2xl cursor-pointer ">Upload</label>
+            <label className="text-2xl tracking-wider">Choose file:</label>
+            <label htmlFor={id} className="border-primaryColor border-2 rounded-md text-primaryColor m-1 p-1 text-xl cursor-pointer hover:bg-primaryColor hover:text-white">Upload</label>
             <input
-                id = "upload-id"
+                id = {id}
                 type="file"
+                name={name}
                 style={{display: 'none'}}
                 ref={fileInputRef}
                 accept="image/*"
@@ -33,7 +33,7 @@ export default function UploadID({label}:UploadFileI){
                 }}
             />
             <div className="text-sm">{fileName}</div>
-            { image != null && <button onClick={(event) => {
+            { image != null && <button className="text-sm pb-8 text-primaryColor" onClick={(event) => {
               setImage(null);
               setFileName(null);
             }}>x</button> }
