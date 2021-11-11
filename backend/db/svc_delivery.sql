@@ -140,6 +140,10 @@ CREATE TABLE `users` (
   `registered_on` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE VIEW `users_no_password` AS
+SELECT `id`, `first_name`, `last_name`, `email`, `recovery_email`, `phone_number`, `alt_phone_number`, `profile_picture`, `file_id`, `file_proof_of_address`, `is_service_provider`, `registered_on`
+FROM `users`;
+
 -- --------------------------------------------------------
 
 --
@@ -263,3 +267,36 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+DELIMITER //
+CREATE FUNCTION getDistance(latitudA float, longitudA float, latitudB float, longitudB float)
+RETURNS float
+BEGIN
+   DECLARE R INT;
+   DECLARE dLat float;
+   DECLARE dLong float;
+   DECLARE a float;
+   DECLARE c float;
+   DECLARE d float;
+   SET R= 6378137; /* EARTH RADIUS */
+   SET dLat =  RADIANS(latitudB - latitudA);
+   SET dLong =  RADIANS(longitudB - longitudA);
+   SET a = SIN(dLat / 2.0) * SIN(dLat / 2.0) + COS(RADIANS(latitudA)) * COS( RADIANS(latitudB)) * SIN(dLong / 2.0) * SIN(dLong / 2.0);
+   SET c = 2.0 * ATAN2(SQRT(a), SQRT(1 - a));
+   SET d = R * c;
+   return d; 
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE FUNCTION doIntersect(latitudA float, longitudA float, radioA float, latitudB float, longitudB float, radioB float)
+RETURNS boolean
+BEGIN
+  DECLARE distance INT;
+  DECLARE radius float;
+  SET distance = getDistance(latitudA, longitudA, latitudB, longitudB);
+  SET radius = radioA + radioB;
+  return distance < radius;
+END //
+DELIMITER ;

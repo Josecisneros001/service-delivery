@@ -1,18 +1,18 @@
 export {};
 import type { CustomResponse } from "../interfaces/CustomResponse";
-import type { ServiceCategories as Model } from "../models/ServiceCategories";
+import type { ServicePhotos as Model } from "../models/ServicePhotos";
 import { failResponse, successReponse } from  '../scripts/response';
 import { executeQuery } from '../db/mysql';
 import { buildWhereClause, buildInsertInto } from '../scripts/buildQueryHelpers'
 
-const dbTableName = "service_categories";
+const dbTableName = "service_photos";
 
-export const ServiceCategories = {
+export const ServicePhotos = {
     /**
      * Function that creates a record.
      */
     create: async function (params: Model): Promise<CustomResponse> {
-        const fields = ["name", "description"];
+        const fields = ["service_id", "description", "photo_url"];
         const timestamp = new Date().toISOString();
         const query = buildInsertInto(params, dbTableName, fields, timestamp);
         if (query.length == 0) {
@@ -26,13 +26,13 @@ export const ServiceCategories = {
         }
         return failResponse("Bad Request", result);
     },
-    /**Controller
+    /**
      * Function that get list of records.
      */
     getAll: async function (filters: Model): Promise<CustomResponse> {
-        const params = ["id"];
-        const dbRelations = [`${dbTableName}.id`];
-        const types = ["number"];
+        const params = ["id", "service_id"];
+        const dbRelations = [`${dbTableName}.id`, `${dbTableName}.service_id`];
+        const types = ["number", "number"];
         const whereClause = buildWhereClause(filters, params, dbRelations, types);
         const query = `SELECT * from ${dbTableName} ${whereClause}`;
         return executeQuery(query);
