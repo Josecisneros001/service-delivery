@@ -1,8 +1,7 @@
 import React, { ChangeEvent, Component, createRef} from 'react';
-import '../../../tailwindcss.css';
+import "../../../tailwindcss.css";
 import UploadPhoto from '../UploadPhoto/UploadPhoto';
 import UploadID from '../UploadID/UploadID';
-import '../../UserSignUp/UserSignUp.css'
 
 class UserUploadPhoto extends Component {
     private form = createRef<HTMLFormElement>();

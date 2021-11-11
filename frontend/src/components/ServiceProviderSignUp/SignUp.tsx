@@ -1,6 +1,5 @@
 import { Component } from 'react';
 import '../../tailwindcss.css';
-import './UserSignUp.css';
 import FormField from './FormField/FormField'
 import UserSignUpState from '../../interfaces/UserSignUp/UserSignUpState'
 
