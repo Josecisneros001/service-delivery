@@ -40,7 +40,7 @@ export default function UploadPhoto() {
                         }}
                         className="w-48 h-48 bg-gray-400 rounded-full relative"
                     >
-                         <img className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-20 h-20" src="upload.png" alt=""/>
+                         <img className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-20 h-20" src="../upload.png" alt=""/>
                     </button>
                     )}
                     <input

@@ -56,7 +56,7 @@ class UserSignUp extends Component<{}, UserSignUpState> {
             <div className="flex flex-row h-full">
                 <div className='w-1/3 bg-primaryColor' />
                 <div className='flex-1 px-20 space-y-3'>
-                    <div className="lg:text-5xl py-10 sm:text-base">Welcome to <br/> Service Delivery!</div>
+                    <div className="font-semibold tracking-wider lg:text-5xl py-10 sm:text-base">Welcome to <br/> Service Delivery!</div>
                     <form onSubmit={this.handleSubmit} className="flex-1 flex flex-col text-2xl">
                     <div className="flex">
                         <FormField label='First Name(s)' onChange={this.handleFirstName}/>
