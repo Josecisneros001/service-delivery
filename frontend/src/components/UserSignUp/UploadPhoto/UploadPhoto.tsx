@@ -21,7 +21,7 @@ export default function UploadPhoto() {
 
        return (
            <div className="flex">
-               <form>
+               <form id = "myFileForm">
                     {preview ? (
                         <img
                             className="rounded-full cursor-pointer w-48 h-48"

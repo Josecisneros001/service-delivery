@@ -9,7 +9,7 @@ class UserSignUp extends Component {
             <div className="flex flex-row h-full">
                 <div className='w-1/3 bg-primaryColor' />
                 <div className='flex-1 px-20 space-y-3'>
-                    <div className="lg:text-5xl py-16 sm:text-base">Welcome to <br/> Service Delivery!</div>
+                    <div className="lg:text-5xl py-10 sm:text-base">Welcome to <br/> Service Delivery!</div>
                     <div className="flex">
                         <FormField label='First Name(s)' />
                         <div className="w-1/6"/>
