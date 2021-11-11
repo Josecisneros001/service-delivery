@@ -3,13 +3,12 @@ import "../../../tailwindcss.css";
 import "./ServiceProviderHomePage.css";
 import coverProfile from "../../../images/garden.jpeg"
 import profilePic from "../../../images/profilePic.png"
-{/* import ServiceProviderNavbar from "../ServiceProviders/ServiceProviderNavbar";*/}
+import ServiceProviderNavbar from "../ServiceProviderNavbar";
 
 class ServiceProviderHomePage extends Component{
     render() {
         return (
             <>
-                {/* <ServiceProviderNavbar /> */}
                 <img src="../../../images/profilePic.png" alt="Profile Pic"></img>
                 <div className="coverPhoto">
                     <div className="tagUsuario">
