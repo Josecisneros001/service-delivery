@@ -80,7 +80,7 @@ const dummy_expenses = [
 ];
 
 const Test = () => {
-  const [expenses, setExpenses] = useState(dummy_expenses);
+  const [expenses, _setExpenses] = useState(dummy_expenses);
 
   return (
     <div className="w-3/5 m-auto">
