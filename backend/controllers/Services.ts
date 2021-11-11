@@ -39,7 +39,11 @@ export const Services = {
         const params = ["id"];
         const dbRelations = [`${dbTableName}.id`];
         const types = ["number"];
-        const whereClause = buildWhereClause(filters, params, dbRelations, types);
+        const conditions = [];
+        if (filters["location_lat"] && filters["location_lng"] && filters["location_radius"]) {
+            conditions.push(`doIntersect(${filters["location_lat"]}, ${filters["location_lng"]}, ${filters["location_radius"]}, location_lat, location_lng, location_radius) = 1`);
+        }
+        const whereClause = buildWhereClause(filters, params, dbRelations, types, conditions);
         const query = `SELECT * from ${dbTableName} ${whereClause}`;
         return executeQuery(query);
     },
