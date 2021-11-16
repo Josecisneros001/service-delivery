@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
+import { Appointments as AppointmentsRouter } from './routes/Appointments';
 import { ServiceCategories as ServiceCategoriesRouter } from './routes/ServiceCategories';
 import { Services as ServicesRouter } from './routes/Services';
 import { ServicePhotos as ServicesPhotosRouter } from './routes/ServicePhotos';
@@ -30,6 +31,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/api/v1/appointments', AppointmentsRouter);
 app.use('/api/v1/services', ServicesRouter);
 app.use('/api/v1/service_photos', ServicesPhotosRouter);
 app.use('/api/v1/service_categories', ServiceCategoriesRouter);
