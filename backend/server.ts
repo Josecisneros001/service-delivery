@@ -14,6 +14,7 @@ import { Services as ServicesRouter } from './routes/Services';
 import { ServicePhotos as ServicesPhotosRouter } from './routes/ServicePhotos';
 import { Users as UsersRouter } from './routes/Users';
 import { WorkHours as WorkHoursRouter } from './routes/WorkHours';
+import { ChatMessages as ChatMessagesRouter } from './routes/ChatMessages';
 
 const router = express.Router();
 
@@ -39,6 +40,7 @@ app.use('/api/v1/service_photos', ServicesPhotosRouter);
 app.use('/api/v1/service_categories', ServiceCategoriesRouter);
 app.use('/api/v1/users', UsersRouter);
 app.use('/api/v1/work_hours', WorkHoursRouter);
+app.use('/api/v1/chat_messages', ChatMessagesRouter);
 app.use('/files', express.static('files'));
 
 app.use(function (_req: Request, _res: Response, next: NextFunction) {
