@@ -1,36 +1,49 @@
-export const buildWhereClause = (filters: any, params: string[], dbRelations: string[], types: string[]): string => {
-	let paramsValues = [];
+const initOptional = (optional: boolean[], fields: string[]) => {
+	if (optional.length != 0) {
+		return;
+	}
+	for(const _ in fields) {
+		optional.push(false);
+	}
+};
+
+export const buildWhereClause = (filters: any, params: string[], dbRelations: string[], types: string[], conditions: string[] = []): string => {
 	for (let index = 0; index < params.length; index++) {
 		const param = params[index]
 		const dbRelation = dbRelations[index]
 		if ((param in filters)) {
 			if (types[index] == "string") {
-				paramsValues.push(`${dbRelation} LIKE '%${filters[param]}%'`)
+				conditions.push(`${dbRelation} LIKE '%${filters[param]}%'`)
 			} else if (types[index] == "number_min") {
-				paramsValues.push(`${dbRelation} >= '${filters[param]}'`);
+				conditions.push(`${dbRelation} >= '${filters[param]}'`);
 			} else if (types[index] == "number_max") {
-				paramsValues.push(`${dbRelation} <= '${filters[param]}'`);
+				conditions.push(`${dbRelation} <= '${filters[param]}'`);
 			} else if (types[index] == "array") {
 				let tmpOrArray = []
 				for (const filer_value of filters[param]) {
 					tmpOrArray.push(`${dbRelation} = '${filer_value}'`);
 				}
-				paramsValues.push(`(${tmpOrArray.join(' OR ')})`);
+				conditions.push(`(${tmpOrArray.join(' OR ')})`);
 			} else {
-				paramsValues.push(`${dbRelation} = '${filters[param]}'`)
+				conditions.push(`${dbRelation} = '${filters[param]}'`)
 			}
 		}
 	}
-	if (paramsValues.length == 0) {
+	if (conditions.length == 0) {
 		return "";
 	}
-	return `where ${paramsValues.join(" AND ")}`;
+	return `where ${conditions.join(" AND ")}`;
 }
 
-export const buildInsertInto = (params: any, dbTableName: string, fields: string[], timestamp: string): string => {
+export const buildInsertInto = (params: any, dbTableName: string, fields: string[], timestamp: string, optional: boolean[] = []): string => {
+	initOptional(optional, fields);
 	let paramsValues : string[] = [];
 	for (let indexRP in fields) {
 		const requiredParam = fields[indexRP];
+		const isOptional = optional[indexRP];
+		if (isOptional && !(requiredParam in params)) {
+			params[requiredParam] = 0;
+		}
 		if (!(requiredParam in params)) {
 			return "";
 		}
@@ -68,11 +81,17 @@ export const buildUpdate = (id: number, filters: any, fields: string[], dbTableN
 import { ServiceCategories } from "../controllers/ServiceCategories";
 import { Users } from "../controllers/Users";
 import { Services } from "../controllers/Services";
-import { CustomResponse } from "../interfaces/CustomResponse"
-import { failResponse, successReponse } from "./response"
-export const checkIfExists = async (fields: string[], controllers: string[],  values: any) : Promise<CustomResponse> => {
+import { Appointments } from "../controllers/Appointments";
+import { CustomResponse } from "../interfaces/CustomResponse";
+import { failResponse, successReponse } from "./response";
+export const checkIfExists = async (fields: string[], controllers: string[], values: any, optional: boolean[] = []) : Promise<CustomResponse> => {
+	initOptional(optional, fields);
 	for(const index in fields) {
 		const field = fields[index];
+		const isOptional = optional[index];
+		if (isOptional && values[field] == 0) {
+			continue;
+		}
 		const controller = controllers[index];
 		let response;
 		switch (controller) {
@@ -84,6 +103,9 @@ export const checkIfExists = async (fields: string[], controllers: string[],  va
 			break;
 			case 'ServiceCategories':
 				response = await ServiceCategories.getById(values[field]);
+			break;
+			case 'Appointments':
+				response = await Appointments.getById(values[field]);
 			break;
 		}
 		if (response?.status != 200) {

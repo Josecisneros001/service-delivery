@@ -1,26 +1,27 @@
 export {};
 import type { CustomResponse } from "../interfaces/CustomResponse";
-import type { Services as Model } from "../models/Services";
+import type { Reviews as Model } from "../models/Reviews";
 import { failResponse, successReponse } from  '../scripts/response';
 import { executeQuery } from '../db/mysql';
 import { buildWhereClause, buildInsertInto, buildUpdate, checkIfExists } from '../scripts/buildQueryHelpers'
 
-const dbTableName = "services";
+const dbTableName = "reviews";
 
-export const Services = {
+export const Reviews = {
     /**
      * Function that creates a record.
      */
     create: async function (params: Model): Promise<CustomResponse> {
-        const fields = ["user_id", "category_id", "name", "description", "location_lat", "location_lng", "location_radius", "is_service_fee_per_hour"];
+        const fields = ["user_receiver_id", "user_sender_id", "service_id", "appointment_id", "comment", "rate"];
+        const optional = [false, false, true, true, false, false];
         const timestamp = new Date().toISOString();
-        const query = buildInsertInto(params, dbTableName, fields, timestamp);
+        const query = buildInsertInto(params, dbTableName, fields, timestamp, optional);
         if (query.length == 0) {
             return failResponse("Missing Parameters", false);
         }
-        const checkIfExistsFields = ["user_id", "category_id"];
-        const checkIfExistsControllers = ["Users", "ServiceCategories"];
-        const checkIfExistsResponse = await checkIfExists(checkIfExistsFields, checkIfExistsControllers, params);
+        const checkIfExistsFields = ["user_receiver_id", "user_sender_id", "service_id", "appointment_id"];
+        const checkIfExistsControllers = ["Users", "Users", "Services", "Appointments"];
+        const checkIfExistsResponse = await checkIfExists(checkIfExistsFields, checkIfExistsControllers, params, optional);
         if(checkIfExistsResponse.status != 200) {
             return checkIfExistsResponse;
         }
@@ -36,31 +37,12 @@ export const Services = {
      * Function that get list of records.
      */
     getAll: async function (filters: Model): Promise<CustomResponse> {
-        const params = ["id"];
-        const dbRelations = [`${dbTableName}.id`];
-        const types = ["number"];
-        const conditions = [];
-        if (filters["location_lat"] && filters["location_lng"] && filters["location_radius"]) {
-            conditions.push(`doIntersect(${filters["location_lat"]}, ${filters["location_lng"]}, ${filters["location_radius"]}, location_lat, location_lng, location_radius) = 1`);
-        }
-        const whereClause = buildWhereClause(filters, params, dbRelations, types, conditions);
+        const params = ["id", "user_receiver_id", "user_sender_id", "service_id", "appointment_id"];
+        const dbRelations = [`${dbTableName}.id`, `${dbTableName}.user_id`, `${dbTableName}.service_id`];
+        const types = ["number", "number", "number"];
+        const whereClause = buildWhereClause(filters, params, dbRelations, types);
         const query = `SELECT * from ${dbTableName} ${whereClause}`;
         return executeQuery(query);
-    },
-    /**
-     * Function that update a record.
-    */
-    update: async function (id: number, filters: Model): Promise<CustomResponse> {
-        const params = ["name", "description", "location_lat", "location_lng", "location_radius", "is_service_fee_per_hour"];
-        const query = buildUpdate(id, filters, params, dbTableName);
-        if (query.length == 0) {
-            return failResponse("Bad Request", false);
-        }
-        const result = await executeQuery(query);
-        if (result.status == 200) {
-            return this.getById(id);
-        }
-        return failResponse("Missing Parameters", false);
     },
     /**
      * Function that get a record by id if exists.
