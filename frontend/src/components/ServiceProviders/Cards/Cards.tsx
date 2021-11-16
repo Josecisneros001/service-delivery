@@ -44,7 +44,7 @@ const Cards = () => {
   const [expenses, _setExpenses] = useState(dummy_expenses);
 
   return (
-    <div className="w-3/5 m-auto">
+    <div className="w-3/5 m-auto p-3">
       <Expenses item={expenses} />
     </div>
   );

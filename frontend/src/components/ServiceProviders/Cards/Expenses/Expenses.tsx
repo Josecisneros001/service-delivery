@@ -13,7 +13,7 @@ const Expenses = (props: {
 }) => {
   return (
     <div>
-      <Card className="Expenses">
+      <Card className="Expenses p-0.5">
         <>
           {props.item.map((expense) => (
             <ExpenseItem
