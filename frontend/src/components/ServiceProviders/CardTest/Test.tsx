@@ -5,78 +5,39 @@ const dummy_expenses = [
   {
     id: "e1",
     title: "Toilet Paper",
-    amount: 94.12,
+    client: "A.J Cook",
     date: new Date(2020, 7, 14),
-  },
-  {
-    id: "e2",
-    title: "New TV",
-
-    amount: 799.49,
-    date: new Date(2021, 2, 12),
-  },
-  {
-    id: "e3",
-    title: "Car Insurance",
-    amount: 294.67,
-    date: new Date(2021, 2, 28),
-  },
-  {
-    id: "e4",
-    title: "New Desk (Wooden)",
-    amount: 450,
-    date: new Date(2021, 5, 12),
+    desc: "9:00 am Privada BocaNegra 602"
   },
   {
     id: "e1",
     title: "Toilet Paper",
-    amount: 94.12,
+    client: "A.J Cook",
     date: new Date(2020, 7, 14),
-  },
-  {
-    id: "e2",
-    title: "New TV",
-
-    amount: 799.49,
-    date: new Date(2021, 2, 12),
-  },
-  {
-    id: "e3",
-    title: "Car Insurance",
-    amount: 294.67,
-    date: new Date(2021, 2, 28),
-  },
-  {
-    id: "e4",
-    title: "New Desk (Wooden)",
-    amount: 450,
-    date: new Date(2021, 5, 12),
+    desc: "9:00 am Privada BocaNegra 602"
   },
   {
     id: "e1",
     title: "Toilet Paper",
-    amount: 94.12,
+    client: "A.J Cook",
     date: new Date(2020, 7, 14),
+    desc: "9:00 am Privada BocaNegra 602"
   },
   {
-    id: "e2",
-    title: "New TV",
-
-    amount: 799.49,
-    date: new Date(2021, 2, 12),
+    id: "e1",
+    title: "Toilet Paper",
+    client: "A.J Cook",
+    date: new Date(2020, 7, 14),
+    desc: "9:00 am Privada BocaNegra 602"
   },
   {
-    id: "e3",
-    title: "Car Insurance",
-    amount: 294.67,
-    date: new Date(2021, 2, 28),
+    id: "e1",
+    title: "Toilet Paper",
+    client: "A.J Cook",
+    date: new Date(2020, 7, 14),
+    desc: "9:00 am Privada BocaNegra 602"
   },
-  {
-    id: "e4",
-    title: "New Desk (Wooden)",
-    amount: 450,
-    date: new Date(2021, 5, 12),
-  }
+  
 ];
 
 const Test = () => {

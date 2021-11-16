@@ -6,8 +6,9 @@ const Expenses = (props: {
   item: Array<{
     id: string
     title: string,
-    amount: number,
+    client: string,
     date: Date,
+    desc: string,
   }>,
 }) => {
   return (
@@ -17,8 +18,9 @@ const Expenses = (props: {
           {props.item.map((expense) => (
             <ExpenseItem
               title={expense.title}
-              amount={expense.amount}
+              client={expense.client}
               date={expense.date}
+              desc={expense.desc}
             />
           ))}
         </>
