@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Navbar from '../components/ServiceProviders/ServiceProviderNavbar';
 import CreateNewService from '../components/ServiceProviders/CreateNewService';
-import Test from '../components/ServiceProviders/CardTest/Test';
+import Test from '../components/ServiceProviders/Cards/Cards';
 
 export default class ServiceProvider extends Component {
 

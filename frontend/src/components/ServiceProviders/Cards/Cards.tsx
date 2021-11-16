@@ -40,7 +40,7 @@ const dummy_expenses = [
   
 ];
 
-const Test = () => {
+const Cards = () => {
   const [expenses, _setExpenses] = useState(dummy_expenses);
 
   return (
@@ -50,4 +50,4 @@ const Test = () => {
   );
 };
 
-export default Test;
+export default Cards;
