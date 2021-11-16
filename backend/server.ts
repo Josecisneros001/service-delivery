@@ -8,6 +8,7 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
 import { Appointments as AppointmentsRouter } from './routes/Appointments';
+import { Reviews as ReviewsRouter } from './routes/Reviews';
 import { ServiceCategories as ServiceCategoriesRouter } from './routes/ServiceCategories';
 import { Services as ServicesRouter } from './routes/Services';
 import { ServicePhotos as ServicesPhotosRouter } from './routes/ServicePhotos';
@@ -32,6 +33,7 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/v1/appointments', AppointmentsRouter);
+app.use('/api/v1/reviews', ReviewsRouter);
 app.use('/api/v1/services', ServicesRouter);
 app.use('/api/v1/service_photos', ServicesPhotosRouter);
 app.use('/api/v1/service_categories', ServiceCategoriesRouter);
