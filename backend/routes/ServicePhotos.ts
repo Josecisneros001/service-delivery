@@ -4,9 +4,11 @@ import type { ServicePhotos as Model } from "../models/ServicePhotos";
 import { ServicePhotos as Controller } from '../controllers/ServicePhotos';
 import { Services } from '../controllers/Services';
 import fs from 'fs';
-import express from 'express';
 import { failResponse } from '../scripts/response';
 import { v4 as uuidv4 } from 'uuid';
+import { jwtAuth } from '../middleware/jwtAuth';
+
+import express from 'express';
 export const ServicePhotos = express.Router();
 
 const storage = multer.diskStorage({
@@ -24,6 +26,7 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage: storage });
 
+ServicePhotos.use(jwtAuth);
 ServicePhotos.get('/', async function (req: Request, res: Response, _next: NextFunction) {
   const response = await Controller.getAll(req.query as unknown as Model);
   return res.status(200).json(response);

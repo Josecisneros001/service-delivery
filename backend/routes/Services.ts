@@ -1,10 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
 import type { Services as Model } from "../models/Services";
 import { Services as Controller } from '../controllers/Services';
+import { jwtAuth } from '../middleware/jwtAuth';
 
 import express from 'express';
 export const Services = express.Router();
 
+Services.use(jwtAuth);
 Services.get('/', async function (req: Request, res: Response, _next: NextFunction) {
   const response = await Controller.getAll(req.query as unknown as Model);
   return res.status(200).json(response);

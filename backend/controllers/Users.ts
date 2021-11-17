@@ -101,7 +101,7 @@ export const Users = {
             if (userData.password && await passwordMatch(params.password, userData.password)){
                 return successReponse("Success", true);
             } else {
-                return successReponse("Success", false);
+                return failResponse("Authentication Failed", false);
             }
         }
         return failResponse("Bad Request", false);
