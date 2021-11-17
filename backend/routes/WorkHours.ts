@@ -1,10 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
 import type { WorkHours as Model , WorkHoursMultiple as ModelMultiple } from "../models/WorkHours";
 import { WorkHours as Controller } from '../controllers/WorkHours';
+import { jwtAuth } from '../middleware/jwtAuth';
 
 import express from 'express';
 export const WorkHours = express.Router();
 
+WorkHours.use(jwtAuth);
 WorkHours.get('/', async function (req: Request, res: Response, _next: NextFunction) {
   const response = await Controller.getAll(req.query as unknown as Model);
   return res.status(200).json(response);

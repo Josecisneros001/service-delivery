@@ -4,9 +4,11 @@ import { ChatMessages as Controller } from '../controllers/ChatMessages';
 import multer from 'multer';
 import fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
-import express from 'express';
 import { failResponse } from '../scripts/response';
 import { Users } from '../controllers/Users';
+import { jwtAuth } from '../middleware/jwtAuth';
+
+import express from 'express';
 export const ChatMessages = express.Router();
 
 const storage = multer.diskStorage({
@@ -24,6 +26,7 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage: storage });
 
+ChatMessages.use(jwtAuth);
 ChatMessages.get('/', async function (req: Request, res: Response, _next: NextFunction) {
   const response = await Controller.getAll(req.query as unknown as Model);
   return res.status(200).json(response);
