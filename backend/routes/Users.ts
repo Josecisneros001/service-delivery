@@ -3,10 +3,16 @@ import multer from 'multer';
 import type { Users as Model } from "../models/Users";
 import { Users as Controller } from '../controllers/Users';
 import fs from 'fs';
-import express from 'express';
+import dotenv from 'dotenv';
 import { failResponse } from '../scripts/response';
 import { v4 as uuidv4 } from 'uuid';
+import jwt from 'jsonwebtoken';
+import { jwtAuth } from '../middleware/jwtAuth';
+
+import express from 'express';
 export const Users = express.Router();
+
+dotenv.config();
 
 const storage = multer.diskStorage({
   destination: function (req: Request, _file: Express.Multer.File, cb) {
@@ -23,23 +29,23 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage: storage });
 
-Users.get('/', async function (req: Request, res: Response, _next: NextFunction) {
+Users.get('/', jwtAuth, async function (req: Request, res: Response, _next: NextFunction) {
   const response = await Controller.getAll(req.query as unknown as Model);
   return res.status(200).json(response);
 });
 
-Users.post('/', async function (req: Request, res: Response, _next: NextFunction) {
+Users.post('/', jwtAuth, async function (req: Request, res: Response, _next: NextFunction) {
   const response = await Controller.create(req.body as unknown as Model);
   return res.status(200).json(response);
 });
 
-Users.get('/:id', async function (req: Request, res: Response, next: NextFunction) {
+Users.get('/:id', jwtAuth, async function (req: Request, res: Response, next: NextFunction) {
   const response = await Controller.getById(parseInt(req.params.id));
   return res.status(200).json(response);
 });
 
 const filesUpload = upload.fields([{ name: 'profile_picture', maxCount: 1 }, { name: 'file_id', maxCount: 1 }, { name: 'file_proof_of_address', maxCount: 1 }]);
-Users.post('/files/:id', async function (req: Request, res: Response, next: NextFunction) {
+Users.post('/files/:id', jwtAuth, async function (req: Request, res: Response, next: NextFunction) {
   const response = await Controller.getById(parseInt(req.params.id));
   if (response.status != 200) {
     return res.status(200).json(failResponse("User doesn't exists", false));
@@ -72,17 +78,23 @@ Users.post('/files/:id', async function (req: Request, res: Response, next: Next
   });
 });
 
-Users.put('/:id', async function (req: Request, res: Response, next: NextFunction) {
+Users.put('/:id', jwtAuth, async function (req: Request, res: Response, next: NextFunction) {
   const response = await Controller.update(parseInt(req.params.id), req.body);
   return res.status(200).json(response);
 });
 
-Users.delete('/:id', async function (req: Request, res: Response, next: NextFunction) {
+Users.delete('/:id', jwtAuth, async function (req: Request, res: Response, next: NextFunction) {
   const response = await Controller.deleteById(parseInt(req.params.id));
   return res.status(200).json(response);
 });
 
 Users.post('/sign_in', async function (req: Request, res: Response, next: NextFunction) {
   const response = await Controller.handleLogin(req.body);
+  if(response.data) {
+    const payload = { check: true };
+    const JWT_HASH = process.env.JWT_HASH || '';
+    const token = jwt.sign(payload, JWT_HASH);
+    response.data = token;
+  }
   return res.status(200).json(response);
 });
