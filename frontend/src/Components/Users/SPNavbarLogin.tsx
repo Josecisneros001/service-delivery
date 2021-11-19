@@ -4,11 +4,11 @@ import Navbar from '../General/Navbar';
 const navigation = {
   brand: { name: 'Service Delivery', to: '/' },
   links: [
-    { name: 'Are you a service provider? click here', to: '/service-provider/login' },
+    { name: 'User login? click here', to: '/users/login' },
   ]
 };
 
-const UsersNavbarLogin = () => {
+const SPNavbarLogin = () => {
     const { brand, links } = navigation;
 
     return (
@@ -16,4 +16,4 @@ const UsersNavbarLogin = () => {
     );
 }
 
-export default UsersNavbarLogin;
+export default SPNavbarLogin;
