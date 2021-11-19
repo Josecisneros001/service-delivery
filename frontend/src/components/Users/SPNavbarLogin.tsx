@@ -1,19 +1,15 @@
-import React from 'react';
-import Navbar from '../General/Navbar';
+import React from "react";
+import Navbar from "../General/Navbar";
 
 const navigation = {
-  brand: { name: 'Service Delivery', to: '/' },
-  links: [
-    { name: 'User login? click here', to: '/users/login' },
-  ]
+  brand: { name: "Service Delivery", to: "/" },
+  links: [{ name: "User login? click here", to: "/users/login" }],
 };
 
 const SPNavbarLogin = () => {
-    const { brand, links } = navigation;
+  const { brand, links } = navigation;
 
-    return (
-      <Navbar brand={brand} links={links} />
-    );
-}
+  return <Navbar brand={brand} links={links} />;
+};
 
 export default SPNavbarLogin;
