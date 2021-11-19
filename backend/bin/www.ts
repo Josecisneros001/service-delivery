@@ -23,6 +23,12 @@ const httpServer = http.createServer(app);
 
 
 /**
+ * Socket Implementation with HTTP SERVER
+*/
+import { SocketIo } from './../helpers/SocketIo';
+SocketIo.getInstance(httpServer);
+
+/**
  * Listen on provided port, on all network interfaces.
  */
 

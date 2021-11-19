@@ -1,22 +1,29 @@
 export {};
 import type { CustomResponse } from "../interfaces/CustomResponse";
-import type { ServiceCategories as Model } from "../models/ServiceCategories";
+import type { ChatMessages as Model } from "../models/ChatMessages";
 import { failResponse, successReponse } from  '../scripts/response';
 import { executeQuery } from '../db/mysql';
-import { buildWhereClause, buildInsertInto } from '../scripts/buildQueryHelpers'
+import { buildWhereClause, buildInsertInto, checkIfExists } from '../scripts/buildQueryHelpers'
 
-const dbTableName = "service_categories";
+const dbTableName = "chat_message";
 
-export const ServiceCategories = {
+export const ChatMessages = {
     /**
      * Function that creates a record.
      */
     create: async function (params: Model): Promise<CustomResponse> {
-        const fields = ["name", "description"];
+        const fields = ["user_sender_id", "user_receiver_id", "message", "attachment_url"];
+        const optional = [false, false, true, true];
         const timestamp = new Date().toISOString();
-        const query = buildInsertInto(params, dbTableName, fields, timestamp);
+        const query = buildInsertInto(params, dbTableName, fields, timestamp, optional);
         if (query.length == 0) {
             return failResponse("Missing Parameters", false);
+        }
+        const checkIfExistsFields = ["user_sender_id", "user_receiver_id"];
+        const checkIfExistsControllers = ["Users", "Users"];
+        const checkIfExistsResponse = await checkIfExists(checkIfExistsFields, checkIfExistsControllers, params, optional);
+        if(checkIfExistsResponse.status != 200) {
+            return checkIfExistsResponse;
         }
         const result = await executeQuery(query);
         if (result.status == 200) {
@@ -30,15 +37,26 @@ export const ServiceCategories = {
      * Function that get list of records.
      */
     getAll: async function (filters: Model): Promise<CustomResponse> {
-        const params = ["id"];
-        const dbRelations = [`${dbTableName}.id`];
-        const types = ["number"];
-        const whereClause = buildWhereClause(filters, params, dbRelations, types);
-        const query = `SELECT * from ${dbTableName} ${whereClause}`;
+        const params = ["id", "user_sender_id", "user_receiver_id"];
+        const dbRelations = [`${dbTableName}.id`, `${dbTableName}.user_id`, `${dbTableName}.service_id`];
+        const types = ["number", "number", "number"];
+        const conditions = [];
+        if (filters["user_first_id"]) {
+            conditions.push(`(user_sender_id = ${filters["user_first_id"]} OR user_receiver_id = ${filters["user_first_id"]})`);
+        }
+        if (filters["user_second_id"]) {
+            conditions.push(`(user_sender_id = ${filters["user_second_id"]} OR user_receiver_id = ${filters["user_second_id"]})`);
+        }
+        const whereClause = buildWhereClause(filters, params, dbRelations, types, conditions);
+        let limitStatement = '';
+        if (filters["offset"] && filters["limit"]) {
+            limitStatement = `LIMIT ${filters["limit"]} OFFSET ${filters["offset"]}`;
+        }
+        const query = `SELECT * from ${dbTableName} ${whereClause} ${limitStatement}`;
         return executeQuery(query);
     },
     /**
-     * Function that get a record by id.
+     * Function that get a record by id if exists.
      */
     getById: async function (id: number): Promise<CustomResponse> {
         if (!id) {

@@ -29,10 +29,3 @@
   background-color: #4caf50;
   color: white;
 }
-
-.line {
-  width: 350px;
-  height: 1px;
-  border-bottom: 1px solid black;
-  align-items: center;
-}
