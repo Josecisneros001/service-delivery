@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Navbar from '../components/ServiceProviders/ServiceProviderNavbar';
 import CreateNewService from '../components/ServiceProviders/CreateNewService';
 import SPLogin from '../components/ServiceProviderlogin/SPLogin';
 
