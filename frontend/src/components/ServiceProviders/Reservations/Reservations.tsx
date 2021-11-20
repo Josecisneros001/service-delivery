@@ -38,6 +38,7 @@ const Cards = () => {
       {reservations.map((reservation) => {
         return (
           <Card 
+            key={reservation.id}
             className="reservation-container p-2.5 my-3"
             title={reservation.title}
             subtitle={reservation.category}
