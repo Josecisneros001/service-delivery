@@ -7,10 +7,14 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
+import { Appointments as AppointmentsRouter } from './routes/Appointments';
+import { Reviews as ReviewsRouter } from './routes/Reviews';
 import { ServiceCategories as ServiceCategoriesRouter } from './routes/ServiceCategories';
 import { Services as ServicesRouter } from './routes/Services';
 import { ServicePhotos as ServicesPhotosRouter } from './routes/ServicePhotos';
 import { Users as UsersRouter } from './routes/Users';
+import { WorkHours as WorkHoursRouter } from './routes/WorkHours';
+import { ChatMessages as ChatMessagesRouter } from './routes/ChatMessages';
 
 const router = express.Router();
 
@@ -29,10 +33,14 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/api/v1/appointments', AppointmentsRouter);
+app.use('/api/v1/reviews', ReviewsRouter);
 app.use('/api/v1/services', ServicesRouter);
 app.use('/api/v1/service_photos', ServicesPhotosRouter);
 app.use('/api/v1/service_categories', ServiceCategoriesRouter);
 app.use('/api/v1/users', UsersRouter);
+app.use('/api/v1/work_hours', WorkHoursRouter);
+app.use('/api/v1/chat_messages', ChatMessagesRouter);
 app.use('/files', express.static('files'));
 
 app.use(function (_req: Request, _res: Response, next: NextFunction) {

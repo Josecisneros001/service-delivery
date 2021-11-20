@@ -12,7 +12,7 @@ import http from 'http';
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(process.env.PORT || '3001');
 app.set('port', port);
 
 /**
@@ -21,6 +21,12 @@ app.set('port', port);
 
 const httpServer = http.createServer(app);
 
+
+/**
+ * Socket Implementation with HTTP SERVER
+*/
+import { SocketIo } from './../helpers/SocketIo';
+SocketIo.getInstance(httpServer);
 
 /**
  * Listen on provided port, on all network interfaces.
