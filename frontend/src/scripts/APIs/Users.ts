@@ -9,7 +9,7 @@ export const Users = {
   },
   get: async (is_service_provider: boolean | null) => {
     const urlParams = {
-      "is_service_provider": is_service_provider
+      "is_service_provider": is_service_provider ? 1 : 0,
     };
     const queryString=`users/?${getUrlParams(urlParams)}`;
     const methodValue='GET';
@@ -33,11 +33,9 @@ export const Users = {
     const methodValue='PUT';
     return await doFetch(queryString, methodValue, params);
   },
-  files: async () => {
-    // TODO: FORM-DATA
-    const queryString=`users/`;
+  files: async (id: number, params: FormData) => {
+    const queryString=`users/${id}`;
     const methodValue='POST';
-    const params=null;
     return await doFetch(queryString, methodValue, params);
   },
   login: async (email: string, password: string) => {

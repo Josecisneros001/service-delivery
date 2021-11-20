@@ -2,9 +2,12 @@ import type { ChatMessages as Model } from '../../Interfaces/models/ChatMessages
 import { doFetch, getUrlParams } from '../APIs';
 
 export const ChatMessages = {
-  create: async (params: Model) => {
-		// TODO: FORM-DATA
-    const queryString=`chat_messages/`;
+  create: async (user_sender_id: number, user_receiver_id: number, params: FormData) => {
+    const urlParams = {
+      "user_sender_id": user_sender_id,
+			"user_receiver_id": user_receiver_id,
+    };
+    const queryString=`chat_messages/?${getUrlParams(urlParams)}`;
     const methodValue='POST';
     return await doFetch(queryString, methodValue, params);
   },

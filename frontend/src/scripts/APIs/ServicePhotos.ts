@@ -2,9 +2,11 @@ import type { ServicePhotos as Model } from '../../Interfaces/models/ServicePhot
 import { doFetch, getUrlParams } from '../APIs';
 
 export const ServicePhotos = {
-  create: async (params: Model) => {
-    // TODO: FORM-DATA
-    const queryString=`service_photos/`;
+  create: async (service_id: number, params: FormData) => {
+    const urlParams = {
+      "service_id": service_id
+    };
+    const queryString=`service_photos/?${getUrlParams(urlParams)}`;
     const methodValue='POST';
     return await doFetch(queryString, methodValue, params);
   },
