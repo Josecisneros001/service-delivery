@@ -22,10 +22,10 @@ const handleParams = (params: any) => {
   return JSON.stringify(params);
 };
 
-export const doFetch = async (queryString: string,methodValue: string, params: any) => {
+export const doFetch = async (queryString: string,methodValue: string, params: any, tokenRequired = true) => {
   const USER_TOKEN = typeof cookie.load('userToken') === 'undefined' ? '' : cookie.load('userToken');
   
-  if (!BACK_AVAILABLE || !USER_TOKEN) {
+  if (!BACK_AVAILABLE || (!USER_TOKEN && tokenRequired) ) {
     return {
       status:false,
       msg:'Backend not Available.',
@@ -48,41 +48,6 @@ export const doFetch = async (queryString: string,methodValue: string, params: a
   }).then((responseData) => {
     if (!responseData) {
       return {};
-    } else {
-      return responseData;
-    }
-  });
-};
-
-export const doLoginFetch = async (queryString:string, methodValue: string, params:any) => {
-  const defaultData = false;
-  if (!BACK_AVAILABLE) {
-    return {
-      status:false,
-      msg:'Backend not Available.',
-      data:defaultData
-    };
-  }
-
-  return fetch(BACK_HOST_NAME + queryString, {
-    method: methodValue,
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(params)
-  }).then((response) => {
-      if (response.status !== 200) {
-        return false;
-      } else {
-        return response.json();
-      }
-  }).then((responseData) => {
-    if (!responseData) {
-      return {
-        status:false,
-        msg:'Failed.',
-        data:defaultData
-      };
     } else {
       return responseData;
     }

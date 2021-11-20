@@ -1,11 +1,11 @@
 import type { Users as Model } from '../../Interfaces/models/Users';
-import { doFetch, getUrlParams, doLoginFetch } from '../APIs';
+import { doFetch, getUrlParams } from '../APIs';
 
 export const Users = {
   create: async (params: Model) => {
     const queryString=`users/`;
     const methodValue='POST';
-    return await doFetch(queryString, methodValue, params);
+    return await doFetch(queryString, methodValue, params, false);
   },
   get: async (is_service_provider: boolean | null) => {
     const urlParams = {
@@ -45,6 +45,6 @@ export const Users = {
       "email":email,
       "password":password
     }
-    return await doLoginFetch(queryString, methodValue, params);
+    return await doFetch(queryString, methodValue, params, false);
   }
 };
