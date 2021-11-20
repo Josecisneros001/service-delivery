@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Navbar from '../components/ServiceProviders/ServiceProviderNavbar';
 import CreateNewService from '../components/ServiceProviders/CreateNewService';
-import Test from '../components/ServiceProviders/Cards/Cards';
+import Reservations from '../components/ServiceProviders/Reservations/Reservations';
 
 export default class ServiceProvider extends Component {
 
@@ -14,7 +14,7 @@ export default class ServiceProvider extends Component {
         {/* TODO: Handle all ServiceProvider Components */}
         <Routes>
           <Route path="/create-service" element={<CreateNewService/>} />
-          <Route path="/card" element={<Test/>} />
+          <Route path="/reservations" element={<Reservations/>} />
         </Routes>
       </div>
     );
