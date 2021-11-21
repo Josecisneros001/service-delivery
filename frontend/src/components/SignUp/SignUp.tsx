@@ -199,7 +199,7 @@ class SignUp extends Component<{is_service_provider: boolean}, SignUpState> {
                             <div className="w-1/4"/>
                             <div className="w-1/3"/>
                         </div>
-                        <div className="items-center">
+                        <div className="flex justify-center">
                             <button type="submit" className="button button1">Confirm</button>
                         </div>
                         </form>
