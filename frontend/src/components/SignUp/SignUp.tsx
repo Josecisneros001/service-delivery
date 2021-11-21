@@ -200,7 +200,7 @@ class SignUp extends Component<{is_service_provider: boolean}, UserSignUp> {
                             <div className="w-1/3"/>
                         </div>
                         <div className="items-center">
-                            <button type="submit" className="button button1">Confirm</button>
+                            <button type="submit" className="button button2">Confirm</button>
                         </div>
                         </form>
                     </div>
