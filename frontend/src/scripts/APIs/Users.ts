@@ -1,5 +1,7 @@
 import type { Users as Model } from '../../interfaces/models/Users';
-import { doFetch, getUrlParams } from '../APIs';
+import { doFetch, getUrlParams, getCurrentUser } from '../APIs';
+
+const USER_ID = getCurrentUser();
 
 export const Users = {
   create: async (params: Model) => {
@@ -16,24 +18,24 @@ export const Users = {
     const params=null;
     return await doFetch(queryString, methodValue, params);
   },
-  getById: async (id: number) => {
+  getById: async (id = USER_ID) => {
     const queryString=`users/${id}`;
     const methodValue='GET';
     const params=null;
     return await doFetch(queryString, methodValue, params);
   },
-  destroy: async (id: number) => {
+  destroy: async (id = USER_ID) => {
     const queryString=`users/${id}`;
     const methodValue='DELETE';
     const params=null;
     return await doFetch(queryString, methodValue, params);
   },
-  update: async (id: number, params: Model) => {
+  update: async (params: Model, id = USER_ID) => {
     const queryString=`users/${id}`;
     const methodValue='PUT';
     return await doFetch(queryString, methodValue, params);
   },
-  files: async (id: number, params: FormData) => {
+  files: async (params: FormData, id = USER_ID) => {
     const queryString=`users/${id}`;
     const methodValue='POST';
     return await doFetch(queryString, methodValue, params);

@@ -94,7 +94,7 @@ Users.post('/sign_in', async function (req: Request, res: Response, next: NextFu
     const payload = { check: true };
     const JWT_HASH = process.env.JWT_HASH || '';
     const token = jwt.sign(payload, JWT_HASH);
-    response.data = token;
+    response.data.token = token;
   }
   return res.status(200).json(response);
 });

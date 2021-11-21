@@ -3,8 +3,25 @@ import cookie from 'react-cookies';
 const BACK_AVAILABLE = ( process.env.REACT_APP_BACK_AVAILABLE === 'true' ? true : false ); 
 const BACK_HOST_NAME = process.env.REACT_APP_BACK_API_HOST_NAME || 'http://localhost:3001/api/v1/';
 
-export const saveUserToken = (userToken: string) => {
+export const handleLogInCookies = (userId: string, userToken: string) => {
+  cookie.save('userId', userId, { path: '/' });
   cookie.save('userToken', userToken, { path: '/' });
+};
+
+export const handleLogOutCookies = () => {
+  cookie.remove('userId', { path: '/' });
+  cookie.remove('userToken', { path: '/' });
+};
+
+export const isAuth = () : boolean => {
+  const USER_TOKEN = typeof cookie.load('userToken') === 'undefined' ? '' : cookie.load('userToken');
+  const USER_ID = typeof cookie.load('userId') === 'undefined' ? '' : cookie.load('userId');
+  return USER_TOKEN && USER_ID;
+};
+
+export const getCurrentUser = () => {
+  const USER_ID = typeof cookie.load('userId') === 'undefined' ? '' : cookie.load('userId');
+  return parseInt(USER_ID);
 };
 
 export const getUrlParams = (params: any) => {
