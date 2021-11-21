@@ -10,7 +10,7 @@ export interface Users {
     profile_picture?: string,
     file_id?: string,
     file_proof_of_address?: string,
-    is_service_provider?: boolean,
+    is_service_provider?: number,
     registered_on?: string,
-    [key: string]: string | number | boolean | undefined
+    [key: string]: string | number | number | undefined
 };

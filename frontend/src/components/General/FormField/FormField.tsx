@@ -1,11 +1,10 @@
 import React from 'react';
-import FormFieldI from '../../../interfaces/UserSignUp/FormField';
+import FormFieldI from '../../../interfaces/SignUp/FormField';
 
 class FormField extends React.Component<FormFieldI,{ value: string },{}> {
     constructor(props: FormFieldI) {
         super(props);
         this.state = {value: ''};
-
         this.handleChange = this.handleChange.bind(this);
     }
 
@@ -14,14 +13,13 @@ class FormField extends React.Component<FormFieldI,{ value: string },{}> {
         this.props.onChange(event.target.value);
     }
 
-    handleSubmit(event: React.ChangeEvent<any>) {
-        //alert('A name was submitted: ' + this.state.value);
-        event.preventDefault();
+    orientationClass() {
+        return this.props.orientation === 'row' ? "flex-row" : "flex-col";
     }
 
     render() { 
         return (
-            <div onSubmit={this.handleSubmit} className="flex-1 flex flex-col text-2xl">
+            <div className={`flex-1 flex ${this.orientationClass()} text-2xl`}>
                 <div className="w-full text-left">
                     <label> {this.props.label} </label>
                 </div>
@@ -31,6 +29,7 @@ class FormField extends React.Component<FormFieldI,{ value: string },{}> {
                     value={this.state.value} 
                     onChange={this.handleChange}
                     placeholder={this.props.placeholder}
+                    autoComplete="nope"
                 />
             </div>
         );

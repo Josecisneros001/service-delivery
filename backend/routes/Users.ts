@@ -58,7 +58,7 @@ Users.post('/files/:id', jwtAuth, async function (req: Request, res: Response, n
       return res.status(200).json(failResponse("Server error, Try Again", false));
     }
     if (typeof req.files !== 'object') {
-      return res.status(200).json(failResponse("Bad Request, Try Again", false));
+      return res.status(200).json(failResponse("Bad Request, Missing Files, Try Again", false));
     }
     let filesObj = {} as {[key:string]: string};
     const files = req.files as {[fieldname: string]: Express.Multer.File[];};
