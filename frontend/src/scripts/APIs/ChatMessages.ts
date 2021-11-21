@@ -1,4 +1,4 @@
-import type { ChatMessages as Model } from '../../interfaces/models/ChatMessages';
+import type { ChatMessages as Model } from '../../Interfaces/models/ChatMessages';
 import { doFetch, getUrlParams } from '../APIs';
 
 export const ChatMessages = {

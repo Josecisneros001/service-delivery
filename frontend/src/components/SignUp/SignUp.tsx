@@ -1,14 +1,14 @@
 import { Component } from 'react';
 import './SignUp.css';
 import FormField from "../General/FormField/FormField";
-import SignUpState from '../../interfaces/SignUp/SignUpState'
+import UserSignUp from '../../Interfaces/SignUp/SignUpState';
 import { Users } from '../../scripts/APIs/Users';
-import { Users as UsersModel } from '../../interfaces/models/Users';
+import { Users as UsersModel } from '../../Interfaces/models/Users';
 import { Navigate } from 'react-router';
 import { handleLogInCookies, isAuth } from '../../scripts/APIs';
 import Snackbar from '../General/Snackbar';
 
-class SignUp extends Component<{is_service_provider: boolean}, SignUpState> {
+class SignUp extends Component<{is_service_provider: boolean}, UserSignUp> {
     constructor(props: {is_service_provider: boolean}) {
         super(props);
         this.state = {

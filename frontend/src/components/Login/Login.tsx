@@ -3,13 +3,13 @@ import "./Login.css";
 import UsersNavbarLogin from "../Users/UsersNavbarLogin";
 import ServiceProviderNavbarLogin from "../ServiceProviders/ServiceProviderNavbarLogin";
 import FormField from "../General/FormField/FormField";
-import LoginState from "../../interfaces/Login/LoginState";
+import UserLoginState from "../../Interfaces/Login/LoginState";
 import { Users } from "../../scripts/APIs/Users";
 import { handleLogInCookies, isAuth } from "../../scripts/APIs";
 import Snackbar from "../General/Snackbar";
 import { Navigate } from "react-router-dom";
 
-class Login extends Component<{is_service_provider: boolean},LoginState,{}> {
+class Login extends Component<{is_service_provider: boolean},UserLoginState,{}> {
   constructor(props: {is_service_provider: boolean}) {
     super(props);
     this.state = {

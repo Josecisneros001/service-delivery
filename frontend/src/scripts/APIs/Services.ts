@@ -1,4 +1,4 @@
-import type { Services as Model } from '../../interfaces/models/Services';
+import type { Services as Model } from '../../Interfaces/models/Services';
 import { doFetch, getUrlParams } from '../APIs';
 
 export const Services = {

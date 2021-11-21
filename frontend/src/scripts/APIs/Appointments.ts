@@ -1,4 +1,4 @@
-import type { Appointments as Model } from '../../interfaces/models/Appointments';
+import type { Appointments as Model } from '../../Interfaces/models/Appointments';
 import { doFetch, getUrlParams } from '../APIs';
 
 export const Appointments = {

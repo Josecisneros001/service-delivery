@@ -1,4 +1,4 @@
-import type { ServicePhotos as Model } from '../../interfaces/models/ServicePhotos';
+import type { ServicePhotos as Model } from '../../Interfaces/models/ServicePhotos';
 import { doFetch, getUrlParams } from '../APIs';
 
 export const ServicePhotos = {

@@ -1,4 +1,4 @@
-export default interface FormField {
+export default interface FormFieldI {
     label: string;
     placeholder?: string;
     onChange: Function;
