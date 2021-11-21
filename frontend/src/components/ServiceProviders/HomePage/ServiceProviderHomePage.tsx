@@ -1,11 +1,12 @@
-import React, { Component } from "react";
-import "../../../tailwindcss.css";
+import React from "react";
 import "./ServiceProviderHomePage.css";
 import Reservations from "../Reservations/Reservations";
+import ServiceProviderNavbar from "../ServiceProviderNavbar";
 
 const ServiceProviderHomePage = () => {
   return (
     <>
+      <ServiceProviderNavbar />
       <div className="coverPhoto">
         <div className="tagUsuario">
           <p>Bienvenido nombreUsuario !</p>
