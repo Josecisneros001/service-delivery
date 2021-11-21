@@ -1,6 +1,5 @@
 import React from 'react';
-import FormFieldI from '../../../Interfaces/UserSignUp/FormField';
-import './FormField.css'
+import FormFieldI from '../../../interfaces/SignUp/FormField';
 
 class FormField extends React.Component<FormFieldI,{ value: string },{}> {
     constructor(props: FormFieldI) {
@@ -14,9 +13,13 @@ class FormField extends React.Component<FormFieldI,{ value: string },{}> {
         this.props.onChange(event.target.value);
     }
 
+    orientationClass() {
+        return this.props.orientation === 'row' ? "flex-row" : "flex-col";
+    }
+
     render() { 
         return (
-            <>
+            <div className={`flex-1 flex ${this.orientationClass()} text-2xl`}>
                 <div className="w-full text-left">
                     <label> {this.props.label} </label>
                 </div>
@@ -26,8 +29,9 @@ class FormField extends React.Component<FormFieldI,{ value: string },{}> {
                     value={this.state.value} 
                     onChange={this.handleChange}
                     placeholder={this.props.placeholder}
+                    autoComplete="nope"
                 />
-            </>
+            </div>
         );
     }
 }

@@ -1,4 +1,4 @@
-import type { Users as Model } from '../../Interfaces/models/Users';
+import type { Users as Model } from '../../interfaces/models/Users';
 import { doFetch, getUrlParams } from '../APIs';
 
 export const Users = {
@@ -7,9 +7,9 @@ export const Users = {
     const methodValue='POST';
     return await doFetch(queryString, methodValue, params, false);
   },
-  get: async (is_service_provider: boolean | null) => {
+  get: async (is_service_provider: number | null) => {
     const urlParams = {
-      "is_service_provider": is_service_provider ? 1 : 0,
+      "is_service_provider": is_service_provider,
     };
     const queryString=`users/?${getUrlParams(urlParams)}`;
     const methodValue='GET';
@@ -28,22 +28,23 @@ export const Users = {
     const params=null;
     return await doFetch(queryString, methodValue, params);
   },
-  update: async (id: number, params: Model) => {
+  update: async (params: Model, id: number) => {
     const queryString=`users/${id}`;
     const methodValue='PUT';
     return await doFetch(queryString, methodValue, params);
   },
-  files: async (id: number, params: FormData) => {
-    const queryString=`users/${id}`;
+  files: async (params: FormData, id: number) => {
+    const queryString=`users/files/${id}`;
     const methodValue='POST';
     return await doFetch(queryString, methodValue, params);
   },
-  login: async (email: string, password: string) => {
+  login: async (email: string, password: string, is_service_provider: number) => {
     const queryString='users/sign_in';
     const methodValue='POST';
     const params={
       "email":email,
-      "password":password
+      "password":password,
+      "is_service_provider": is_service_provider
     }
     return await doFetch(queryString, methodValue, params, false);
   }

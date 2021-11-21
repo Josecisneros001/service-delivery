@@ -99,7 +99,8 @@ export const Users = {
         if (userRequest.status == 200 && userRequest.data.length > 0) {
             const userData = userRequest.data[0] as Model;
             if (userData.password && await passwordMatch(params.password, userData.password)){
-                return successReponse("Success", true);
+                delete userData.password;
+                return successReponse("Success", userData);
             } else {
                 return failResponse("Authentication Failed", false);
             }

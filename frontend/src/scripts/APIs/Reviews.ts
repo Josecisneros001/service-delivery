@@ -1,4 +1,4 @@
-import type { Reviews as Model } from '../../Interfaces/models/Reviews';
+import type { Reviews as Model } from '../../interfaces/models/Reviews';
 import { doFetch, getUrlParams } from '../APIs';
 
 export const Reviews = {
