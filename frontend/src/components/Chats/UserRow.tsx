@@ -19,8 +19,7 @@ class UsersRow extends React.Component<UsersRowProps, UsersRowState,{}> {
             return '';
         }
         const now = new Date();
-        const messageTimesamp = new Date(this.props.lastMessage.registered_on || '');
-
+        const messageTimesamp = new Date(this.props.lastMessage.registered_on + 'Z');
         const diffMs = (now.getTime() - messageTimesamp.getTime());
         const diffDays = Math.floor(diffMs / 86400000);
         const diffHrs = Math.floor((diffMs) / 3600000);
@@ -61,7 +60,15 @@ class UsersRow extends React.Component<UsersRowProps, UsersRowState,{}> {
                         <span className="block ml-2 font-semibold text-base text-gray-600 ">{this.props.user.first_name} {this.props.user.last_name}</span>
                         <span className="block ml-2 text-sm text-gray-600">{this.getDeltaTime()}</span>
                     </div>
-                    <span className="block ml-2 text-sm text-gray-600">{this.props.lastMessage?.message || ''}</span>
+                    <span className="flex flex-row ml-2 text-sm text-gray-600">
+                        {this.props.lastMessage?.message || ''}
+                        {this.props.lastMessage?.attachment_url?
+                            <svg className="text-gray-400 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                            </svg>
+                            : <></>
+                        }
+                    </span>
                 </div>
             </div>
         );

@@ -1,8 +1,8 @@
 import cookie from 'react-cookies';
 
-const BACK_AVAILABLE = ( process.env.REACT_APP_BACK_AVAILABLE === 'true' ? true : false ); 
-const BACK_HOST_NAME = process.env.REACT_APP_BACK_API_HOST_NAME || 'http://localhost:3001/';
-const BACK_ENDPOINT = BACK_HOST_NAME + "api/v1/";
+export const BACK_AVAILABLE = ( process.env.REACT_APP_BACK_AVAILABLE === 'true' ? true : false ); 
+export const BACK_HOST_NAME = process.env.REACT_APP_BACK_API_HOST_NAME || 'http://localhost:3001/';
+export const BACK_ENDPOINT = BACK_HOST_NAME + "api/v1/";
 
 export const getFileUrl = (filePath?: string) => {
   if (!filePath) {
@@ -80,8 +80,10 @@ const handleHeaders = (USER_TOKEN: string, params: any) => {
 
 export const doFetch = async (queryString: string,methodValue: string, params: any, tokenRequired = true) => {
   const USER_TOKEN = typeof cookie.load('userToken') === 'undefined' ? '' : cookie.load('userToken');
-  
-  if (!BACK_AVAILABLE || (!USER_TOKEN && tokenRequired) ) {
+  const SP_TOKEN = typeof cookie.load('SPToken') === 'undefined' ? '' : cookie.load('SPToken');
+  const TOKEN = USER_TOKEN ? USER_TOKEN : SP_TOKEN;
+
+  if (!BACK_AVAILABLE || (!TOKEN && tokenRequired) ) {
     return {
       status:false,
       msg:'Backend not Available.',
@@ -90,7 +92,7 @@ export const doFetch = async (queryString: string,methodValue: string, params: a
   }
   return fetch(BACK_ENDPOINT + queryString, {
     method: methodValue,
-    headers: handleHeaders(USER_TOKEN, params),
+    headers: handleHeaders(TOKEN, params),
     body: handleParams(params)
   }).then((response) => {
       if (response.status !== 200) {

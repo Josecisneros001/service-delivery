@@ -10,10 +10,11 @@ export const ChatMessages = {
     const methodValue='POST';
     return await doFetch(queryString, methodValue, params);
   },
-  get: async (user_first_id: number | null, user_second_id: number | null,
-		user_sender_id: number | null, user_receiver_id: number | null,
-		offset: number | null, limit: number | null) => {
+  get: async (lastMessages: boolean | null, user_first_id: number | null = null, user_second_id: number | null = null,
+		user_sender_id: number | null = null, user_receiver_id: number | null = null,
+		offset: number | null = null, limit: number | null = null) => {
     const urlParams = {
+      "lastMessages": lastMessages,
       "user_first_id": user_first_id,
 			"user_second_id": user_second_id,
 			"user_sender_id": user_sender_id,
