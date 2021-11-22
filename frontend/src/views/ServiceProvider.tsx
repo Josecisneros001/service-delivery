@@ -15,6 +15,7 @@ export default class ServiceProvider extends Component {
         <Routes>
           <Route path="/login" element={<Login is_service_provider={true}/>}/>
           <Route path="/signup" element={<SignUp is_service_provider={true}/>}/>
+          <Route path="/homepage" element={<ServiceProviderHomePage/>}/>
           <Route
             path="/upload-files"
             element={<PrivateRoute is_service_provider={true} redirectTo="login"><UploadFilesForm is_service_provider={true}/></PrivateRoute>}
