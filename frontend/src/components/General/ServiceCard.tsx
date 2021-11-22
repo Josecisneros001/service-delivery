@@ -13,7 +13,7 @@ function ServiceCard(props: {
         <div className="flex flex-row-reverse px-2 underline">
           <button>Edit</button>
         </div>
-        <div className="text-2xl">
+        <div className="text-3xl pb-3">
           <span> {props.title} </span>
         </div>
         <div className="w-full rounded-2xl bg-white">{props.children}</div>
