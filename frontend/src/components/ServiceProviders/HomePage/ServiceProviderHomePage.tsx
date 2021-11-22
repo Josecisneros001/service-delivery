@@ -17,13 +17,7 @@ const ServiceProviderHomePage = () => {
         </div>
       </div>
       <br></br>
-      <h1 className="text-3xl">Upcoming Reservations</h1>
-      <div className="grid justify-items-end">
-        <div className="hover:bg-gray-300 rounded-full h-10 w-40 flex items-center justify-center border-2 border-gray-300 m-2">
-          <button>Add service</button>
-        </div>
-      </div>
-
+      <h1 className="text-3xl py-4">Upcoming Reservations</h1>
       <Reservations />
     </>
   );
