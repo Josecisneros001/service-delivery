@@ -11,10 +11,10 @@ function ServiceCard(props: {
     >
       <div className="flex flex-col">
         <div className="flex flex-row-reverse px-2 underline">
-          <button className="">Edit</button>
+          <button>Edit</button>
         </div>
         <div className="text-2xl">
-          <span> {props.title} </span>-<span> {props.subtitle} </span>
+          <span> {props.title} </span>
         </div>
         <div className="w-full rounded-2xl bg-white">{props.children}</div>
       </div>

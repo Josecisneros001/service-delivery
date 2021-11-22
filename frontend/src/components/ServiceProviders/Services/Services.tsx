@@ -6,27 +6,24 @@ import ServiceCard from "../../General/ServiceCard";
 const DummyReservations = [
   {
     id: "1",
-    title: "Technician",
-    category: "Electricity",
-    desc: "A.J Cook",
+    title: "Tutoring",
+    desc: "I will teach any introductory maths course such as calculus I & II",
     price: "500-1000",
-    loc: "9:00 am Privada BocaNegra 602"
+    loc: "Monterrey, NL"
   },
   {
     id: "2",
     title: "Technician",
-    category: "Electricity",
-    desc: "A.J Cook",
+    desc: "Electricity maintenance and monitoring",
     price: "500-1000",
-    loc: "9:00 am Privada BocaNegra 602"
+    loc: "Monterrey, NL"
   },
   {
     id: "3",
-    title: "Technician",
-    category: "Electricity",
-    desc: "A.J Cook",
+    title: "Plumber",
+    desc: "Everything plumbing such as bathrooms, sinks, garden, etc",
     price: "500-1000",
-    loc: "9:00 am Privada BocaNegra 602"
+    loc: "Monterrey, NL"
   },
 ];
 
@@ -41,7 +38,6 @@ const _Services = () => {
             key={reservation.id}
             className="reservation-container p-2.5 my-3"
             title={reservation.title}
-            subtitle={reservation.category}
           >
               <Service
                 desc={reservation.desc}

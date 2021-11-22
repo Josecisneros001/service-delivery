@@ -7,10 +7,12 @@ const Service = (props: {
 }) => {
   return (
     <div className="flex flex-row items-center p-1.5 justify-between">
-      <div className="flex flex-row items-center">
-        <div className="text-lg p-5">{props.desc}</div>
+      <div className="flex flex-col">
+        <div className="text-lg p-2">{props.desc}</div>
+        <div className="text-lg p-2">$ {props.price}</div>
+        <div className="text-lg p-2">{props.loc}</div>
       </div>
-      <div className="text-lg">{props.loc}</div>
+      
     </div>
   );
 };
