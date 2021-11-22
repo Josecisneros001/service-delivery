@@ -32,7 +32,6 @@ export default class ServiceProvider extends Component {
             path="/"
             element={<PrivateRoute is_service_provider={true} redirectTo="login"><ServiceProviderHomePage/></PrivateRoute>}
           />
-          {/* TODO: Change * to Home View */}
           <Route
             path="*"
             element={<PrivateRoute is_service_provider={true} redirectTo="login"><ServiceProviderHomePage/></PrivateRoute>}
