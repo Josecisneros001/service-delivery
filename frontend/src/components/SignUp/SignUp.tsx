@@ -116,6 +116,7 @@ class SignUp extends Component<{is_service_provider: boolean}, SignUpState> {
             this.setState({snackBarMsg: "Phone and Alt Phone need to be different.", showAlert: true});
             return false;
         }
+        // TODO: EMAIL NO EXISTA.
         return true;
     }
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import Chats from '../components/Chats/Chats';
 import Login from '../components/Login/Login';
 import CreateNewService from '../components/ServiceProviders/CreateNewService';
 import Reservations from '../components/ServiceProviders/Reservations/Reservations';
@@ -19,6 +20,10 @@ export default class ServiceProvider extends Component {
           <Route
             path="/upload-files"
             element={<PrivateRoute is_service_provider={true} redirectTo="login"><UploadFilesForm is_service_provider={true}/></PrivateRoute>}
+          />
+          <Route
+            path="/chats"
+            element={<PrivateRoute is_service_provider={true} redirectTo="login"><Chats is_service_provider={true}/></PrivateRoute>}
           />
           <Route
             path="/create-service"
