@@ -1,4 +1,4 @@
-import type { Users as Model } from '../../Interfaces/models/Users';
+import type { Users as Model } from '../../interfaces/models/Users';
 import { doFetch, getUrlParams } from '../APIs';
 
 export const Users = {

@@ -1,5 +1,5 @@
-import type { WorkHours as Model } from '../../Interfaces/models/WorkHours';
-import type { WorkHoursMultiple as MultipleModel } from '../../Interfaces/models/WorkHours';
+import type { WorkHours as Model } from '../../interfaces/models/WorkHours';
+import type { WorkHoursMultiple as MultipleModel } from '../../interfaces/models/WorkHours';
 import { doFetch, getUrlParams } from '../APIs';
 
 export const WorkHours = {

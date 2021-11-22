@@ -3,7 +3,7 @@ import "./Login.css";
 import UsersNavbarLogin from "../Users/UsersNavbarLogin";
 import ServiceProviderNavbarLogin from "../ServiceProviders/ServiceProviderNavbarLogin";
 import FormField from "../General/FormField/FormField";
-import UserLoginState from "../../Interfaces/Login/LoginState";
+import UserLoginState from "../../interfaces/Login/LoginState";
 import { Users } from "../../scripts/APIs/Users";
 import { handleLogInCookies, isAuth } from "../../scripts/APIs";
 import Snackbar from "../General/Snackbar";

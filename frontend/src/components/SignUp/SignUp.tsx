@@ -1,9 +1,9 @@
 import { Component } from 'react';
 import './SignUp.css';
 import FormField from "../General/FormField/FormField";
-import UserSignUp from '../../Interfaces/SignUp/SignUpState';
+import UserSignUp from '../../interfaces/SignUp/SignUpState';
 import { Users } from '../../scripts/APIs/Users';
-import { Users as UsersModel } from '../../Interfaces/models/Users';
+import { Users as UsersModel } from '../../interfaces/models/Users';
 import { Navigate } from 'react-router';
 import { handleLogInCookies, isAuth } from '../../scripts/APIs';
 import Snackbar from '../General/Snackbar';

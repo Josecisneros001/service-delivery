@@ -9,7 +9,7 @@ import UploadFilesForm from '../components/SignUp/UploadFilesForm/UploadFilesFor
 import PrivateRoute from '../scripts/PrivateRoute';
 
 export default class ServiceProvider extends Component {  
-  public render() {
+  public render() { 
     return (
       <div className="h-screen">
         <Routes>

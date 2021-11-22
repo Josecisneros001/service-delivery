@@ -1,5 +1,5 @@
 import React from 'react';
-import FormFieldI from '../../../Interfaces/SignUp/FormField';
+import FormFieldI from '../../../interfaces/SignUp/FormField';
 
 class FormField extends React.Component<FormFieldI,{ value: string },{}> {
     constructor(props: FormFieldI) {
