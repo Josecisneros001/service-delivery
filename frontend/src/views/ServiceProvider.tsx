@@ -7,6 +7,7 @@ import ServiceProviderHomePage from '../components/ServiceProviders/HomePage/Ser
 import SignUp from '../components/SignUp/SignUp';
 import UploadFilesForm from '../components/SignUp/UploadFilesForm/UploadFilesForm';
 import PrivateRoute from '../scripts/PrivateRoute';
+import EditProfile from '../components/ServiceProviders/EditProfile/EditProfile';
 
 export default class ServiceProvider extends Component {  
   public render() { 
@@ -16,6 +17,7 @@ export default class ServiceProvider extends Component {
           <Route path="/login" element={<Login is_service_provider={true}/>}/>
           <Route path="/signup" element={<SignUp is_service_provider={true}/>}/>
           <Route path="/homepage" element={<ServiceProviderHomePage/>}/>
+          <Route path="/edit" element={<EditProfile is_service_provider={true}/>}/>
           <Route
             path="/upload-files"
             element={<PrivateRoute is_service_provider={true} redirectTo="login"><UploadFilesForm is_service_provider={true}/></PrivateRoute>}
