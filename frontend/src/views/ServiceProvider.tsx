@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Login from '../components/Login/Login';
-import CreateNewService from '../components/ServiceProviders/CreateNewService';
+import MyServices from '../components/ServiceProviders/MyServices/MyServices';
 import Reservations from '../components/ServiceProviders/Reservations/Reservations';
 import ServiceProviderHomePage from '../components/ServiceProviders/HomePage/ServiceProviderHomePage';
 import SignUp from '../components/SignUp/SignUp';
@@ -15,14 +15,13 @@ export default class ServiceProvider extends Component {
         <Routes>
           <Route path="/login" element={<Login is_service_provider={true}/>}/>
           <Route path="/signup" element={<SignUp is_service_provider={true}/>}/>
-          <Route path="/homepage" element={<ServiceProviderHomePage/>}/>
           <Route
             path="/upload-files"
             element={<PrivateRoute is_service_provider={true} redirectTo="login"><UploadFilesForm is_service_provider={true}/></PrivateRoute>}
           />
           <Route
-            path="/create-service"
-            element={<PrivateRoute is_service_provider={true} redirectTo="login"><CreateNewService/></PrivateRoute>}
+            path="/my-services"
+            element={<PrivateRoute is_service_provider={true} redirectTo="login"><MyServices/></PrivateRoute>}
           />
           <Route
             path="/reservations"
