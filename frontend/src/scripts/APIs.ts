@@ -1,7 +1,15 @@
 import cookie from 'react-cookies';
 
 const BACK_AVAILABLE = ( process.env.REACT_APP_BACK_AVAILABLE === 'true' ? true : false ); 
-const BACK_HOST_NAME = process.env.REACT_APP_BACK_API_HOST_NAME || 'http://localhost:3001/api/v1/';
+const BACK_HOST_NAME = process.env.REACT_APP_BACK_API_HOST_NAME || 'http://localhost:3001/';
+const BACK_ENDPOINT = BACK_HOST_NAME + "api/v1/";
+
+export const getFileUrl = (filePath?: string) => {
+  if (!filePath) {
+    return '';
+  }
+  return BACK_HOST_NAME + filePath;
+}
 
 export const handleLogInCookies = (userId: string, userToken: string, isServiceProvider: boolean) => {
   if (isServiceProvider) {
@@ -80,7 +88,7 @@ export const doFetch = async (queryString: string,methodValue: string, params: a
       data:{}
     };
   }
-  return fetch(BACK_HOST_NAME + queryString, {
+  return fetch(BACK_ENDPOINT + queryString, {
     method: methodValue,
     headers: handleHeaders(USER_TOKEN, params),
     body: handleParams(params)

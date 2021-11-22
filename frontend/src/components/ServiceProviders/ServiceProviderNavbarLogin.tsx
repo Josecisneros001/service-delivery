@@ -7,11 +7,11 @@ const navigation = {
   ]
 };
 
-const ServiceProviderNavbarLogin = () => {
+const ServiceProviderNavbarLogin = (props: { className?: string }) => {
     const { brand, links } = navigation;
 
     return (
-      <Navbar brand={brand} links={links} />
+      <Navbar className={props.className} brand={brand} links={links} />
     );
 }
 

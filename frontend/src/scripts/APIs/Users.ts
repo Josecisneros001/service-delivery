@@ -7,9 +7,10 @@ export const Users = {
     const methodValue='POST';
     return await doFetch(queryString, methodValue, params, false);
   },
-  get: async (is_service_provider: number | null) => {
+  get: async (is_service_provider: number | null, filter: string | null = null) => {
     const urlParams = {
       "is_service_provider": is_service_provider,
+      "filter": filter,
     };
     const queryString=`users/?${getUrlParams(urlParams)}`;
     const methodValue='GET';

@@ -4,6 +4,7 @@ import Login from '../components/Login/Login';
 import SignUp from '../components/SignUp/SignUp';
 import PrivateRoute from '../scripts/PrivateRoute';
 import UploadFilesForm from '../components/SignUp/UploadFilesForm/UploadFilesForm';
+import Chats from '../components/Chats/Chats';
 
 export default class Users extends Component {
 
@@ -16,6 +17,10 @@ export default class Users extends Component {
           <Route
             path="/upload-files"
             element={<PrivateRoute is_service_provider={false} redirectTo="login"><UploadFilesForm is_service_provider={false}/></PrivateRoute>}
+          />
+          <Route
+            path="/chats"
+            element={<PrivateRoute is_service_provider={false} redirectTo="login"><Chats is_service_provider={false}/></PrivateRoute>}
           />
           {/* TODO: Change * to Home View */}
           <Route
