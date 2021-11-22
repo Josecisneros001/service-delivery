@@ -1,7 +1,7 @@
 import { useRef, useState} from 'react';
-import UploadFile from '../../../interfaces/SignUp/UploadFile';
+import UploadFileI from '../../../interfaces/SignUp/UploadFile';
 
-export default function UploadID({label, id, name, onChange}:UploadFile){
+export default function UploadID({label, id, name, onChange}:UploadFileI){
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [file, setFile] = useState<File|null|undefined>();
     const [fileName, setFileName] = useState<any|null>();
