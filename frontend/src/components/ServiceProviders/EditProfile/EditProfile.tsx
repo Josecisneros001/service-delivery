@@ -91,43 +91,71 @@ class EditProfile extends Component<
     
     render() {
         return (
-            <div className="flex flex-c3/5 md:w-2/5 m-auto bg-gray-50 mt-16 shadow-lg text-center">
-                <form
+            <div className="coverPhoto">
+                <div className="flex flex-col w- 3/5 md:w-2/5 m-auto bg-blue-100 mt-16 shadow-lg text-center rounded-3xl py-9">
+                    <form
                     onSubmit={this.handleSubmit}
                     className="flex-1 flex flex-col text-2xl"
                     >
-                    <div className="w-3/5 m-auto">
-                    <FormField
-                        orientation="col"
-                        label="Email"
-                        onChange={this.handleEmail}
-                        placeholder="getemailusuario"
-                    />
-                    </div>
-
-                    <div className="w-3/5 m-auto">
+                        <div className="w-3/5 m-auto">
                         <FormField
                             orientation="col"
-                            label="Password"
-                            onChange={this.handlePassword}
+                            label="First Name"
+                            onChange={this.handleEmail}
+                            placeholder="getfirst"
                         />
-                    </div>
+                        </div>
 
-                    <div className="w-3/5 m-auto">
-                    <FormField
-                        orientation="col"
-                        label="Phone"
-                        onChange={this.handleEmail}
-                        placeholder="getphoneusuario"
-                    />
-                    </div>
+                        <div className="w-3/5 m-auto">
+                        <FormField
+                            orientation="col"
+                            label="Last Name"
+                            onChange={this.handleEmail}
+                            placeholder="getlast"
+                        />
+                        </div>
 
-                    <div className="items-center py-2">
-                        <button type="submit" className="button button1">
-                            Save
-                        </button>
-                    </div>
-                </form>
+                        <div className="w-3/5 m-auto">
+                        <FormField
+                            orientation="col"
+                            label="Email"
+                            onChange={this.handleEmail}
+                            placeholder="getemailusuario"
+                        />
+                        </div>
+
+                        <div className="w-3/5 m-auto">
+                            <FormField
+                                orientation="col"
+                                label="Password"
+                                onChange={this.handlePassword}
+                            />
+                        </div>
+
+                        <div className="w-3/5 m-auto">
+                        <FormField
+                            orientation="col"
+                            label="Phone"
+                            onChange={this.handleEmail}
+                            placeholder="getphoneusuario"
+                        />
+                        </div>
+
+
+                        <div className="w-3/5 m-auto">
+                            <label className="w-full text-left">Profile Picture</label>
+                            <input type="file" placeholder="" className="mt-2 mb-5 px-8 w-full border rounded py-2 text-base text-gray-700 focus:outline-none items-center bg-gray-100"/>
+                        </div>
+
+                        <div className="items-center py-2">
+                            <button type="submit" className="button button1">
+                                Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <br></br>
             </div>
         );
     }

@@ -1,0 +1,21 @@
+.cardProfile{
+    background-color:rgba(155,193,174);
+    width: fit-content;
+    height: fit-content;
+    border-radius: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.coverPhoto {
+    background-image: url("../../../images/garden.png");
+    background-size: 100%;
+    width: 100%;
+    height: 110px;
+    padding: 10px;
+    text-align: left;
+}
