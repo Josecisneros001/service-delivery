@@ -95,6 +95,14 @@ class RequestPage extends Component<{ is_service_provider: boolean },UserRequest
       });
     }
 
+    // checar cuales fechas no están disponibles
+    async getWorkHrs() {
+      const schedule = new AvailabilitySchedule('2021-11-22T00:00:00Z', '2023-11-24T00:00:00Z');
+      schedule.addAvailability('2021-11-22T00:00:00Z', '2023-11-24T00:00:00Z');
+      const startDate = this.state.workHoursInfo?.day 
+      //schedule.removeAvailability();
+    }
+
     formValidation = () => {
       const fields = ["address", "timestamp", "duration"];
       const fieldsName = ["Address", "Timestamp", "Duration"];
@@ -107,6 +115,7 @@ class RequestPage extends Component<{ is_service_provider: boolean },UserRequest
         }
       }
     }
+
 
     
 
