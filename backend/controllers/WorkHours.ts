@@ -7,6 +7,8 @@ import { buildWhereClause, buildInsertInto, checkIfExists } from '../scripts/bui
 
 const dbTableName = "work_hours";
 
+// TODO: change user_id -> service_id
+
 export const WorkHours = {
     /**
      * Function that creates a record.
