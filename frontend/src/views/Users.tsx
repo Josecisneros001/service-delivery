@@ -5,6 +5,7 @@ import SignUp from '../components/SignUp/SignUp';
 import PrivateRoute from '../scripts/PrivateRoute';
 import UploadFilesForm from '../components/SignUp/UploadFilesForm/UploadFilesForm';
 import Chats from '../components/Chats/Chats';
+import Home from '../components/Users/Home';
 
 export default class Users extends Component {
 
@@ -25,7 +26,7 @@ export default class Users extends Component {
           {/* TODO: Change * to Home View */}
           <Route
             path="*"
-            element={<PrivateRoute is_service_provider={false} redirectTo="login"><>Home</></PrivateRoute>}
+            element={<PrivateRoute is_service_provider={false} redirectTo="login"><Home /></PrivateRoute>}
           />
         </Routes>
       </div>
