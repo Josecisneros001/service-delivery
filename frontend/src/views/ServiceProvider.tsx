@@ -8,7 +8,7 @@ import ServiceProviderHomePage from '../components/ServiceProviders/HomePage/Ser
 import SignUp from '../components/SignUp/SignUp';
 import UploadFilesForm from '../components/SignUp/UploadFilesForm/UploadFilesForm';
 import PrivateRoute from '../scripts/PrivateRoute';
-import CalendarTest from '../components/ServiceProviders/CalendarTest';
+import Availability from '../components/ServiceProviders/Availability';
 
 export default class ServiceProvider extends Component {  
   public render() { 
@@ -39,8 +39,8 @@ export default class ServiceProvider extends Component {
             element={<PrivateRoute is_service_provider={true} redirectTo="login"><ServiceProviderHomePage/></PrivateRoute>}
           />
           <Route
-            path="/calendar-test"
-            element={<PrivateRoute is_service_provider={false} redirectTo="login"><CalendarTest /></PrivateRoute>}
+            path="/availability"
+            element={<PrivateRoute is_service_provider={false} redirectTo="login"><Availability /></PrivateRoute>}
           />
           <Route
             path="*"

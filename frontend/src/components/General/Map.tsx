@@ -41,21 +41,17 @@ function Map(props: MapProps) {
     const onLoad = React.useCallback(function callback(map) {
       setMap(map);
       props.onCenterChange(center);
-    }, [])
+    }, [props])
   
     const onUnmount = React.useCallback(function callback(map) {
       setMap(null)
     }, [])
 
     useEffect(() => {
-      updateRadius();
-    }, [props.radius, map]);
-
-    const updateRadius = () => {
       if (map) {
         setRadius((props?.radius || 0));
       }
-    }
+    }, [props.radius, map]);
 
     const onCenterChanged = () => {
       if (map) {
