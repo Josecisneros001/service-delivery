@@ -9,11 +9,11 @@ const navigation = {
   ]
 };
 
-const UsersNavbar = () => {
+const UsersNavbar = (props: { className?: string }) => {
     const { brand, links } = navigation;
 
     return (
-      <Navbar brand={brand} links={links} />
+      <Navbar className={props.className} brand={brand} links={links} />
     );
 }
 

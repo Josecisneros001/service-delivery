@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import './SignUp.css';
 import FormField from "../General/FormField/FormField";
-import SignUpState from '../../interfaces/SignUp/SignUpState'
+import SignUpState from '../../interfaces/SignUp/SignUpState';
 import { Users } from '../../scripts/APIs/Users';
 import { Users as UsersModel } from '../../interfaces/models/Users';
 import { Navigate } from 'react-router';
@@ -116,6 +116,7 @@ class SignUp extends Component<{is_service_provider: boolean}, SignUpState> {
             this.setState({snackBarMsg: "Phone and Alt Phone need to be different.", showAlert: true});
             return false;
         }
+        // TODO: EMAIL NO EXISTA.
         return true;
     }
 
@@ -199,8 +200,8 @@ class SignUp extends Component<{is_service_provider: boolean}, SignUpState> {
                             <div className="w-1/4"/>
                             <div className="w-1/3"/>
                         </div>
-                        <div className="flex justify-center">
-                            <button type="submit" className="button button1">Confirm</button>
+                        <div className="items-center">
+                            <button type="submit" className="button button2">Confirm</button>
                         </div>
                         </form>
                     </div>
