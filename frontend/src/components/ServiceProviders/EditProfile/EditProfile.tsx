@@ -7,6 +7,8 @@ import { Users as UsersModel } from "../../../interfaces/models/Users";
 import { Users } from "../../../scripts/APIs/Users";
 import { getCurrentUser } from "../../../scripts/APIs";
 import { Navigate } from "react-router-dom";
+import Snackbar from '../../General/Snackbar';
+
 
 class EditProfile extends Component<
   { is_service_provider: boolean },
@@ -15,11 +17,15 @@ class EditProfile extends Component<
 > {
     constructor(props: { is_service_provider: boolean }) {
         super(props);
+
+
         this.state = {
           //aqui tengo que poner el id del usuario actual
           //get la info de los usuarios y ponerla aquí
-          id: getCurrentUser(this.props.is_service_provider),
-          first_name: "",
+          //id: currentUserId,
+          id: 0,
+          //first_name: this.getinfo().data.first_name,
+          //first_name: "",
           last_name: "",
           password: "",
           email: "",
@@ -29,31 +35,74 @@ class EditProfile extends Component<
           profile_picture: "",
           file_id: "",
           file_proof_of_address: "",
-          is_service_provider: 0, //no se si esto debería estar así
+          //is_service_provider: 0, //no se si esto debería estar así
           registered_on: "",
+          snackBarMsg: "",
+          showAlert: 0
           //[key: string]: ""
         };
     
         this.handleSubmit = this.handleSubmit.bind(this);
-      }
+    }
 
-      handleEmail = (emailValue: string) => {
+    async getinfo(){
+        const currentUserId = getCurrentUser(this.props.is_service_provider);
+        const currentInfo = await Users.getById(currentUserId);
+        return currentInfo;
+    }
+
+    configSnackbar = {
+        verticalAlign: ['bottom', 'top'][0],
+        horizontalAlign: ['center', 'left', 'right'][2],
+        closeButton: true,
+        infinite: false,
+        timeout: 5000,
+    };
+
+    hideSnackbar = () => {
+        this.setState({showAlert: 0});
+    };
+
+    handleFirstName = (firstNameValue: string) => {
+        this.setState({firstName: firstNameValue})
+    }
+
+    handleMiddleName = (middleNameValue: string) => {
+        this.setState({middleName: middleNameValue})
+    }
+
+    handleLastName = (lastNameValue: string) => {
+        this.setState({lastName: lastNameValue})
+    }
+
+    handlePhone = (phoneValue: string) => {
+        this.setState({phone: phoneValue})
+    }
+
+
+    handleEmail = (emailValue: string) => {
         this.setState({ email: emailValue });
-      };
+    };
 
-      handlePassword = (passwordValue: string) => {
+    handlePassword = (passwordValue: string) => {
         this.setState({ password: passwordValue });
-      };
+    };
+
+
 
       formValidations = () => {
-        if (!this.state.email) {
-          this.setState({ snackBarMsg: "Email Missing", showAlert: 1 });
-          return false;
+        //checar que hay info en todas
+        const fields = ["firstName", "middleName", "lastName", "password", "email", "phone"];
+        const fieldsName = ["First Name", "Middle Name", "Last Name", "Password", "Email","Phone Number"];
+        for(const index in fields) {
+            const field = fields[index];
+            const fieldName = fieldsName[index];
+            if(!this.state[field]){
+                this.setState({snackBarMsg: `Missing Field - ${fieldName}`, showAlert: 1});
+                return false;
+            }
         }
-        if (!this.state.password) {
-          this.setState({ snackBarMsg: "Password Missing", showAlert: 1 });
-          return false;
-        }
+
         return true;
       };
 
@@ -77,8 +126,6 @@ class EditProfile extends Component<
         const response = await Users.update(
             params,
             getCurrentUser(this.props.is_service_provider),
-          //(params: Model, id: number)
-          //this.props.is_service_provider ? 1 : 0
         );
         if (response.status !== 200) {
           this.setState({
@@ -89,8 +136,11 @@ class EditProfile extends Component<
         }
       }
     
+      //todavía no está lo del snackbar
+
     render() {
         return (
+            <>
             <div className="coverPhoto">
                 <div className="flex flex-col w- 3/5 md:w-2/5 m-auto bg-blue-100 mt-16 shadow-lg text-center rounded-3xl py-9">
                     <form
@@ -101,7 +151,16 @@ class EditProfile extends Component<
                         <FormField
                             orientation="col"
                             label="First Name"
-                            onChange={this.handleEmail}
+                            onChange={this.handleFirstName}
+                            placeholder="getfirst"
+                        />
+                        </div>
+
+                        <div className="w-3/5 m-auto">
+                        <FormField
+                            orientation="col"
+                            label="Middle Name"
+                            onChange={this.handleMiddleName}
                             placeholder="getfirst"
                         />
                         </div>
@@ -110,7 +169,7 @@ class EditProfile extends Component<
                         <FormField
                             orientation="col"
                             label="Last Name"
-                            onChange={this.handleEmail}
+                            onChange={this.handleLastName}
                             placeholder="getlast"
                         />
                         </div>
@@ -136,7 +195,7 @@ class EditProfile extends Component<
                         <FormField
                             orientation="col"
                             label="Phone"
-                            onChange={this.handleEmail}
+                            onChange={this.handlePhone}
                             placeholder="getphoneusuario"
                         />
                         </div>
@@ -157,6 +216,7 @@ class EditProfile extends Component<
 
                 <br></br>
             </div>
+            </>
         );
     }
 }
