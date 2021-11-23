@@ -36,7 +36,8 @@ class EditProfile extends Component<
             email: "",
             phone: "",
             snackBarMsg: "",
-          	showAlert: false
+          	showAlert: false,
+            isDone: false
         };
     
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -80,14 +81,10 @@ class EditProfile extends Component<
         this.setState({ email: emailValue });
     };
 
-    handlePassword = (passwordValue: string) => {
-        this.setState({ password: passwordValue });
-    };
-
 	formValidations = () => {
         //checar que hay info en todas
-        const fields = ["firstName", "lastName", "password", "email", "phone"];
-        const fieldsName = ["First Name", "Last Name", "Password", "Email","Phone Number"];
+        const fields = ["firstName", "lastName", "email", "phone"];
+        const fieldsName = ["First Name", "Last Name", "Email","Phone Number"];
         for(const index in fields) {
             const field = fields[index];
             const fieldName = fieldsName[index];
@@ -95,6 +92,12 @@ class EditProfile extends Component<
                 this.setState({snackBarMsg: `Missing Field - ${fieldName}`, showAlert: true});
                 return false;
             }
+        }
+
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!re.test(this.state.email)) {
+            this.setState({snackBarMsg: "Invalid Email", showAlert: true});
+            return false;
         }
 
         return true;
@@ -126,9 +129,19 @@ class EditProfile extends Component<
           });
           return;
         }
+
+        this.setState({isDone: true});
       }
 
     render() {
+        if (this.state.isDone) {
+            if (this.props.is_service_provider) {
+                return <Navigate to="/service-providers/homepage" />
+            } else {
+                return <Navigate to="/users/" />
+            }
+        }
+
         return (
             <>
 			<Snackbar
@@ -137,6 +150,12 @@ class EditProfile extends Component<
 				hideEvent={this.hideSnackbar}
 				message={this.state.snackBarMsg}
 			/>
+            {this.props.is_service_provider ? (
+                <ServiceProviderNavbarLogin />
+            ) : (
+                <UsersNavbarLogin />
+            )}
+
             <div className="coverPhoto">
                 <div className="flex flex-col w- 3/5 md:w-2/5 m-auto bg-blue-100 mt-16 shadow-lg text-center rounded-3xl py-9">
                     <form
@@ -174,26 +193,12 @@ class EditProfile extends Component<
                         </div>
 
                         <div className="w-3/5 m-auto">
-                            <FormField
-                                orientation="col"
-                                label="Password"
-                                onChange={this.handlePassword}
-                            />
-                        </div>
-
-                        <div className="w-3/5 m-auto">
                         <FormField
                             orientation="col"
                             label="Phone"
                             onChange={this.handlePhone}
                             initialValue={this.state.userInfo?.phone_number}
                         />
-                        </div>
-
-
-                        <div className="w-3/5 m-auto">
-                            <label className="w-full text-left">Profile Picture</label>
-                            <input type="file" placeholder="" className="mt-2 mb-5 px-8 w-full border rounded py-2 text-base text-gray-700 focus:outline-none items-center bg-gray-100"/>
                         </div>
 
                         <div className="items-center py-2">
