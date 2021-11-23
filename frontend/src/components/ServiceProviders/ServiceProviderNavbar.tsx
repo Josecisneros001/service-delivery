@@ -4,9 +4,9 @@ import Navbar from '../General/Navbar';
 const navigation = {
   brand: { name: 'Service Delivery', to: '/' },
   links: [
-    { name: 'Current Requests', to: '/service-provider/current-requests' },
-    { name: 'Weekly Calendar', to: '/service-provider/weekly-calendar' },
-    { name: 'Chat', to: '/service-provider/chat' },
+    { name: 'Current Requests', to: '/service-providers/current-requests' },
+    { name: 'Availability', to: '/service-providers/availability' },
+    { name: 'Chat', to: '/service-providers/chats' },
   ]
 };
 
