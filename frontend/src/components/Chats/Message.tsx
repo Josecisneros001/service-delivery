@@ -21,7 +21,10 @@ class Message extends React.Component<MessageProps, MessageState,{}> {
     render() { 
         return (
             <div className={`w-full flex ${this.props.isFromCurrentUser? 'justify-end' : 'justify-start'}`}>
-                <div className="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative" style={{maxWidth: "350px"}}>
+                <div
+                    className={`${this.props.isFromCurrentUser? 'bg-blue-100' : 'bg-gray-100'} rounded px-5 py-2 my-2 text-gray-700 relative`}
+                    style={{maxWidth: "350px"}}
+                >
                     <span className="block">{this.props.message}</span>
                     {this.props.file?
                         <a className="flex flex-row underline my-0.5" href={this.props.file}>
