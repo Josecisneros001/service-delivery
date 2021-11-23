@@ -4,6 +4,7 @@ import Login from '../components/Login/Login';
 import SignUp from '../components/SignUp/SignUp';
 import PrivateRoute from '../scripts/PrivateRoute';
 import UploadFilesForm from '../components/SignUp/UploadFilesForm/UploadFilesForm';
+import EditProfile from '../components/ServiceProviders/EditProfile/EditProfile';
 
 export default class Users extends Component {
 
@@ -13,6 +14,7 @@ export default class Users extends Component {
         <Routes>
           <Route path="/login" element={<Login is_service_provider={false}/>}/>
           <Route path="/signup" element={<SignUp is_service_provider={false}/>}/>
+          <Route path="/edit" element={<EditProfile is_service_provider={false}/>}/>
           <Route
             path="/upload-files"
             element={<PrivateRoute is_service_provider={false} redirectTo="login"><UploadFilesForm is_service_provider={false}/></PrivateRoute>}

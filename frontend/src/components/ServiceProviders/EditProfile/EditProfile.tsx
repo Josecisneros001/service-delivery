@@ -9,47 +9,46 @@ import { getCurrentUser } from "../../../scripts/APIs";
 import { Navigate } from "react-router-dom";
 import Snackbar from '../../General/Snackbar';
 
+export interface EditProfileState {
+	userInfo: UsersModel | null,
+	firstName: string;
+	lastName: string;
+	password: string;
+	email: string;
+	phone: string;
+	snackBarMsg: string;
+	showAlert: boolean;
+	[key: string]: UsersModel | string | boolean | null;
+};
 
 class EditProfile extends Component<
   { is_service_provider: boolean },
-  UsersModel,
+  EditProfileState,
   {}
 > {
     constructor(props: { is_service_provider: boolean }) {
         super(props);
-
-
         this.state = {
-          //aqui tengo que poner el id del usuario actual
-          //get la info de los usuarios y ponerla aquí
-          //id: currentUserId,
-          id: 0,
-          //first_name: this.getinfo().data.first_name,
-          //first_name: "",
-          last_name: "",
-          password: "",
-          email: "",
-          recovery_email: "",
-          phone_number: "",
-          alt_phone_number: "",
-          profile_picture: "",
-          file_id: "",
-          file_proof_of_address: "",
-          //is_service_provider: 0, //no se si esto debería estar así
-          registered_on: "",
-          snackBarMsg: "",
-          showAlert: 0
-          //[key: string]: ""
+			userInfo: null,
+            firstName: "",
+			lastName: "",
+            password: "",
+            email: "",
+            phone: "",
+            snackBarMsg: "",
+          	showAlert: false
         };
     
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    async getinfo(){
-        const currentUserId = getCurrentUser(this.props.is_service_provider);
-        const currentInfo = await Users.getById(currentUserId);
-        return currentInfo;
-    }
+	async componentDidMount() {
+		const currentUserId = getCurrentUser(this.props.is_service_provider);
+		const currentInfo = (await Users.getById(currentUserId)).data as UsersModel;
+		this.setState({
+			userInfo: currentInfo,
+		});
+	}
 
     configSnackbar = {
         verticalAlign: ['bottom', 'top'][0],
@@ -60,16 +59,13 @@ class EditProfile extends Component<
     };
 
     hideSnackbar = () => {
-        this.setState({showAlert: 0});
+        this.setState({showAlert: false});
     };
 
     handleFirstName = (firstNameValue: string) => {
         this.setState({firstName: firstNameValue})
     }
 
-    handleMiddleName = (middleNameValue: string) => {
-        this.setState({middleName: middleNameValue})
-    }
 
     handleLastName = (lastNameValue: string) => {
         this.setState({lastName: lastNameValue})
@@ -88,17 +84,15 @@ class EditProfile extends Component<
         this.setState({ password: passwordValue });
     };
 
-
-
-      formValidations = () => {
+	formValidations = () => {
         //checar que hay info en todas
-        const fields = ["firstName", "middleName", "lastName", "password", "email", "phone"];
-        const fieldsName = ["First Name", "Middle Name", "Last Name", "Password", "Email","Phone Number"];
+        const fields = ["firstName", "lastName", "password", "email", "phone"];
+        const fieldsName = ["First Name", "Last Name", "Password", "Email","Phone Number"];
         for(const index in fields) {
             const field = fields[index];
             const fieldName = fieldsName[index];
             if(!this.state[field]){
-                this.setState({snackBarMsg: `Missing Field - ${fieldName}`, showAlert: 1});
+                this.setState({snackBarMsg: `Missing Field - ${fieldName}`, showAlert: true});
                 return false;
             }
         }
@@ -106,20 +100,18 @@ class EditProfile extends Component<
         return true;
       };
 
-      async handleSubmit(event: React.ChangeEvent<any>) {
+	async handleSubmit(event: React.ChangeEvent<any>) {
         event.preventDefault();
         if (!this.formValidations()) {
           return;
         }
 
         const params = {
-            first_name: `${this.state.firstName} ${this.state.middleName}`,
+            first_name: this.state.firstName,
             last_name: this.state.lastName,
             password: this.state.password,
             email: this.state.email,
-            recovery_email: this.state.recoveryEmail,
             phone_number: this.state.phone,
-            alt_phone_number: this.state.altPhone,
             is_service_provider: this.props.is_service_provider ? 1 : 0
         } as UsersModel;
 
@@ -130,17 +122,21 @@ class EditProfile extends Component<
         if (response.status !== 200) {
           this.setState({
             snackBarMsg: "Could not update the information",
-            showAlert: 1,
+            showAlert: true,
           });
           return;
         }
       }
-    
-      //todavía no está lo del snackbar
 
     render() {
         return (
             <>
+			<Snackbar
+				{...this.configSnackbar}
+				show={this.state.showAlert}
+				hideEvent={this.hideSnackbar}
+				message={this.state.snackBarMsg}
+			/>
             <div className="coverPhoto">
                 <div className="flex flex-col w- 3/5 md:w-2/5 m-auto bg-blue-100 mt-16 shadow-lg text-center rounded-3xl py-9">
                     <form
@@ -152,17 +148,11 @@ class EditProfile extends Component<
                             orientation="col"
                             label="First Name"
                             onChange={this.handleFirstName}
-                            placeholder="getfirst"
+                            initialValue={this.state.userInfo?.first_name}
                         />
                         </div>
 
                         <div className="w-3/5 m-auto">
-                        <FormField
-                            orientation="col"
-                            label="Middle Name"
-                            onChange={this.handleMiddleName}
-                            placeholder="getfirst"
-                        />
                         </div>
 
                         <div className="w-3/5 m-auto">
@@ -170,7 +160,7 @@ class EditProfile extends Component<
                             orientation="col"
                             label="Last Name"
                             onChange={this.handleLastName}
-                            placeholder="getlast"
+                            initialValue={this.state.userInfo?.last_name}
                         />
                         </div>
 
@@ -179,7 +169,7 @@ class EditProfile extends Component<
                             orientation="col"
                             label="Email"
                             onChange={this.handleEmail}
-                            placeholder="getemailusuario"
+                            initialValue={this.state.userInfo?.email}
                         />
                         </div>
 
@@ -196,7 +186,7 @@ class EditProfile extends Component<
                             orientation="col"
                             label="Phone"
                             onChange={this.handlePhone}
-                            placeholder="getphoneusuario"
+                            initialValue={this.state.userInfo?.phone_number}
                         />
                         </div>
 

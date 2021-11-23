@@ -8,6 +8,12 @@ class FormField extends React.Component<FormFieldI,{ value: string },{}> {
         this.handleChange = this.handleChange.bind(this);
     }
 
+    componentDidUpdate(prevProps: FormFieldI) {
+        if(this.props.initialValue != prevProps.initialValue) {
+            this.setState({value: this.props.initialValue || ''});
+        }
+    }
+
     handleChange(event: React.ChangeEvent<any>) {
         this.setState({value: event.target.value});
         this.props.onChange(event.target.value);
