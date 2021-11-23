@@ -6,6 +6,7 @@ import PrivateRoute from '../scripts/PrivateRoute';
 import UploadFilesForm from '../components/SignUp/UploadFilesForm/UploadFilesForm';
 import Chats from '../components/Chats/Chats';
 import RequestPage from '../components/Users/RequestPage';
+import MapTest from '../components/Users/MapTest';
 
 export default class Users extends Component {
 
@@ -22,13 +23,17 @@ export default class Users extends Component {
          <Route
             path="/chats"
             element={<PrivateRoute is_service_provider={false} redirectTo="login"><Chats is_service_provider={false}/></PrivateRoute>}
-          /> 
+          />
+          <Route
+            path="/map-test"
+            element={<PrivateRoute is_service_provider={false} redirectTo="login"><MapTest /></PrivateRoute>}
+          />
           {/* TODO: Change * to Home View */}
           <Route
             path="*"
             element={<PrivateRoute is_service_provider={false} redirectTo="login"><>Home</></PrivateRoute>}
           />
-          <Route path="/request" element={<RequestPage/>}/>
+          <Route path="/request" element={<RequestPage is_service_provider={true}/>}/>
         </Routes>
       </div>
     );
