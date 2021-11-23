@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Map from '../General/Map';
 import Slider from '../General/Slider';
 
-const Home = () => {
+const MapTest = () => {
     const [radius, setRadius] = React.useState(0);
     const [coord, setCoord] = React.useState({lat: 0, lng: 0});
 
@@ -18,4 +18,4 @@ const Home = () => {
     );
 }
 
-export default Home;
+export default MapTest;

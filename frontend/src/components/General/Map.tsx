@@ -37,7 +37,7 @@ function Map(props: MapProps) {
     const [map, setMap] = React.useState<google.maps.Map | null>(null);
     const [coord, setCoord] = React.useState(center);
     const [radius, setRadius] = React.useState(0);
-  
+    
     const onLoad = React.useCallback(function callback(map) {
       setMap(map);
       props.onCenterChange(center);
