@@ -11,8 +11,12 @@ import 'react-day-picker/lib/style.css';
 import { WorkHours } from '../../scripts/APIs/WorkHours';
 import AvailabilitySchedule from 'availability-schedule';
 import Snackbar from '../General/Snackbar';
+import Day from '../General/Calendar/Day'
+import Hour from '../General/Calendar/Hour';
 
-
+const past = {
+  before: new Date(),
+}
 
 export interface UserRequestState {
   workHoursInfo: WorkHModel | null,
@@ -95,11 +99,16 @@ class RequestPage extends Component<{ is_service_provider: boolean },UserRequest
       });
     }
 
-    // checar cuales fechas no están disponibles
+    // checar cuales fechas están disponibles
     async getWorkHrs() {
-      const schedule = new AvailabilitySchedule('2021-11-22T00:00:00Z', '2023-11-24T00:00:00Z');
-      schedule.addAvailability('2021-11-22T00:00:00Z', '2023-11-24T00:00:00Z');
-      const startDate = this.state.workHoursInfo?.day 
+      const schedule = new AvailabilitySchedule('2021-11-22T00:00:00Z', '2022-11-24T00:00:00Z');
+      const startHr = this.state.workHoursInfo?.hour || 1;
+      const startDate = new Date("11/23/2021 " + startHr?.toString() + "00:00");
+      const duration = this.state.workHoursInfo?.duration || 1;
+      const endHr = startHr + (duration / 60);
+      const endDate = new Date("11/23/2022 " + endHr?.toString()+ "00:00");
+      schedule.addWeeklyRecurringAvailability(startDate.toISOString(), endDate.toISOString(), [1, 2, 3, 4, 5]); // Mon-Fri 9am-5pm UTC, starting on Wed Jan 4th
+      
       //schedule.removeAvailability();
     }
 
@@ -117,40 +126,44 @@ class RequestPage extends Component<{ is_service_provider: boolean },UserRequest
     }
 
 
-    
-
-
-
 
 
     render() {
         return (
-            <div className="flex flex-col">
-                <UsersNavbar/>
-                <div className="text-center text-4xl pt-7">Request Form</div>
-                <div className="flex-1 ">
-                <form onSubmit={this.handleSubmit} className="flex-1 flex flex-col text-2xl mx-40">
-                  <div className="flex flex-row items-center justify-around">
-                    <div className="flex flex-col w-1/3">
-                          <FormField orientation="col" label="Direction" onChange={this.handleAddressInfo}/>
-                          <FormTextArea  orientation="col" label="Invitation Message" onChange={this.handleMessage}/>
-                          Pricing Range
-                          <div className="pl-8 pt-12"><SliderRange/></div>
-                      </div>
-                      <DayPicker onDayClick={this.handleDayClick} selectedDays={this.state.selectedDay}/>
-                      {this.state.selectedDay ? (
-                        <p>You clicked {this.state.selectedDay.toLocaleDateString()}</p>
-                        ) : (
-                        <p>Please select a day.</p>
-                      )}
-                  </div>
-                  <div className="flex justify-center pt-20">
-                            <button type="submit" className="button button2">Confirm</button>
+          <>
+            <Snackbar {...this.configSnackbar} show={this.state.showAlert} hideEvent={this.hideSnackbar} message={this.state.snackBarMsg}/>
+              <div className="flex flex-col">
+                  <UsersNavbar/>
+                  <div className="text-center text-4xl pt-7">Request Form</div>
+                  <div className="flex-1 ">
+                  <form onSubmit={this.handleSubmit} className="flex-1 flex flex-col text-2xl mx-40">
+                    <div className="flex flex-row items-center justify-around">
+                      <div className="flex flex-col w-1/3">
+                            <FormField orientation="col" label="Direction" onChange={this.handleAddressInfo}/>
+                            <FormTextArea  orientation="col" label="Invitation Message" onChange={this.handleMessage}/>
+                            Pricing Range
+                            <div className="pl-8 pt-12"><SliderRange/></div>
                         </div>
+                        <div className="flex flex-row items-center space-x-7">
+                          <DayPicker onDayClick={this.handleDayClick} selectedDays={this.state.selectedDay} disabledDays={ past }/>
+                          {this.state.selectedDay ? (
+                            <div className="flex-1">
+                                <Day label={this.state.selectedDay.toLocaleDateString()}/>                                    
+                            </div>
+                            ) : (
+                            <p>Please select a day.</p>
+                          )}
+                        </div>
+                    </div>
+                    
+                    <div className="flex justify-center pt-20">
+                              <button type="submit" className="button button2">Confirm</button>
+                          </div>
 
-                </form>
-                </div>
-            </div>
+                  </form>
+                  </div>
+              </div>
+            </>
         );
     }
 }
