@@ -3,4 +3,5 @@ export default interface FormField {
     placeholder?: string;
     onChange: Function;
     orientation: string;
+    isPassword?: boolean;
 }

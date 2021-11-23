@@ -188,9 +188,9 @@ class SignUp extends Component<{is_service_provider: boolean}, SignUpState> {
                             <FormField orientation="col" label='Email' onChange={this.handleEmail}/>
                         </div>
                         <div className="flex">
-                            <FormField orientation="col" label='Password' onChange={this.handlePassword}/>
+                            <FormField orientation="col" label='Password' onChange={this.handlePassword} isPassword={true} />
                             <div className="w-1/6"/>
-                            <FormField orientation="col" label='Confirm Password' onChange={this.handlePassword2}/>
+                            <FormField orientation="col" label='Confirm Password' onChange={this.handlePassword2} isPassword={true} />
                         </div>
                         <div className="flex">
                             <FormField orientation="col" label='Recovery Email' onChange={this.handleRecoveryEmail}/>

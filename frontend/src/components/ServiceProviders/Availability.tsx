@@ -17,6 +17,7 @@ const configSnackbar = {
 const Availability = () => {
   const [avData, setAvData] = React.useState<AvailabilityModel>(defaultAvailability());
   const [showAlert, setShowAlert] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const [snackBarMsg, setSnackBarMsg] = React.useState("false");
 
   useEffect(() => {
@@ -38,6 +39,7 @@ const Availability = () => {
   }, []);
 
   const handleSubmit = async () => {
+    setLoading(true);
     const data = toWorkHours(avData, getCurrentUser(true));
     const response = await WorkHours.createMultiple(data);
     if(response.status !== 200) {
@@ -47,6 +49,7 @@ const Availability = () => {
     }
     setSnackBarMsg('Saved Succesfully!');
     setShowAlert(true);
+    setLoading(false);
   };
 
   const hideSnackbar = () => {
@@ -62,9 +65,14 @@ const Availability = () => {
         message={snackBarMsg}
       />
       <ServiceProviderNavbar />
-      <div className="flex flex-col h-1/2 w-full mx-auto sm:w-3/4 mt-10">
+      <div className="flex flex-col h-1/2 w-full mx-auto sm:w-3/4 mt-10" style={{opacity: loading? '0.5' : '1'}} >
           <Calendar availability={avData} onChange={(availability: AvailabilityModel) => {setAvData(availability)} } />
-          <button type="button" className="rounded-full px-10 py-3 bg-gray-100 w-1/5 mx-auto" onClick={handleSubmit}>
+          <button
+            type="button"
+            className="rounded-full px-10 py-3 bg-gray-100 w-1/5 mx-auto"
+            onClick={handleSubmit}
+            disabled={loading}
+          >
             Save Availability
           </button>
       </div>

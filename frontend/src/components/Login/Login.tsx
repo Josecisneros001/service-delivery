@@ -132,6 +132,7 @@ class Login extends Component<
               <FormField
                 orientation="col"
                 label="Password"
+                isPassword={true}
                 onChange={this.handlePassword}
               />
               {/* TODO: Handle Password Forgotten
