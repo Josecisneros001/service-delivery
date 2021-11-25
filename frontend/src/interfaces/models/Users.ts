@@ -12,5 +12,5 @@ export interface Users {
     file_proof_of_address?: string,
     is_service_provider?: number,
     registered_on?: string,
-    [key: string]: string | number | number | undefined
+    [key: string]: string | number | undefined
 };
