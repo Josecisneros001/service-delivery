@@ -91,6 +91,11 @@ CREATE TABLE `services` (
   `registered_on` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
+CREATE VIEW `services_left` AS
+SELECT `id` as `srv_id`,`user_id` as `srv_user_id`,`category_id` as `srv_category_id`,`name` as `srv_name`,`description` as `srv_description`,`location_lat` as `srv_location_lat`,`location_lng` as `srv_location_lng`,`location_radius` as `srv_location_radius`,`is_service_fee_per_hour` as `srv_is_service_fee_per_hour`,`registered_on` as `srv_registered_on`
+FROM `services`;
+
 -- --------------------------------------------------------
 
 --
@@ -103,6 +108,10 @@ CREATE TABLE `service_categories` (
   `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `registered_on` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE VIEW `service_categories_left` AS
+SELECT `id` as `ctg_id`,`name` as `ctg_name`,`description` as `ctg_description`,`registered_on` as `ctg_registered_on`
+FROM `service_categories`;
 
 -- --------------------------------------------------------
 
@@ -142,6 +151,10 @@ CREATE TABLE `users` (
 
 CREATE VIEW `users_no_password` AS
 SELECT `id`, `first_name`, `last_name`, `email`, `recovery_email`, `phone_number`, `alt_phone_number`, `profile_picture`, `file_id`, `file_proof_of_address`, `is_service_provider`, `registered_on`
+FROM `users`;
+
+CREATE VIEW `users_left` AS
+SELECT `id` as `usr_id`,`first_name` as `usr_first_name`,`last_name` as `usr_last_name`,`email` as `usr_email`,`recovery_email` as `usr_recovery_email`,`phone_number` as `usr_phone_number`,`alt_phone_number` as `usr_alt_phone_number`,`profile_picture` as `usr_profile_picture`,`file_id` as `usr_file_id`,`file_proof_of_address` as `usr_file_proof_of_address`,`is_service_provider` as `usr_is_service_provider`,`registered_on` as `usr_registered_on`
 FROM `users`;
 
 -- --------------------------------------------------------

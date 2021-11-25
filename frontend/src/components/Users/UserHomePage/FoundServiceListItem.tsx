@@ -23,7 +23,7 @@ const FoundServiceListItem = (props:FoundServiceProps) => {
             <div className="flex justify-between p-5">
                 {/* Left info */}
                 <div className="flex flex-row w-full">
-                <img
+                    <img
                         className="h-14 w-14 rounded-full object-cover mx-4"
                         src={getFileUrl(props.serviceProvider.profile_picture)}
                         alt="a"

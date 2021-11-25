@@ -45,7 +45,7 @@ export const Services = {
         }
         let joinClause = '';
         if (filters["include_info"]) {
-            joinClause=`LEFT JOIN users ON ${dbTableName}.user_id = users.id `
+            joinClause=`LEFT JOIN users_no_password as users ON ${dbTableName}.user_id = users.id `
             joinClause+=`LEFT JOIN (SELECT service_id, GROUP_CONCAT(photo_url) photo_urls, GROUP_CONCAT(description) descriptions FROM service_photos GROUP BY service_id) service_photos ON ${dbTableName}.id = service_photos.service_id`;
         }
         const whereClause = buildWhereClause(filters, params, dbRelations, types, conditions);
