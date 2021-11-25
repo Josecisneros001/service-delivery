@@ -24,7 +24,7 @@ class FormField extends React.Component<FormFieldI,{ value: string },{}> {
                     <label> {this.props.label} </label>
                 </div>
                 <input 
-                    type='text' 
+                    type={!this.props.isPassword? 'text' : 'password'}
                     className={`rounded-md w-full h-9 bg-custom-white border-cornflower-blue-500 border-2 p-3 mb-5 text-xl`} 
                     value={this.state.value} 
                     onChange={this.handleChange}

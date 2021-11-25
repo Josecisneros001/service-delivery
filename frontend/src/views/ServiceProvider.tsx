@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import Chats from '../components/Chats/Chats';
 import Login from '../components/Login/Login';
 import MyServices from '../components/ServiceProviders/MyServices/MyServices';
 import Reservations from '../components/ServiceProviders/Reservations/Reservations';
@@ -7,6 +8,7 @@ import ServiceProviderHomePage from '../components/ServiceProviders/HomePage/Ser
 import SignUp from '../components/SignUp/SignUp';
 import UploadFilesForm from '../components/SignUp/UploadFilesForm/UploadFilesForm';
 import PrivateRoute from '../scripts/PrivateRoute';
+import Availability from '../components/ServiceProviders/Availability';
 
 export default class ServiceProvider extends Component {  
   public render() { 
@@ -20,8 +22,12 @@ export default class ServiceProvider extends Component {
             element={<PrivateRoute is_service_provider={true} redirectTo="login"><UploadFilesForm is_service_provider={true}/></PrivateRoute>}
           />
           <Route
-            path="/my-services"
-            element={<PrivateRoute is_service_provider={true} redirectTo="login"><MyServices/></PrivateRoute>}
+            path="/chats"
+            element={<PrivateRoute is_service_provider={true} redirectTo="login"><Chats is_service_provider={true}/></PrivateRoute>}
+          />
+          <Route
+            path="/create-service"
+            element={<PrivateRoute is_service_provider={true} redirectTo="login"><CreateNewService/></PrivateRoute>}
           />
           <Route
             path="/reservations"
@@ -30,6 +36,10 @@ export default class ServiceProvider extends Component {
           <Route
             path="/"
             element={<PrivateRoute is_service_provider={true} redirectTo="login"><ServiceProviderHomePage/></PrivateRoute>}
+          />
+          <Route
+            path="/availability"
+            element={<PrivateRoute is_service_provider={true} redirectTo="login"><Availability /></PrivateRoute>}
           />
           <Route
             path="*"
