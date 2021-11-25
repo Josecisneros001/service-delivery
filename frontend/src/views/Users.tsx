@@ -7,6 +7,7 @@ import UploadFilesForm from '../components/SignUp/UploadFilesForm/UploadFilesFor
 import Chats from '../components/Chats/Chats';
 import MapTest from '../components/Users/MapTest';
 import UserHomePage from '../components/Users/UserHomePage/UserHomePage';
+import MyReservations from '../components/Users/MyReservations/MyReservations';
 
 export default class Users extends Component {
 
@@ -27,6 +28,14 @@ export default class Users extends Component {
           <Route
             path="/map-test"
             element={<PrivateRoute is_service_provider={false} redirectTo="login"><MapTest /></PrivateRoute>}
+          />
+          <Route
+            path="/map-test"
+            element={<PrivateRoute is_service_provider={false} redirectTo="login"><MapTest /></PrivateRoute>}
+          />
+          <Route
+            path="/my-reservations"
+            element={<PrivateRoute is_service_provider={false} redirectTo="login"><MyReservations /></PrivateRoute>}
           />
           {/* TODO: Change * to Home View */}
           <Route
