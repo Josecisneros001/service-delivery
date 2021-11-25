@@ -27,7 +27,7 @@ Card.defaultProps = {
     subtitle: "",
     children: <></>,
     className: "",
-    backgroundColor: "bg-red-200"
+    backgroundColor: "bg-blue-100"
 }
 
 export default Card;

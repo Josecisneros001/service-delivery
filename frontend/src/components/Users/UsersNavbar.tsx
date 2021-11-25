@@ -1,4 +1,5 @@
 import React from 'react';
+import { Users } from '../../interfaces/models/Users';
 import Navbar from '../General/Navbar';
 
 const navigation = {
@@ -9,11 +10,11 @@ const navigation = {
   ]
 };
 
-const UsersNavbar = (props: { className?: string }) => {
+const UsersNavbar = (props: { className?: string, user?: Users }) => {
     const { brand, links } = navigation;
 
     return (
-      <Navbar className={props.className} brand={brand} links={links} />
+      <Navbar isServiceProvider={false} className={props.className} brand={brand} links={links} user={props.user} />
     );
 }
 

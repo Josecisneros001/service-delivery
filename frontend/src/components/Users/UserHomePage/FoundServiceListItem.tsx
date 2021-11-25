@@ -1,25 +1,56 @@
 import React from "react";
-import "../../../tailwindcss.css";
+import { NavLink } from "react-router-dom";
+import { ServicePhotos } from "../../../interfaces/models/ServicePhotos";
+import { Services } from "../../../interfaces/models/Services";
+import { Users } from "../../../interfaces/models/Users";
+import { getFileUrl } from "../../../scripts/APIs";
+import Card from "../../General/Card";
 
 interface FoundServiceProps {
-    time: string,
-    service_name: string,
-    location: string,
+    serviceProvider: Users;
+    service: Services;
+    servicePhotos: ServicePhotos[];
 }
 
-const FoundServiceListItem = ({time, service_name, location}:FoundServiceProps) => {
+const FoundServiceListItem = (props:FoundServiceProps) => {
 
     return(
-        <div className="flex justify-between p-5 mx-20 border-b-2 border-gray-500">
-            {/* Left info */}
-            <div className="flex flex-col">
-                <p>{time} {service_name}</p>
-                <p>{location}</p>
-            </div>
+        <Card
+            className="w-full p-2.5 my-3"
+            title={props.service.name}
+            subtitle={props.serviceProvider.first_name + " " + props.serviceProvider.last_name}
+        >
+            <div className="flex justify-between p-5">
+                {/* Left info */}
+                <div className="flex flex-row w-full">
+                <img
+                        className="h-14 w-14 rounded-full object-cover mx-4"
+                        src={getFileUrl(props.serviceProvider.profile_picture)}
+                        alt="a"
+                    />
+                    <div className="flex flex-1 flex-col">
+                        <p>{props.service.description}</p>
+                    </div>
+                    {props.servicePhotos.map((photos)=>{
+                        return(
+                            <img
+                                className="h-14 w-14 mx-4 flex-initial flex-end"
+                                src={getFileUrl(photos.photo_url)}
+                                alt="a"
+                            />
+                        );
+                    })}
+                </div>
 
-            {/* Request button */}
-            <a href="#" className="underline">Request</a>
-        </div>
+                {/* Request button */}
+                <NavLink
+                    to={`/users/requests/?service_id=${props.service.id}`}
+                    className="bg-gray-300 px-4 py-2 h-10 rounded-full border-2 border-gray-400"
+                >
+                    Request
+                </NavLink>
+            </div>
+        </Card>
     );
 };
 

@@ -22,7 +22,7 @@ const options = {
   panControl : false,
   streetViewControl: false,
   zoomControlOptions: {
-    position: 9
+    position: 1
   }
 }
 
