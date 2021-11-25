@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Chats from '../components/Chats/Chats';
 import Login from '../components/Login/Login';
-import MyServices from '../components/ServiceProviders/MyServices/MyServices';
 import Reservations from '../components/ServiceProviders/Reservations/Reservations';
 import ServiceProviderHomePage from '../components/ServiceProviders/HomePage/ServiceProviderHomePage';
 import SignUp from '../components/SignUp/SignUp';
 import UploadFilesForm from '../components/SignUp/UploadFilesForm/UploadFilesForm';
 import PrivateRoute from '../scripts/PrivateRoute';
 import Availability from '../components/ServiceProviders/Availability';
+import CreateNewService from '../components/ServiceProviders/CreateNewService';
 
 export default class ServiceProvider extends Component {  
   public render() { 
