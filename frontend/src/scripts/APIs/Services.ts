@@ -11,13 +11,15 @@ export const Services = {
     category_id: number | null,
     location_lat: number | null,
     location_lng: number | null,
-    location_radius: number | null) => {
+    location_radius: number | null,
+    include_info: boolean | null) => {
     const urlParams = {
 			"user_id": user_id,
 			"category_id": category_id,
 			"location_lat": location_lat,
 			"location_lng": location_lng,
 			"location_radius": location_radius,
+      "include_info": include_info,
     };
     const queryString=`services/?${getUrlParams(urlParams)}`;
     const methodValue='GET';

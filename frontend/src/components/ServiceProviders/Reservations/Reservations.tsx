@@ -1,52 +1,28 @@
-import { useState } from "react";
 import Reservation from "./Reservation";
 import Card from "../../General/Card";
+import { ReservationFound } from "../../../interfaces/ReservationFound";
 
-// TODO:RemoveDummyReservation - Implement APIs
-const DummyReservations = [
-  {
-    id: "1",
-    title: "Technician",
-    category: "Electricity",
-    client: "A.J Cook",
-    date: new Date(2020, 7, 14),
-    desc: "9:00 am Privada BocaNegra 602"
-  },
-  {
-    id: "2",
-    title: "Technician",
-    category: "Electricity",
-    client: "A.J Cook",
-    date: new Date(2020, 7, 14),
-    desc: "9:00 am Privada BocaNegra 602"
-  },
-  {
-    id: "3",
-    title: "Technician",
-    category: "Electricity",
-    client: "A.J Cook",
-    date: new Date(2020, 7, 14),
-    desc: "9:00 am Privada BocaNegra 602"
-  },
-];
+interface ReservationsProps {
+  reservations: ReservationFound[],
+}
 
-const Cards = () => {
-  const [reservations] = useState(DummyReservations);
-
+const Reservations = (props: ReservationsProps) => {
+  if (props.reservations.length === 0) {
+    return <div className="w-full m-auto text-center text-xl mt-6"> No Data</div>
+  }
   return (
-    <div className="w-full m-auto px-8">
-      {reservations.map((reservation) => {
+    <div className="w-full m-auto">
+      {props.reservations.map((reservation) => {
         return (
-          <Card 
-            key={reservation.id}
-            className="reservation-container p-2.5 my-3"
-            title={reservation.title}
-            subtitle={reservation.category}
+          <Card
+            key={reservation.reservation.id}
+            className="w-full p-2.5 my-5"
+            title={reservation.service.name}
+            subtitle={reservation.serviceCategory.name}
           >
               <Reservation
-                client={reservation.client}
-                date={reservation.date}
-                desc={reservation.desc}
+                client={reservation.user}
+                reservation={reservation.reservation}
               />
           </Card>
         );
@@ -55,4 +31,4 @@ const Cards = () => {
   );
 };
 
-export default Cards;
+export default Reservations;

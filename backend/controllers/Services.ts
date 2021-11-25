@@ -36,15 +36,21 @@ export const Services = {
      * Function that get list of records.
      */
     getAll: async function (filters: Model): Promise<CustomResponse> {
-        const params = ["id"];
-        const dbRelations = [`${dbTableName}.id`];
-        const types = ["number"];
+        const params = ["id", "category_id", "user_id"];
+        const dbRelations = [`${dbTableName}.id`, `${dbTableName}.category_id`, `${dbTableName}.user_id`];
+        const types = ["number", "number"];
         const conditions = [];
         if (filters["location_lat"] && filters["location_lng"] && filters["location_radius"]) {
             conditions.push(`doIntersect(${filters["location_lat"]}, ${filters["location_lng"]}, ${filters["location_radius"]}, location_lat, location_lng, location_radius) = 1`);
         }
+        let joinClause = '';
+        if (filters["include_info"]) {
+            joinClause=`LEFT JOIN users_no_password as users ON ${dbTableName}.user_id = users.id `
+            joinClause+=`LEFT JOIN (SELECT service_id, GROUP_CONCAT(photo_url) photo_urls, GROUP_CONCAT(description) descriptions FROM service_photos GROUP BY service_id) service_photos ON ${dbTableName}.id = service_photos.service_id`;
+        }
         const whereClause = buildWhereClause(filters, params, dbRelations, types, conditions);
-        const query = `SELECT * from ${dbTableName} ${whereClause}`;
+        const query = `SELECT * from ${dbTableName} ${joinClause} ${whereClause}`;
+
         return executeQuery(query);
     },
     /**

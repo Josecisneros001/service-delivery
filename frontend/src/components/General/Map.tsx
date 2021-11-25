@@ -2,8 +2,9 @@ import React, { useEffect } from 'react';
 import { GoogleMap, useJsApiLoader, Marker, Circle } from '@react-google-maps/api';
 
 interface MapProps {
+    fixedCenter?: {lat: number, lng: number}
     radius?: number;
-    onCenterChange: Function;
+    onCenterChange?: Function;
 }
 
 const containerStyle = {
@@ -22,7 +23,7 @@ const options = {
   panControl : false,
   streetViewControl: false,
   zoomControlOptions: {
-    position: 9
+    position: 1
   }
 }
 
@@ -40,7 +41,9 @@ function Map(props: MapProps) {
     
     const onLoad = React.useCallback(function callback(map) {
       setMap(map);
-      props.onCenterChange(center);
+      if(props.onCenterChange && !props.fixedCenter){
+        props.onCenterChange(center);
+      }
     }, [props])
   
     const onUnmount = React.useCallback(function callback(map) {
@@ -50,16 +53,19 @@ function Map(props: MapProps) {
     useEffect(() => {
       if (map) {
         setRadius((props?.radius || 0));
+        setCoord((props?.fixedCenter || center));
       }
-    }, [props.radius, map]);
+    }, [props, map]);
 
     const onCenterChanged = () => {
-      if (map) {
+      if (map && !props.fixedCenter) {
         const mapCenter = map.getCenter();
         const lat = mapCenter?.lat() || center.lat;
         const lng = mapCenter?.lng() || center.lng;
         setCoord({lat: lat, lng: lng});
-        props.onCenterChange({lat: lat, lng: lng})
+        if(props.onCenterChange){
+          props.onCenterChange({lat: lat, lng: lng})
+        }
       }
     };
 
