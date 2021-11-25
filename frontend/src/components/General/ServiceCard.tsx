@@ -12,7 +12,7 @@ function ServiceCard(props: {
     >
       <div className="flex flex-col">
         <div className="flex flex-row-reverse px-2 underline">
-        <NavLink className="underline" to={"/service-providers/homepage"}>
+        <NavLink className="underline" to={"/service-providers/create-service"}>
           Edit
         </NavLink>
         </div>

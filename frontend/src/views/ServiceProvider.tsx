@@ -9,6 +9,7 @@ import UploadFilesForm from '../components/SignUp/UploadFilesForm/UploadFilesFor
 import PrivateRoute from '../scripts/PrivateRoute';
 import Availability from '../components/ServiceProviders/Availability';
 import CreateNewService from '../components/ServiceProviders/CreateNewService';
+import MyServices from '../components/ServiceProviders/MyServices/MyServices';
 
 export default class ServiceProvider extends Component {  
   public render() { 
@@ -32,6 +33,10 @@ export default class ServiceProvider extends Component {
           <Route
             path="/reservations"
             element={<PrivateRoute is_service_provider={true} redirectTo="login"><Reservations/></PrivateRoute>}
+          />
+          <Route
+            path="/my-services"
+            element={<PrivateRoute is_service_provider={true} redirectTo="login"><MyServices/></PrivateRoute>}
           />
           <Route
             path="/"

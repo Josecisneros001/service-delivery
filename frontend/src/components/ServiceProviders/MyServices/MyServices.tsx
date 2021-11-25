@@ -9,7 +9,7 @@ const MyServices = () => {
       <ServiceProviderNavbar />
       <div className="flex justify-between px-12 py-4 flex text-xl">
         <div className="text-5xl">My Services</div>
-        <NavLink className="underline" to={"/service-providers/homepage"}>
+        <NavLink className="underline" to={"/service-providers/create-service"}>
           Add Service
         </NavLink>
       </div>
