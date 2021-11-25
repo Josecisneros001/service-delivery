@@ -1,6 +1,5 @@
 import React from "react";
 import UsersNavbar from "../UsersNavbar";
-import Reservations from "../../ServiceProviders/Reservations/Reservations";
 
 const MyReservations = () => {
   return (
