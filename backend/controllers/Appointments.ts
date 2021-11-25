@@ -36,11 +36,17 @@ export const Appointments = {
      * Function that get list of records.
      */
     getAll: async function (filters: Model): Promise<CustomResponse> {
-        const params = ["id", "user_id", "service_id"];
-        const dbRelations = [`${dbTableName}.id`, `${dbTableName}.user_id`, `${dbTableName}.service_id`];
-        const types = ["number", "number", "number"];
+        const params = ["id", "user_id", "service_id", "from_timestamp", "to_timestamp" ];
+        const dbRelations = [`${dbTableName}.id`, `${dbTableName}.user_id`, `${dbTableName}.service_id`, `${dbTableName}.timestamp`, `${dbTableName}.timestamp`];
+        const types = ["number", "number", "number", "number_min", "number_max"];
+        let joinClause = '';
+        if (filters["include_info"]) {
+            joinClause=`LEFT JOIN users_left as users ON ${dbTableName}.user_id = users.usr_id `
+            joinClause+=`LEFT JOIN services_left as services ON ${dbTableName}.service_id = services.srv_id `
+            joinClause+=`LEFT JOIN service_categories_left as service_categories ON services.srv_category_id = service_categories.ctg_id `
+        }
         const whereClause = buildWhereClause(filters, params, dbRelations, types);
-        const query = `SELECT * from ${dbTableName} ${whereClause}`;
+        const query = `SELECT * from ${dbTableName} ${joinClause} ${whereClause}`;
         return executeQuery(query);
     },
     /**

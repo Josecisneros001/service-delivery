@@ -3,7 +3,6 @@ import { Routes, Route } from 'react-router-dom';
 import Chats from '../components/Chats/Chats';
 import Login from '../components/Login/Login';
 import CreateNewService from '../components/ServiceProviders/CreateNewService';
-import Reservations from '../components/ServiceProviders/Reservations/Reservations';
 import ServiceProviderHomePage from '../components/ServiceProviders/HomePage/ServiceProviderHomePage';
 import SignUp from '../components/SignUp/SignUp';
 import UploadFilesForm from '../components/SignUp/UploadFilesForm/UploadFilesForm';
@@ -29,10 +28,6 @@ export default class ServiceProvider extends Component {
           <Route
             path="/create-service"
             element={<PrivateRoute is_service_provider={true} redirectTo="login"><CreateNewService/></PrivateRoute>}
-          />
-          <Route
-            path="/reservations"
-            element={<PrivateRoute is_service_provider={true} redirectTo="login"><Reservations/></PrivateRoute>}
           />
           <Route
             path="/"
