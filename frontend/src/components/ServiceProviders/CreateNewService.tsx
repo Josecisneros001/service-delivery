@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ServiceProviderNavbar from './ServiceProviderNavbar';
 
 export default class CreateNewService extends Component {
 
@@ -9,7 +10,9 @@ export default class CreateNewService extends Component {
   }
 
   public render() {
-    return (       
+    return (
+      <>
+        <ServiceProviderNavbar />
         <div className="flex justify-center items-center w-full md:w-2/3 lg:w-1/2 border-2 border-red-50 mt-10 p-3 md:mx-auto">
           <form action="./" onSubmit={this.handleSubmit}>
             {/* NAME OF SERVICE INPUT */}
@@ -103,6 +106,7 @@ export default class CreateNewService extends Component {
 
           </form>
         </div>
+      </>
     );
   }
 }

@@ -42,7 +42,11 @@ export const Users = {
         if (excludePassword) {
             dbTableName_ = "users_no_password as users";
         }
-        const whereClause = buildWhereClause(filters, params, dbRelations, types);
+        let conditions = [];
+        if (filters["filter"]) {
+            conditions.push(`(${dbTableName}.email LIKE '%${filters["filter"]}%' OR CONCAT(${dbTableName}.first_name," ", ${dbTableName}.last_name) LIKE '%${filters["filter"]}%')`);
+        }
+        const whereClause = buildWhereClause(filters, params, dbRelations, types, conditions);
         const query = `SELECT * from ${dbTableName_} ${whereClause}`;
         return executeQuery(query);
     },
@@ -99,7 +103,8 @@ export const Users = {
         if (userRequest.status == 200 && userRequest.data.length > 0) {
             const userData = userRequest.data[0] as Model;
             if (userData.password && await passwordMatch(params.password, userData.password)){
-                return successReponse("Success", true);
+                delete userData.password;
+                return successReponse("Success", userData);
             } else {
                 return failResponse("Authentication Failed", false);
             }

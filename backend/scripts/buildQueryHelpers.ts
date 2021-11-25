@@ -13,7 +13,7 @@ export const buildWhereClause = (filters: any, params: string[], dbRelations: st
 		const dbRelation = dbRelations[index]
 		if ((param in filters)) {
 			if (types[index] == "string") {
-				conditions.push(`${dbRelation} LIKE '%${filters[param]}%'`)
+				conditions.push(`${dbRelation} = '${filters[param]}'`);
 			} else if (types[index] == "number_min") {
 				conditions.push(`${dbRelation} >= '${filters[param]}'`);
 			} else if (types[index] == "number_max") {
