@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Map from '../General/Map';
 import ServiceProviderNavbar from './ServiceProviderNavbar';
 
 export default class CreateNewService extends Component {
@@ -17,7 +18,7 @@ export default class CreateNewService extends Component {
           <form action="./" onSubmit={this.handleSubmit}>
             {/* NAME OF SERVICE INPUT */}
             <label className="font-bold">Name of service</label>
-            <input type="text" placeholder="ex. Tutoring" className="mt-2 mb-5 px-8 w-full border rounded py-2 text-gray-700 focus:outline-none items-center bg-gray-100"/>
+            <input type="text" placeholder="ex. Tutoring for Web Development" className="mt-2 mb-5 px-8 w-full border rounded py-2 text-gray-700 focus:outline-none items-center bg-gray-100"/>
 
             {/* CATEGORIES INPUT */}
             <div className="flex flex-col">
@@ -26,52 +27,52 @@ export default class CreateNewService extends Component {
               {/* TODO: Add categories dinamically */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 <label htmlFor="gardening" className="mt-2 ml-3 cursor-pointer">
-                  <input type="checkbox" id="gardening" />
+                  <input type="radio" id="gardening" name="category"/>
                   <span className="ml-2">Gardening</span>
                 </label>
 
                 <label htmlFor="cleaning" className="mt-2 ml-3 cursor-pointer">
-                  <input type="checkbox" id="cleaning" />
+                  <input type="radio" id="cleaning" name="category"/>
                   <span className="ml-2">Cleaning</span>
                 </label>
 
                 <label htmlFor="exterminator" className="mt-2 ml-3 cursor-pointer">
-                  <input type="checkbox" id="exterminator" />
+                  <input type="radio" id="exterminator" name="category"/>
                   <span className="ml-2">Exterminator</span>
                 </label>
 
                 <label htmlFor="electrician" className="mt-2 ml-3 cursor-pointer">
-                  <input type="checkbox" id="electrician" />
+                  <input type="radio" id="electrician" name="category"/>
                   <span className="ml-2">Electrician</span>
                 </label>
 
                 <label htmlFor="mechanic" className="mt-2 ml-3 cursor-pointer">
-                  <input type="checkbox" id="mechanic" />
+                  <input type="radio" id="mechanic" name="category"/>
                   <span className="ml-2">Mechanic</span>
                 </label>
 
                 <label htmlFor="tutoring" className="mt-2 ml-3 cursor-pointer">
-                  <input type="checkbox" id="tutoring" />
+                  <input type="radio" id="tutoring" name="category"/>
                   <span className="ml-2">Tutoring</span>
                 </label>
 
                 <label htmlFor="chef" className="mt-2 ml-3 cursor-pointer">
-                  <input type="checkbox" id="chef" />
+                  <input type="radio" id="chef" name="category"/>
                   <span className="ml-2">Chef</span>
                 </label>
 
                 <label htmlFor="catering" className="mt-2 ml-3 cursor-pointer">
-                  <input type="checkbox" id="catering" />
+                  <input type="radio" id="catering" name="category"/>
                   <span className="ml-2">Catering</span>
                 </label>
 
                 <label htmlFor="babysitting" className="mt-2 ml-3 cursor-pointer">
-                  <input type="checkbox" id="babysitting" />
+                  <input type="radio" id="babysitting" name="category"/>
                   <span className="ml-2">Babysitting</span>
                 </label>
 
                 <label htmlFor="moving-out" className="mt-2 ml-3 cursor-pointer">
-                  <input type="checkbox" id="moving-out" />
+                  <input type="radio" id="moving-out" name="category"/>
                   <span className="ml-2">Moving out</span>
                 </label>
               </div>
@@ -87,13 +88,11 @@ export default class CreateNewService extends Component {
             <label className="font-bold">Price per hour</label>
             <input type="text" placeholder="ex. 50 / hr" className="mt-2 mb-5 px-8 w-full border rounded py-2 text-gray-700 focus:outline-none items-center bg-gray-100"/>
 
-            {/* AVAILABILITY INPUT */}
-            <label className="font-bold">Availability</label>
-            <input type="text" placeholder="ex. Mon-Fri 9:00-16:00" className="mt-2 mb-5 px-8 w-full border rounded py-2 text-gray-700 focus:outline-none items-center bg-gray-100"/>
-
             {/* LOCATION INPUT */}
             <label className="font-bold">Location</label>
-            <input type="text" placeholder="ex. Monterrey" className="mt-2 mb-5 px-8 w-full border rounded py-2 text-gray-700 focus:outline-none items-center bg-gray-100"/>
+            <div className="w-full h-52 mb-5">
+              <Map />
+            </div>
 
             {/* PHOTOS INPUT */}
             <label className="font-bold">Photos</label>
