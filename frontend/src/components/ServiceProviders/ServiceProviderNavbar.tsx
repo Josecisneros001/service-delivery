@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from '../General/Navbar';
 
 const navigation = {
-  brand: { name: 'Service Delivery', to: '/' },
+  brand: { name: 'Service Delivery', to: '/service-providers/homepage' },
   links: [
     { name: 'My Services', to: '/service-providers/my-services' },
     { name: 'Chat', to: '/service-providers/chats' },
