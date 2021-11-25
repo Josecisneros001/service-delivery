@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 function ServiceCard(props: {
   title: string;
   subtitle: string;
@@ -11,7 +12,9 @@ function ServiceCard(props: {
     >
       <div className="flex flex-col">
         <div className="flex flex-row-reverse px-2 underline">
-          <button>Edit</button>
+        <NavLink className="underline" to={"/service-providers/homepage"}>
+          Edit
+        </NavLink>
         </div>
         <div className="text-3xl pb-3">
           <span> {props.title} </span>
