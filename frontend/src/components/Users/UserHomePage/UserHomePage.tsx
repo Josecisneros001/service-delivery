@@ -4,12 +4,10 @@ import FoundServiceListItem from "./FoundServiceListItem";
 import { Users as UsersModel } from "../../../interfaces/models/Users";
 import { getCurrentUser } from "../../../scripts/APIs";
 import { Users } from "../../../scripts/APIs/Users";
-import { Services as ServicesModel } from "../../../interfaces/models/Services";
 import Map from "../../General/Map";
 import Slider from "../../General/Slider";
 import { ServiceCategories as ServiceCategoriesModel } from "../../../interfaces/models/ServiceCategories";
 import { ServiceCategories } from "../../../scripts/APIs/ServiceCategories";
-import { ServicePhotos } from "../../../interfaces/models/ServicePhotos";
 import { Services } from "../../../scripts/APIs/Services";
 import { ServiceFound, ServiceFoundRow } from "../../../interfaces/ServiceFoundRow";
 
@@ -91,7 +89,7 @@ const UserHomePage = (props: UserProfileProps) => {
             {/* USER SERVICES INFORMATION */}
             <div className="flex flex-col justify-center align-middle w-full sm:w-2/3 mx-auto">
                 <div className="relative w-full h-96 mb-28">
-                    <h2 className="self-center my-3 text-2xl text-center">Search Services</h2>
+                    <div className="text-3xl w-full text-center py-3">Search Services</div>
                     <select 
                         className={`absolute top-18 right-0 z-50 block p-3 px-2 border-2 border-gray-400 w-44 ${errorSearch? 'border-red-600': ''}`}
                         onChange={event => {setSearchCategory(parseInt(event.target.value))}}

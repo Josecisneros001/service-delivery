@@ -40,12 +40,20 @@ export const Appointments = {
         const dbRelations = [`${dbTableName}.id`, `${dbTableName}.user_id`, `${dbTableName}.service_id`, `${dbTableName}.timestamp`, `${dbTableName}.timestamp`];
         const types = ["number", "number", "number", "number_min", "number_max"];
         let joinClause = '';
-        if (filters["include_info"]) {
-            joinClause=`LEFT JOIN users_left as users ON ${dbTableName}.user_id = users.usr_id `
+        let conditions = [] as string[];
+        if (filters["include_info"]  && filters["include_info"] !== "false") {
             joinClause+=`LEFT JOIN services_left as services ON ${dbTableName}.service_id = services.srv_id `
+            if (filters["include_info_sp"] && filters["include_info_sp"] !== "false") {
+                joinClause+=`LEFT JOIN users_left as users ON services.srv_user_id = users.usr_id `
+            } else {
+                joinClause+=`LEFT JOIN users_left as users ON ${dbTableName}.user_id = users.usr_id `
+            }
             joinClause+=`LEFT JOIN service_categories_left as service_categories ON services.srv_category_id = service_categories.ctg_id `
+            if(filters["service_provider_id"]) {
+                conditions.push(`services.srv_user_id = ${filters["service_provider_id"]}`)
+            }
         }
-        const whereClause = buildWhereClause(filters, params, dbRelations, types);
+        const whereClause = buildWhereClause(filters, params, dbRelations, types, conditions);
         const query = `SELECT * from ${dbTableName} ${joinClause} ${whereClause}`;
         return executeQuery(query);
     },

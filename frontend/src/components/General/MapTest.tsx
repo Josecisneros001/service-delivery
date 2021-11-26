@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import Map from '../General/Map';
-import Slider from '../General/Slider';
+import Map from './Map';
+import Slider from './Slider';
 
 const MapTest = () => {
     const [radius, setRadius] = React.useState(0);
