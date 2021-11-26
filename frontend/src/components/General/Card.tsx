@@ -7,11 +7,11 @@ function Card(props: {
     backgroundColor: string,
 }): JSX.Element {
     return (
-        <div className={`shadow-xl rounded-xl ${props.className} ${props.backgroundColor}`}>
+        <div className={`relative shadow-xl rounded-xl ${props.className} ${props.backgroundColor}`}>
             <div className="flex flex-col">
                 <div className="text-2xl">
                     <span> {props.title} </span>
-                    -
+                    {props.subtitle ?  "-" : ""}
                     <span> {props.subtitle} </span>
                 </div>
                 <div className="w-full rounded-2xl bg-white">

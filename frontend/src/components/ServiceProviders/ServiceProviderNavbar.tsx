@@ -3,8 +3,10 @@ import { Users } from '../../interfaces/models/Users';
 import Navbar from '../General/Navbar';
 
 const navigation = {
-  brand: { name: 'Service Delivery', to: '/service-providers/homepage' },
+  brand: { name: 'Service Delivery', to: '/service-providers/' },
   links: [
+    { name: 'Home', to: '/service-providers/' },
+    { name: 'Availability', to: '/service-providers/availability' },
     { name: 'My Services', to: '/service-providers/my-services' },
     { name: 'Chat', to: '/service-providers/chats' },
   ]
