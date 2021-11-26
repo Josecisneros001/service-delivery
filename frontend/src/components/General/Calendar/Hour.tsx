@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
+import "./Hour.css"
 
 interface HourProps {
     label: string;
+    isAvailable: boolean;
+    index: number;
+    onChange: Function;
 }
 
 interface HourState {
@@ -15,11 +19,26 @@ class Hour extends React.Component<HourProps, HourState,{}> {
             active: false,
         }
     }
-    render() { 
+
+    componentDidUpdate = (prevProps: HourProps) => {
+        if (prevProps.isAvailable !== this.props.isAvailable) {
+            this.setState({active: this.props.isAvailable});
+        }
+    }
+
+    mouseAction = (e: MouseEvent<HTMLDivElement>) => {
+        if (e.buttons === 1) {
+            this.props.onChange(this.props.index, !this.state.active);
+            this.setState({active: !this.state.active});
+        }
+    }
+
+    render() {
         return (
             <div 
-                className={`h-10 cursor-pointer px-2 text-center ${this.state.active? 'bg-blue-100' : 'bg-white' }`}
-                onClick={()=>{this.setState({active: !this.state.active})}}
+                className={`noselect cursor-pointer px-2 py-1.5 text-center ${this.state.active? 'bg-blue-100' : 'bg-white' }`}
+                onMouseDown={this.mouseAction}
+                onMouseOver={this.mouseAction}
             >
                 {this.props.label}
             </div>

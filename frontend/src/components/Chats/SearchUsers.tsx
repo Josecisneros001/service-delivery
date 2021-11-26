@@ -48,7 +48,7 @@ class SearchUsers extends React.Component<SearchUsersProps, SearchUsersState,{}>
         return (
             <div className="relative text-gray-600 focus-within:text-gray-400">
                 <span className="absolute inset-y-0 left-0 flex items-center pl-2">
-                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" className="w-6 h-6 text-gray-500"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" className="w-6 h-6 text-gray-500"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                 </span>
                 <input
                     type='text'
@@ -59,7 +59,7 @@ class SearchUsers extends React.Component<SearchUsersProps, SearchUsersState,{}>
                 />
                 <div className="autocomplete-items absolute z-40 top-full left-0 right-0 bg-white">
                     {this.state.autocomplete?.map((user)=> {
-                        return <UsersRow onClick={this.userFound} user={user} />;
+                        return <UsersRow onClick={this.userFound} user={user} key={user.id} />;
                     })}
                 </div>
             </div>

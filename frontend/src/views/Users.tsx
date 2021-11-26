@@ -7,6 +7,7 @@ import UploadFilesForm from '../components/SignUp/UploadFilesForm/UploadFilesFor
 import Chats from '../components/Chats/Chats';
 import RequestPage from '../components/Users/RequestPage';
 import MapTest from '../components/Users/MapTest';
+import UserHomePage from '../components/Users/UserHomePage/UserHomePage';
 
 export default class Users extends Component {
 
@@ -31,7 +32,7 @@ export default class Users extends Component {
           {/* TODO: Change * to Home View */}
           <Route
             path="*"
-            element={<PrivateRoute is_service_provider={false} redirectTo="login"><>Home</></PrivateRoute>}
+            element={<PrivateRoute is_service_provider={false} redirectTo="login"><UserHomePage /></PrivateRoute>}
           />
           <Route path="/request" element={<RequestPage is_service_provider={true}/>}/>
         </Routes>

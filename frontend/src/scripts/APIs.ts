@@ -1,7 +1,8 @@
 import cookie from 'react-cookies';
 
 export const BACK_AVAILABLE = ( process.env.REACT_APP_BACK_AVAILABLE === 'true' ? true : false ); 
-export const BACK_HOST_NAME = process.env.REACT_APP_BACK_API_HOST_NAME || 'http://localhost:3001/';
+export const BACK_HOST_NAME = process.env.REACT_APP_BACK_HOST_NAME || 'http://localhost:3001/';
+
 export const BACK_ENDPOINT = BACK_HOST_NAME + "api/v1/";
 
 export const getFileUrl = (filePath?: string) => {

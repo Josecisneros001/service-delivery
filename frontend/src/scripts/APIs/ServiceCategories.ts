@@ -1,5 +1,5 @@
 import type { ServiceCategories as Model } from '../../interfaces/models/ServiceCategories';
-import { doFetch, getUrlParams } from '../APIs';
+import { doFetch } from '../APIs';
 
 export const ServiceCategories = {
   create: async (params: Model) => {
