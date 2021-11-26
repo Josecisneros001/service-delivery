@@ -12,6 +12,7 @@ export const ServicePhotos = {
      * Function that creates a record.
      */
     create: async function (params: Model): Promise<CustomResponse> {
+        params.description = params.description || '';
         const fields = ["service_id", "description", "photo_url"];
         const timestamp = new Date().toISOString();
         const query = buildInsertInto(params, dbTableName, fields, timestamp);
