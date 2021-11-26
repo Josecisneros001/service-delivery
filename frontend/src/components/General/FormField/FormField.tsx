@@ -5,12 +5,14 @@ class FormField extends React.Component<FormFieldI,{ value: string },{}> {
     constructor(props: FormFieldI) {
         super(props);
         this.state = {value: props.initialValue || ''};
+        this.props.onChange(props.initialValue || '');
         this.handleChange = this.handleChange.bind(this);
     }
 
     componentDidUpdate(prevProps: FormFieldI) {
         if(this.props.initialValue !== prevProps.initialValue) {
             this.setState({value: this.props.initialValue || ''});
+            this.props.onChange(this.props.initialValue || '');
         }
     }
 
@@ -25,7 +27,7 @@ class FormField extends React.Component<FormFieldI,{ value: string },{}> {
 
     render() { 
         return (
-            <div className={`flex-1 flex ${this.orientationClass()} text-2xl`}>
+            <div className={`flex-1 flex ${this.orientationClass()} text-2xl`}  style={{opacity: this.props.disabled? '0.5' : '1'}} >
                 <div className="w-full text-left">
                     <label> {this.props.label} </label>
                 </div>

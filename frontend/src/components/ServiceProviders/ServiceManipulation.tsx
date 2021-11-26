@@ -5,7 +5,7 @@ import { ServiceCategories as ServiceCategoriesModel } from "../../interfaces/mo
 import { Users as UsersModel } from "../../interfaces/models/Users";
 import { Users } from '../../scripts/APIs/Users';
 import { ServiceCategories } from '../../scripts/APIs/ServiceCategories';
-import { getCurrentUser } from '../../scripts/APIs';
+import { getCurrentUser, getFileUrl } from '../../scripts/APIs';
 import FormField from '../General/FormField/FormField';
 import Slider from '../General/Slider';
 import { Services } from '../../scripts/APIs/Services';
@@ -96,6 +96,9 @@ const ServiceManipulation = (props: ServiceManipulationProps) => {
               setEdit(true);
               const photo_urls = srv.photo_urls.split(',');
               const photo_desc = srv.descriptions.split(',');
+              setCoord({lat: srv.location_lat, lng: srv.location_lng});
+              setRadius(srv.location_radius);
+              setPreviews(photo_urls.map((path) => getFileUrl(path)));
               setService({
                 "service": {
                     id: srv.id,
@@ -164,13 +167,13 @@ const ServiceManipulation = (props: ServiceManipulationProps) => {
       setShowAlert(true);
       return false;
     }
-    if (images.length == 0) {
+    if (previews.length == 0) {
       setErrorsTimeOut("images");
       setSnackBarMsg('Missing Field - Description');
       setShowAlert(true);
       return false;
     }
-    if (images.length > 4) {
+    if (previews.length > 4) {
       setErrorsTimeOut("images");
       setSnackBarMsg('Maximum 4 Photos Per Service');
       setShowAlert(true);
@@ -194,22 +197,32 @@ const ServiceManipulation = (props: ServiceManipulationProps) => {
       location_lng: coord.lng,
       location_radius: radius,
     } as ServicesModel;
-    const responseCreate = await Services.create(params);
-    if(responseCreate.status !== 200) {
+    let response;
+    if(edit && service?.service.id) {
+      delete params.category_id;
+      delete params.name;
+      delete params.user_id;
+      response = await Services.update(service.service.id, params);
+    } else {
+      response = await Services.create(params);
+    }
+    if(response && response.status !== 200) {
       setSnackBarMsg('Server Error - Try Again Later');
       setShowAlert(true);
       setLoading(false);
       return;
     }
-    const srv_id = responseCreate.data.id as number;
-    const data = new FormData(formRef.current as HTMLFormElement);
-    const responsePhotos = await ServicePhotos.create(srv_id, data);
-		if(responsePhotos.status !== 200) {
-		  setSnackBarMsg('Server Error Uploading Photos - Try Again Later');
-      setShowAlert(true);
-      setLoading(false);
-		  return;
-		}
+    const srv_id = response.data.id as number;
+    if (images.length > 0) {
+      const data = new FormData(formRef.current as HTMLFormElement);
+      const responsePhotos = await ServicePhotos.create(srv_id, data);
+      if(responsePhotos.status !== 200) {
+        setSnackBarMsg('Server Error Uploading Photos - Try Again Later');
+        setShowAlert(true);
+        setLoading(false);
+        return;
+      }
+    }
     setLoading(false);
     setIsDone(true);
   }
@@ -226,9 +239,11 @@ const ServiceManipulation = (props: ServiceManipulationProps) => {
         message={snackBarMsg}
       />
       <ServiceProviderNavbar user={user} />
-      <div className="flex justify-center items-center w-full md:w-2/3 lg:w-1/2 border-2 shadow mt-10 p-3 md:mx-auto" style={{opacity: loading? '0.5' : '1'}}>
+      <div className="flex justify-center items-center w-full md:w-2/3 lg:w-1/2 border-2 shadow mt-2 p-3 md:mx-auto" style={{opacity: loading? '0.5' : '1'}}>
         <form onSubmit={handleSubmit} autoComplete="nope" ref={formRef} >
-          <div className="text-2xl mb-4 text-center">Create Service</div>
+          <div className="text-2xl mb-4 text-center">
+            {`${edit? "Edit" : "Create"} Service`}
+          </div>
           {/* NAME OF SERVICE INPUT */}
           <FormField
             orientation="col"
@@ -236,6 +251,8 @@ const ServiceManipulation = (props: ServiceManipulationProps) => {
             placeholder="ex. Tutoring for Web Development"
             onChange={setName}
             hasError={errors?.name}
+            disabled={edit}
+            initialValue={service?.service.name}
           />
   
           {/* CATEGORIES INPUT */}
@@ -245,6 +262,8 @@ const ServiceManipulation = (props: ServiceManipulationProps) => {
             label='Category'
             onChange={setCategory}
             hasError={errors?.category}
+            disabled={edit}
+            initialValue={service?.service.category_id?.toString()}
           >
             {serviceCategories.map((category) => {
                 return (
@@ -262,6 +281,7 @@ const ServiceManipulation = (props: ServiceManipulationProps) => {
             placeholder="ex. I'll teach you React and Vue."
             onChange={setDesc}
             hasError={errors?.desc}
+            initialValue={service?.service.description?.toString()}
           />
   
           {/* LOCATION INPUT */}
@@ -320,7 +340,9 @@ const ServiceManipulation = (props: ServiceManipulationProps) => {
   
           {/* BOTON SUBMIT FORM */}
           <div className="flex justify-center mt-7">
-            <button type="submit" className="rounded-full px-10 py-3 bg-gray-100">Create</button>
+            <button type="submit" className="rounded-full px-10 py-3 bg-gray-100">
+              {`${edit? "Update" : "Create"}`}
+            </button>
           </div>
   
         </form>

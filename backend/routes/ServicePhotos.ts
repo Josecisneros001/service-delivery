@@ -51,6 +51,7 @@ ServicePhotos.post('/', async function (req: Request, res: Response, _next: Next
     if (!req.files) {
       return res.status(200).json(failResponse("Bad Request, Try Again", false));
     }
+    await Controller.deleteByService(parseInt(service_id));
     let response = [] as any[];
     for(const file of req.files as Express.Multer.File[]) {
       let reqObj = {} as {[key:string]: string};

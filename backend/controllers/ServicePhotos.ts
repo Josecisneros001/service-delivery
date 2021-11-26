@@ -65,4 +65,18 @@ export const ServicePhotos = {
         }
         return failResponse("Bad Request", result);
     },
+    /**
+     * Function that delete a record by id.
+    */
+    deleteByService: async function (service: number): Promise<CustomResponse> {
+        if (!service) {
+            return failResponse("Missing Parameters", false);
+        }
+        const query = `DELETE from ${dbTableName} where service_id = '${service}'`;
+        const result = await executeQuery(query);
+        if (result.status == 200) {
+            return successReponse("Success", false);
+        }
+        return failResponse("Bad Request", result);
+    },
 };
