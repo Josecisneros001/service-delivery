@@ -76,6 +76,9 @@ const MyServices = () => {
                     <ServiceCard  {...serviceFound} />
                 );
             })}
+            {servicesFound.length === 0
+            ? <div className="w-full m-auto text-center text-xl mt-6"> No Data</div>
+            : <></>}
         </div>
       </div>
     </>
