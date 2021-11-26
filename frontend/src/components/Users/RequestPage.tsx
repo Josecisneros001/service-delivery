@@ -105,7 +105,7 @@ class RequestPage extends Component<{ is_service_provider: boolean },UserRequest
       const startHr = this.state.workHoursInfo?.hour || 1;
       const startDate = new Date("11/23/2021 " + startHr?.toString() + "00:00");
       const duration = this.state.workHoursInfo?.duration || 1;
-      const endHr = startHr + (duration / 60);
+      const endHr = startHr + duration;
       const endDate = new Date("11/23/2022 " + endHr?.toString()+ "00:00");
       schedule.addWeeklyRecurringAvailability(startDate.toISOString(), endDate.toISOString(), [1, 2, 3, 4, 5]); // Mon-Fri 9am-5pm UTC, starting on Wed Jan 4th
       
