@@ -70,7 +70,8 @@ const Availability = () => {
         message={snackBarMsg}
       />
       <ServiceProviderNavbar user={user} />
-      <div className="flex flex-col h-1/2 w-full mx-auto sm:w-3/4 mt-10" style={{opacity: loading? '0.5' : '1'}} >
+      <div className="flex flex-col h-1/2 w-full mx-auto sm:w-3/4" style={{opacity: loading? '0.5' : '1'}} >
+          <div className="text-3xl w-full text-center py-3">Availability</div>
           <Calendar availability={avData} onChange={(availability: AvailabilityModel) => {setAvData(availability)} } />
           <button
             type="button"
@@ -78,7 +79,7 @@ const Availability = () => {
             onClick={handleSubmit}
             disabled={loading}
           >
-            Save Availability
+            Save
           </button>
       </div>
     </>
