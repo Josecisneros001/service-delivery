@@ -7,6 +7,11 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const pool = mysql.createPool({
+  timezone: 'UTC',
+  dateStrings: [
+    'DATE',
+    'DATETIME'
+  ],
   connectionLimit : 100,
   host     : process.env.MYSQL_HOST,
   user     : process.env.MYSQL_USER,

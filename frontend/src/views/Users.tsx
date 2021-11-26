@@ -5,6 +5,9 @@ import SignUp from '../components/SignUp/SignUp';
 import PrivateRoute from '../scripts/PrivateRoute';
 import UploadFilesForm from '../components/SignUp/UploadFilesForm/UploadFilesForm';
 import EditProfile from '../components/ServiceProviders/EditProfile/EditProfile';
+import Chats from '../components/Chats/Chats';
+import UserHomePage from '../components/Users/UserHomePage/UserHomePage';
+import MyReservations from '../components/Users/MyReservations/MyReservations';
 
 export default class Users extends Component {
 
@@ -14,15 +17,29 @@ export default class Users extends Component {
         <Routes>
           <Route path="/login" element={<Login is_service_provider={false}/>}/>
           <Route path="/signup" element={<SignUp is_service_provider={false}/>}/>
-          <Route path="/edit" element={<EditProfile is_service_provider={false}/>}/>
+          <Route
+            path="/edit-profile"
+            element={<PrivateRoute is_service_provider={false} redirectTo="login"><EditProfile is_service_provider={false}/></PrivateRoute>}
+          />
           <Route
             path="/upload-files"
             element={<PrivateRoute is_service_provider={false} redirectTo="login"><UploadFilesForm is_service_provider={false}/></PrivateRoute>}
           />
-          {/* TODO: Change * to Home View */}
+          <Route
+            path="/chats"
+            element={<PrivateRoute is_service_provider={false} redirectTo="login"><Chats is_service_provider={false}/></PrivateRoute>}
+          />
+          <Route
+            path="/my-reservations"
+            element={<PrivateRoute is_service_provider={false} redirectTo="login"><MyReservations /></PrivateRoute>}
+          />
+          <Route
+            path="/"
+            element={<PrivateRoute is_service_provider={false} redirectTo="login"><UserHomePage/></PrivateRoute>}
+          />
           <Route
             path="*"
-            element={<PrivateRoute is_service_provider={false} redirectTo="login"><>Home</></PrivateRoute>}
+            element={<PrivateRoute is_service_provider={false} redirectTo="login"><UserHomePage /></PrivateRoute>}
           />
         </Routes>
       </div>

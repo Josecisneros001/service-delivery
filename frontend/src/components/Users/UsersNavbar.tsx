@@ -1,19 +1,21 @@
 import React from 'react';
+import { Users } from '../../interfaces/models/Users';
 import Navbar from '../General/Navbar';
 
 const navigation = {
-  brand: { name: 'Service Delivery', to: '/' },
+  brand: { name: 'Service Delivery', to: '/users/' },
   links: [
-    { name: 'Pending Reservations', to: '/users/pending-reservations' },
-    { name: 'Chat', to: '/users/chat' },
+    { name: 'Home', to: '/users/' },
+    { name: 'My Reservations', to: '/users/my-reservations' },
+    { name: 'Chat', to: '/users/chats' },
   ]
 };
 
-const UsersNavbar = () => {
+const UsersNavbar = (props: { className?: string, user?: Users }) => {
     const { brand, links } = navigation;
 
     return (
-      <Navbar brand={brand} links={links} />
+      <Navbar isServiceProvider={false} className={props.className} brand={brand} links={links} user={props.user} />
     );
 }
 

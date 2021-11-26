@@ -47,6 +47,25 @@ export const ChatMessages = {
         if (filters["user_second_id"]) {
             conditions.push(`(user_sender_id = ${filters["user_second_id"]} OR user_receiver_id = ${filters["user_second_id"]})`);
         }
+        if (filters["lastMessages"] && filters["user_first_id"]) {
+            const user_id = filters["user_first_id"];
+            const query = `SELECT a.*, d.id as user_id, d.first_name, d.last_name, d.email, d.profile_picture
+                FROM ${dbTableName} a
+                INNER JOIN (
+                    SELECT other_user, MAX(registered_on) registered_on
+                    FROM (
+                        SELECT *, IF(user_sender_id = ${user_id}, user_receiver_id, user_sender_id) as other_user
+                        from ${dbTableName}
+                        WHERE user_sender_id = ${user_id} OR user_receiver_id = ${user_id}
+                    ) c
+                    GROUP BY other_user
+                ) b ON IF(a.user_sender_id = ${user_id}, a.user_receiver_id, a.user_sender_id) = b.other_user AND a.registered_on = b.registered_on
+                LEFT JOIN (
+                    SELECT * from users
+                ) d ON d.id = IF(a.user_sender_id = ${user_id}, a.user_receiver_id, a.user_sender_id)
+                WHERE user_sender_id = ${user_id} OR user_receiver_id = ${user_id};`
+            return executeQuery(query);
+        }
         const whereClause = buildWhereClause(filters, params, dbRelations, types, conditions);
         let limitStatement = '';
         if (filters["offset"] && filters["limit"]) {
