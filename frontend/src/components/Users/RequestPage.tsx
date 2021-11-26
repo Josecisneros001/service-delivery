@@ -12,10 +12,15 @@ import { WorkHours } from '../../scripts/APIs/WorkHours';
 import AvailabilitySchedule from 'availability-schedule';
 import Snackbar from '../General/Snackbar';
 import Day from '../General/Calendar/Day'
-import Hour from '../General/Calendar/Hour';
+import { AvailabilityModel, defaultAvailability, defaultAvailabilityDay, toWorkHours, AvailabilityDay, daysN } from '../../interfaces/AvailabilityModel';
 
 const past = {
   before: new Date(),
+}
+
+interface UserRequestProps {
+  availability: AvailabilityModel
+  onChange: Function
 }
 
 export interface UserRequestState {
@@ -27,14 +32,15 @@ export interface UserRequestState {
   duration: number;
   snackBarMsg: string;
   showAlert: boolean;
-  [key: string]: WorkHModel | string | boolean | Date | number | null;
+  availability: AvailabilityModel,
+  [key: string]: WorkHModel | string | boolean | Date | number | AvailabilityModel | null;
 };
 
-class RequestPage extends Component<{ is_service_provider: boolean },UserRequestState, {}> {
+class RequestPage extends Component<{ is_service_provider: boolean },UserRequestState, UserRequestProps> {
     constructor(props: { is_service_provider: boolean }) {
         super(props);
         this.handleDayClick = this.handleDayClick.bind(this);
-        this.state = {workHoursInfo: null, address_info: '', invitationMessage: '', timestamp: "", selectedDay: new Date(), duration: 0, snackBarMsg: "", showAlert: false};
+        this.state = {workHoursInfo: null, address_info: '', invitationMessage: '', timestamp: "", selectedDay: new Date(), duration: 0, snackBarMsg: "", availability:defaultAvailability(), showAlert: false};
         this.handleSubmit = this.handleSubmit.bind(this);
       }
       configSnackbar = {
@@ -64,6 +70,13 @@ class RequestPage extends Component<{ is_service_provider: boolean },UserRequest
     handleTimestamp = (timestampValue: string) => {
       this.setState({timestamp: timestampValue});
     }
+
+    handleChange = (index: number, day: AvailabilityDay) => {
+      const currentAvailability = this.state.availability;
+      currentAvailability[daysN[index]] = day;
+      this.setState({availability: currentAvailability});
+      //this.props.onChange(currentAvailability);
+  }
 
     async handleSubmit(event: React.ChangeEvent<any>) {
       event.preventDefault();
@@ -101,14 +114,25 @@ class RequestPage extends Component<{ is_service_provider: boolean },UserRequest
 
     // checar cuales fechas están disponibles
     async getWorkHrs() {
-      const schedule = new AvailabilitySchedule('2021-11-22T00:00:00Z', '2022-11-24T00:00:00Z');
-      const startHr = this.state.workHoursInfo?.hour || 1;
-      const startDate = new Date("11/23/2021 " + startHr?.toString() + "00:00");
-      const duration = this.state.workHoursInfo?.duration || 1;
-      const endHr = startHr + duration;
-      const endDate = new Date("11/23/2022 " + endHr?.toString()+ "00:00");
-      schedule.addWeeklyRecurringAvailability(startDate.toISOString(), endDate.toISOString(), [1, 2, 3, 4, 5]); // Mon-Fri 9am-5pm UTC, starting on Wed Jan 4th
-      
+      // const schedule = new AvailabilitySchedule('2021-11-22T00:00:00Z', '2022-11-24T00:00:00Z');
+      // const startHr = this.state.workHoursInfo?.hour || 1;
+      // const startDate = new Date("11/23/2021 " + startHr?.toString() + "00:00");
+      // const duration = this.state.workHoursInfo?.duration || 1;
+      // const endHr = startHr + duration;
+      // const endDate = new Date("11/23/2022 " + endHr?.toString()+ "00:00");
+      // schedule.addWeeklyRecurringAvailability(startDate.toISOString(), endDate.toISOString(), [1, 2, 3, 4, 5]); // Mon-Fri 9am-5pm UTC, starting on Wed Jan 4th
+      const response = (await WorkHours.get(getCurrentUser(this.props.is_service_provider), null)).data as WorkHModel[];
+      const dayDict = defaultAvailability();
+      for(const wk of response) {
+        if (wk.day && wk.duration && wk.hour) {
+          wk.day = parseInt(wk.day.toString());
+          wk.duration = parseInt(wk.duration.toString());
+          wk.hour = parseInt(wk.hour.toString());
+          for(let index = wk.hour; index < wk.hour + wk.duration && index <= 23 && index >= 6 ; index++) {
+            dayDict[wk.day][index] = true;
+          }
+        }
+      }
       //schedule.removeAvailability();
     }
 
@@ -148,12 +172,13 @@ class RequestPage extends Component<{ is_service_provider: boolean },UserRequest
                           <DayPicker onDayClick={this.handleDayClick} selectedDays={this.state.selectedDay} disabledDays={ past }/>
                           {this.state.selectedDay ? (
                             <div className="flex-1">
-                                <Day label={this.state.selectedDay.toLocaleDateString()}/>                                    
+                                {/* <Day label={this.state.selectedDay.toLocaleDateString()} index={undefined} availability={undefined} onChange={undefined}/>                                     */}
                             </div>
                             ) : (
                             <p>Please select a day.</p>
                           )}
                         </div>
+                        
                     </div>
                     
                     <div className="flex justify-center pt-20">
