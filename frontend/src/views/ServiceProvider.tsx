@@ -34,12 +34,12 @@ export default class ServiceProvider extends Component {
             element={<PrivateRoute is_service_provider={true} redirectTo="login"><MyServices/></PrivateRoute>}
           />
           <Route
-            path="/"
-            element={<PrivateRoute is_service_provider={true} redirectTo="login"><ServiceProviderHomePage/></PrivateRoute>}
-          />
-          <Route
             path="/availability"
             element={<PrivateRoute is_service_provider={true} redirectTo="login"><Availability /></PrivateRoute>}
+          />
+          <Route
+            path="/"
+            element={<PrivateRoute is_service_provider={true} redirectTo="login"><ServiceProviderHomePage/></PrivateRoute>}
           />
           <Route
             path="*"

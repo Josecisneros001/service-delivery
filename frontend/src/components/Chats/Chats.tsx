@@ -25,6 +25,7 @@ interface ChatsState {
 		user: UsersModel;
 		lastMessage: ChatMessagesModel;
 	}[];
+	user?: UsersModel;
 }
 
 interface ActiveChatsTmp {
@@ -63,6 +64,7 @@ class Chats extends Component<{is_service_provider: boolean, location?: any},Cha
 			snackBarMsg: '',
 			activeChat: null,
 			activeChats: [] as ChatsState["activeChats"],
+			user: undefined,
 		};
 		this.refChatTool = React.createRef();
 		this.fileInputRef = React.createRef();
@@ -85,6 +87,8 @@ class Chats extends Component<{is_service_provider: boolean, location?: any},Cha
 	}
 	
 	async componentDidMount() {
+		const responseUser = (await Users.getById(getCurrentUser(this.props.is_service_provider))).data as UsersModel;
+      	this.setState({user: responseUser});
 		const response = await ChatMessages.get(true, getCurrentUser(this.props.is_service_provider));
 		if(response.status !== 200) {
             this.setState({snackBarMsg: 'Something wrong happen, please try again.', showAlert: true});
@@ -370,8 +374,8 @@ class Chats extends Component<{is_service_provider: boolean, location?: any},Cha
 				<Snackbar {...this.configSnackbar} show={this.state.showAlert} hideEvent={this.hideSnackbar} message={this.state.snackBarMsg} />
 				{
 				this.props.is_service_provider
-				? <ServiceProviderNavbar className="flex-none" />
-				: <UsersNavbar className="flex-none" />
+				? <ServiceProviderNavbar className="flex-none" user={this.state.user} />
+				: <UsersNavbar className="flex-none" user={this.state.user} />
 				}
 				<div className="grid grid-cols-3 min-w-full border rounded flex-1">
 					<div className="col-span-1 bg-white border-r border-gray-300 flex flex-col">

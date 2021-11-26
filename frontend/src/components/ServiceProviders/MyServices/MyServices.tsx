@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import _Services from "../ServiceCards/ServiceCard";
 import ServiceProviderNavbar from "../ServiceProviderNavbar";
 import { NavLink } from "react-router-dom";
 import { Users as UsersModel } from "../../../interfaces/models/Users";

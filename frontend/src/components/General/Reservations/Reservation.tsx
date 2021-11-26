@@ -3,8 +3,8 @@ import { NavLink } from "react-router-dom";
 import { Appointments } from "../../../interfaces/models/Appointments";
 import { Users } from "../../../interfaces/models/Users";
 import { getFileUrl } from "../../../scripts/APIs";
-import DateSquare from "../../General/DateSquare/DateSquare";
-import Map from "../../General/Map";
+import DateSquare from "../DateSquare/DateSquare";
+import Map from "../Map";
 
 const Reservation = (props: {
   client: Users;
@@ -17,11 +17,16 @@ const Reservation = (props: {
       <div className="flex flex-row items-center p-1.5 justify-between">
         <div className="flex flex-row items-center">
           <DateSquare date={new Date(props.reservation.timestamp || '')} />
-          <div
-            className="text-lg p-5 underline cursor-pointer"
-            onClick={()=>setShowMap(!showMap)}
-          >
-            {props.reservation.address_info}
+          <div className="flex flex-col">
+            <div
+              className="text-lg pl-5 underline cursor-pointer"
+              onClick={()=>setShowMap(!showMap)}
+            >
+              {props.reservation.address_info}
+            </div>
+            <div className="text-lg pl-5">
+              {new Date(props.reservation.timestamp || '').toLocaleTimeString()} - {props.reservation.duration} Minutes
+            </div>
           </div>
         </div>
         <div className="flex flex-col">

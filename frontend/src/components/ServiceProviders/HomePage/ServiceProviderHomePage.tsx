@@ -1,49 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./ServiceProviderHomePage.css";
-import Reservations from "../Reservations/Reservations";
+import Reservations from "../../General/Reservations/Reservations";
 import ServiceProviderNavbar from "../ServiceProviderNavbar";
 import { Users as UsersModel } from "../../../interfaces/models/Users";
-import { ReservationFound } from "../../../interfaces/ReservationFound";
+import { ReservationFound, AppointmentRow } from "../../../interfaces/ReservationFound";
 import { Users } from "../../../scripts/APIs/Users";
 import { getCurrentUser } from "../../../scripts/APIs";
 import { Appointments } from "../../../scripts/APIs/Appointments";
 
-interface AppointmentRow {
-  id: number,
-  user_id: number,
-  service_id: number,
-  timestamp: string,
-  duration: number,
-  address_info: string,
-  location_lat: number,
-  location_lng: number,
-  registered_on: string,
-  srv_id: number,
-  srv_user_id: number,
-  srv_category_id: number,
-  srv_name: string,
-  srv_description: string,
-  srv_location_lat: number,
-  srv_location_lng: number,
-  srv_location_radius: number,
-  srv_is_service_fee_per_hour: number,
-  srv_registered_on: string,
-  ctg_name: string,
-  ctg_description: string,
-  usr_id: number,
-  usr_first_name: string,
-  usr_last_name: string,
-  usr_password: string,
-  usr_email: string,
-  usr_recovery_email: string,
-  usr_phone_number: string,
-  usr_alt_phone_number: string,
-  usr_profile_picture: string,
-  usr_file_id: string,
-  usr_file_proof_of_address: string,
-  usr_is_service_provider: number,
-  usr_registered_on: string,
-}
 
 const ServiceProviderHomePage = () => {
   const [user, setUser] = useState<UsersModel | undefined>(undefined);
@@ -54,8 +18,8 @@ const ServiceProviderHomePage = () => {
     (async () => {
       const responseUser = (await Users.getById(getCurrentUser(true))).data as UsersModel;
       setUser(responseUser);
-      const response = (await Appointments.get(null, getCurrentUser(true), null, true, new Date().toISOString(), null)).data as AppointmentRow[];
-      const responsePast = (await Appointments.get(null, getCurrentUser(true), null, true, null, new Date().toISOString())).data as AppointmentRow[];
+      const response = (await Appointments.get(null, getCurrentUser(true), null, true, false, new Date().toISOString(), null)).data as AppointmentRow[];
+      const responsePast = (await Appointments.get(null, getCurrentUser(true), null, true, false, null, new Date().toISOString())).data as AppointmentRow[];
       setReservations(response.map((reservationInfo) => {
         return {
           "service": {

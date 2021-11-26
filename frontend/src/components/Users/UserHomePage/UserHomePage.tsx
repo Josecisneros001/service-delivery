@@ -4,12 +4,10 @@ import FoundServiceListItem from "./FoundServiceListItem";
 import { Users as UsersModel } from "../../../interfaces/models/Users";
 import { getCurrentUser } from "../../../scripts/APIs";
 import { Users } from "../../../scripts/APIs/Users";
-import { Services as ServicesModel } from "../../../interfaces/models/Services";
 import Map from "../../General/Map";
 import Slider from "../../General/Slider";
 import { ServiceCategories as ServiceCategoriesModel } from "../../../interfaces/models/ServiceCategories";
 import { ServiceCategories } from "../../../scripts/APIs/ServiceCategories";
-import { ServicePhotos } from "../../../interfaces/models/ServicePhotos";
 import { Services } from "../../../scripts/APIs/Services";
 import { ServiceFound, ServiceFoundRow } from "../../../interfaces/ServiceFoundRow";
 

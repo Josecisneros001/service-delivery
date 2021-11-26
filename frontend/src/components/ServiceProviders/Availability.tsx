@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import { AvailabilityModel, defaultAvailability, toWorkHours } from '../../interfaces/AvailabilityModel';
+import { Users as UsersModel } from "../../interfaces/models/Users";
 import { WorkHours as WorkHoursModel } from '../../interfaces/models/WorkHours';
 import { getCurrentUser } from '../../scripts/APIs';
 import { WorkHours } from '../../scripts/APIs/WorkHours';
 import Calendar from '../General/Calendar/Calendar';
 import Snackbar from '../General/Snackbar';
 import ServiceProviderNavbar from './ServiceProviderNavbar';
+import { Users } from '../../scripts/APIs/Users';
 
 const configSnackbar = {
   verticalAlign: ["bottom", "top"][0],
@@ -15,6 +17,7 @@ const configSnackbar = {
   timeout: 5000,
 };
 const Availability = () => {
+  const [user, setUser] = React.useState<UsersModel | undefined>(undefined);
   const [avData, setAvData] = React.useState<AvailabilityModel>(defaultAvailability());
   const [showAlert, setShowAlert] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
@@ -22,6 +25,8 @@ const Availability = () => {
 
   useEffect(() => {
     (async () => {
+      const responseUser = (await Users.getById(getCurrentUser(true))).data as UsersModel;
+      setUser(responseUser);
       const response = (await WorkHours.get(getCurrentUser(true), null)).data as WorkHoursModel[];
       const dayDict = defaultAvailability();
       for(const wk of response) {
@@ -64,7 +69,7 @@ const Availability = () => {
         hideEvent={hideSnackbar}
         message={snackBarMsg}
       />
-      <ServiceProviderNavbar />
+      <ServiceProviderNavbar user={user} />
       <div className="flex flex-col h-1/2 w-full mx-auto sm:w-3/4 mt-10" style={{opacity: loading? '0.5' : '1'}} >
           <Calendar availability={avData} onChange={(availability: AvailabilityModel) => {setAvData(availability)} } />
           <button
