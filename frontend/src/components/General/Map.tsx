@@ -53,7 +53,9 @@ function Map(props: MapProps) {
     useEffect(() => {
       if (map) {
         setRadius((props?.radius || 0));
-        setCoord((props?.fixedCenter || center));
+        if(props?.fixedCenter) {
+          setCoord(props?.fixedCenter);
+        }
       }
     }, [props, map]);
 

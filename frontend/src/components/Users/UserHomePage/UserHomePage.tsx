@@ -11,41 +11,9 @@ import { ServiceCategories as ServiceCategoriesModel } from "../../../interfaces
 import { ServiceCategories } from "../../../scripts/APIs/ServiceCategories";
 import { ServicePhotos } from "../../../interfaces/models/ServicePhotos";
 import { Services } from "../../../scripts/APIs/Services";
+import { ServiceFound, ServiceFoundRow } from "../../../interfaces/ServiceFoundRow";
 
 interface UserProfileProps {
-}
-
-interface ServiceFoundRow {
-    id: number,
-    user_id: number,
-    category_id: number,
-    name: string,
-    description: string,
-    location_lat: number,
-    location_lng: number,
-    location_radius: number,
-    is_service_fee_per_hour: number,
-    registered_on: string,
-    first_name: string,
-    last_name: string,
-    password: string,
-    email: string,
-    recovery_email: string,
-    phone_number: string,
-    alt_phone_number: string,
-    profile_picture: string,
-    file_id: string,
-    file_proof_of_address: string,
-    is_service_provider: number,
-    service_id: number,
-    photo_urls: string,
-    descriptions: string,
-}
-
-interface ServiceFound {
-    service: ServicesModel;
-    serviceProvider: UsersModel;
-    servicePhotos: ServicePhotos[];
 }
 
 const UserHomePage = (props: UserProfileProps) => {
@@ -62,7 +30,6 @@ const UserHomePage = (props: UserProfileProps) => {
             const response = (await Users.getById(getCurrentUser(false))).data as UsersModel;
             const responseSC = (await ServiceCategories.get()).data as ServiceCategoriesModel[];
             setUser(response);
-            console.log(response);
             setServiceCategories(responseSC);
         })();
     }, []);
@@ -93,18 +60,19 @@ const UserHomePage = (props: UserProfileProps) => {
                     registered_on: serviceInfo.registered_on,
                 },
                 "serviceProvider": {
-                    id: serviceInfo.user_id,
-                    first_name: serviceInfo.first_name,
-                    last_name: serviceInfo.last_name,
-                    password: serviceInfo.password,
-                    email: serviceInfo.email,
-                    recovery_email: serviceInfo.recovery_email,
-                    phone_number: serviceInfo.phone_number,
-                    alt_phone_number: serviceInfo.alt_phone_number,
-                    profile_picture: serviceInfo.profile_picture,
-                    file_id: serviceInfo.file_id,
-                    file_proof_of_address: serviceInfo.file_proof_of_address,
-                    is_service_provider: serviceInfo.is_service_provider,
+                    id: serviceInfo.usr_id,
+                    first_name: serviceInfo.usr_first_name,
+                    last_name: serviceInfo.usr_last_name,
+                    password: serviceInfo.usr_password,
+                    email: serviceInfo.usr_email,
+                    recovery_email: serviceInfo.usr_recovery_email,
+                    phone_number: serviceInfo.usr_phone_number,
+                    alt_phone_number: serviceInfo.usr_alt_phone_number,
+                    profile_picture: serviceInfo.usr_profile_picture,
+                    file_id: serviceInfo.usr_file_id,
+                    file_proof_of_address: serviceInfo.usr_file_proof_of_address,
+                    is_service_provider: serviceInfo.usr_is_service_provider,
+                    registered_on: serviceInfo.usr_registered_on,
                 },
                 "servicePhotos": photo_urls.map((url, index)=>{
                     return {
