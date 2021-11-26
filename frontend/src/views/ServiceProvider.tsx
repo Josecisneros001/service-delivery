@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Chats from '../components/Chats/Chats';
 import Login from '../components/Login/Login';
+import ServiceManipulation from '../components/ServiceProviders/ServiceManipulation';
 import ServiceProviderHomePage from '../components/ServiceProviders/HomePage/ServiceProviderHomePage';
 import SignUp from '../components/SignUp/SignUp';
 import UploadFilesForm from '../components/SignUp/UploadFilesForm/UploadFilesForm';
 import PrivateRoute from '../scripts/PrivateRoute';
 import Availability from '../components/ServiceProviders/Availability';
-import CreateNewService from '../components/ServiceProviders/CreateNewService';
 import MyServices from '../components/ServiceProviders/MyServices/MyServices';
 
 export default class ServiceProvider extends Component {  
@@ -26,8 +26,8 @@ export default class ServiceProvider extends Component {
             element={<PrivateRoute is_service_provider={true} redirectTo="login"><Chats is_service_provider={true}/></PrivateRoute>}
           />
           <Route
-            path="/create-service"
-            element={<PrivateRoute is_service_provider={true} redirectTo="login"><CreateNewService/></PrivateRoute>}
+            path="/service"
+            element={<PrivateRoute is_service_provider={true} redirectTo="login"><ServiceManipulation /></PrivateRoute>}
           />
           <Route
             path="/my-services"

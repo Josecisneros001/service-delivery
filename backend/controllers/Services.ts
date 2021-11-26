@@ -12,7 +12,7 @@ export const Services = {
      * Function that creates a record.
      */
     create: async function (params: Model): Promise<CustomResponse> {
-        const fields = ["user_id", "category_id", "name", "description", "location_lat", "location_lng", "location_radius", "is_service_fee_per_hour"];
+        const fields = ["user_id", "category_id", "name", "description", "location_lat", "location_lng", "location_radius"];
         const timestamp = new Date().toISOString();
         const query = buildInsertInto(params, dbTableName, fields, timestamp);
         if (query.length == 0) {
@@ -45,7 +45,7 @@ export const Services = {
         }
         let joinClause = '';
         if (filters["include_info"]) {
-            joinClause=`LEFT JOIN users_no_password as users ON ${dbTableName}.user_id = users.id `
+            joinClause=`LEFT JOIN users_left as users ON ${dbTableName}.user_id = users.usr_id `
             joinClause+=`LEFT JOIN (SELECT service_id, GROUP_CONCAT(photo_url) photo_urls, GROUP_CONCAT(description) descriptions FROM service_photos GROUP BY service_id) service_photos ON ${dbTableName}.id = service_photos.service_id`;
         }
         const whereClause = buildWhereClause(filters, params, dbRelations, types, conditions);
@@ -75,7 +75,7 @@ export const Services = {
         if (!id) {
             return failResponse("Missing Parameters", false);
         }
-        const response = await this.getAll({ id: id });
+        const response = await this.getAll({ id: id, include_info: 1  });
         if (response.data.length == 0) {
             return failResponse("Record doesn't exists", false);
         }
