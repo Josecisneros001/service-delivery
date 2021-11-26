@@ -1,5 +1,5 @@
 import Reservation from "./Reservation";
-import Card from "../../General/Card";
+import Card from "../Card";
 import { ReservationFound } from "../../../interfaces/ReservationFound";
 
 interface ReservationsProps {

@@ -1,25 +1,24 @@
-import React, { useEffect, useState } from "react";
-import "./ServiceProviderHomePage.css";
-import Reservations from "../../General/Reservations/Reservations";
-import ServiceProviderNavbar from "../ServiceProviderNavbar";
+import React, { useState, useEffect } from "react";
 import { Users as UsersModel } from "../../../interfaces/models/Users";
-import { ReservationFound, AppointmentRow } from "../../../interfaces/ReservationFound";
 import { Users } from "../../../scripts/APIs/Users";
 import { getCurrentUser } from "../../../scripts/APIs";
+import UsersNavbar from "../UsersNavbar";
+import { AppointmentRow, ReservationFound } from "../../../interfaces/ReservationFound";
 import { Appointments } from "../../../scripts/APIs/Appointments";
+import Reservations from "../../General/Reservations/Reservations";
 
-
-const ServiceProviderHomePage = () => {
+const MyServices = () => {
   const [user, setUser] = useState<UsersModel | undefined>(undefined);
   const [reservations, setReservations] = useState<ReservationFound[]>([]);
   const [reservationsPast, setReservationsPast] = useState<ReservationFound[]>([]);
 
   useEffect(() => {
     (async () => {
-      const responseUser = (await Users.getById(getCurrentUser(true))).data as UsersModel;
+      const responseUser = (await Users.getById(getCurrentUser(false))).data as UsersModel;
       setUser(responseUser);
-      const response = (await Appointments.get(null, getCurrentUser(true), null, true, false, new Date().toISOString(), null)).data as AppointmentRow[];
-      const responsePast = (await Appointments.get(null, getCurrentUser(true), null, true, false, null, new Date().toISOString())).data as AppointmentRow[];
+
+      const response = (await Appointments.get(getCurrentUser(false), null, null, true, true, new Date().toISOString(), null)).data as AppointmentRow[];
+      const responsePast = (await Appointments.get(getCurrentUser(false), null, null, true, true, null, new Date().toISOString())).data as AppointmentRow[];
       setReservations(response.map((reservationInfo) => {
         return {
           "service": {
@@ -117,16 +116,17 @@ const ServiceProviderHomePage = () => {
 
   return (
     <>
-      <ServiceProviderNavbar user={user} />
+      <UsersNavbar user={user} />
       <div className="flex flex-col justify-center align-middle w-full sm:w-2/3 mx-auto">
-        <h1 className="text-3xl mt-4">Upcoming Reservations</h1>
-        <Reservations reservations={reservations} />
-        <h1 className="text-3xl mt-4">Past Reservations</h1>
-        <Reservations reservations={reservationsPast} />
+        <div className="flex flex-col w-full">
+          <h1 className="text-3xl mt-4">Upcoming Reservations</h1>
+          <Reservations reservations={reservations} />
+          <h1 className="text-3xl mt-4">Past Reservations</h1>
+          <Reservations reservations={reservationsPast} />
+        </div>
       </div>
-
     </>
   );
 };
 
-export default ServiceProviderHomePage;
+export default MyServices;

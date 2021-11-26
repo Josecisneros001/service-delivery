@@ -6,8 +6,8 @@ const navigation = {
   brand: { name: 'Service Delivery', to: '/users/' },
   links: [
     { name: 'Home', to: '/users/' },
-    { name: 'Pending Reservations', to: '/users/pending-reservations' },
-    { name: 'Chat', to: '/users/chat' },
+    { name: 'My Reservations', to: '/users/my-reservations' },
+    { name: 'Chat', to: '/users/chats' },
   ]
 };
 

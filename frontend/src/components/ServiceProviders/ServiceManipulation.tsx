@@ -167,7 +167,7 @@ const ServiceManipulation = (props: ServiceManipulationProps) => {
       setShowAlert(true);
       return false;
     }
-    if (previews.length == 0) {
+    if (previews.length === 0) {
       setErrorsTimeOut("images");
       setSnackBarMsg('Missing Field - Description');
       setShowAlert(true);
