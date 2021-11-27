@@ -54,7 +54,7 @@ export const Appointments = {
             }
         }
         const whereClause = buildWhereClause(filters, params, dbRelations, types, conditions);
-        const query = `SELECT * from ${dbTableName} ${joinClause} ${whereClause}`;
+        const query = `SELECT * from ${dbTableName} ${joinClause} ${whereClause} order by ${dbTableName}.timestamp`;
         return executeQuery(query);
     },
     /**
