@@ -3,7 +3,7 @@ import "./Login.css";
 import UsersNavbarLogin from "../Users/UsersNavbarLogin";
 import ServiceProviderNavbarLogin from "../ServiceProviders/ServiceProviderNavbarLogin";
 import FormField from "../General/FormField/FormField";
-import LoginState from "../../interfaces/Login/LoginState";
+import { LoginState, ErrorFields} from "../../interfaces/Login/LoginState";
 import { Users } from "../../scripts/APIs/Users";
 import { handleLogInCookies, isAuth } from "../../scripts/APIs";
 import Snackbar from "../General/Snackbar";
@@ -23,6 +23,7 @@ class Login extends Component<
       snackBarMsg: "",
       redirectToCreate: false,
       isAuth: isAuth(this.props.is_service_provider),
+      errors: {} as ErrorFields,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -44,12 +45,24 @@ class Login extends Component<
     this.setState({ password: passwordValue });
   };
 
+  setErrorsTimeOut = (key: string) => {
+    let currentErrors = this.state.errors;
+    currentErrors[key] = true;
+    this.setState({errors: currentErrors});
+    setTimeout( () => {
+      currentErrors[key] = false;
+      this.setState({errors: currentErrors});
+    }, 5000);
+  }
+
   formValidations = () => {
     if (!this.state.email) {
+      this.setErrorsTimeOut("email");
       this.setState({ snackBarMsg: "Email Missing", showAlert: true });
       return false;
     }
     if (!this.state.password) {
+      this.setErrorsTimeOut("password");
       this.setState({ snackBarMsg: "Password Missing", showAlert: true });
       return false;
     }
@@ -67,6 +80,8 @@ class Login extends Component<
       this.props.is_service_provider ? 1 : 0
     );
     if (response.status !== 200) {
+      this.setErrorsTimeOut("email");
+      this.setErrorsTimeOut("password");
       this.setState({
         snackBarMsg: "Email or Password incorrect, please try again.",
         showAlert: true,
@@ -126,6 +141,7 @@ class Login extends Component<
                 orientation="col"
                 label="Email"
                 onChange={this.handleEmail}
+                hasError={this.state.errors.email}
               />
             </div>
             <div className="w-3/5 m-auto">
@@ -134,13 +150,8 @@ class Login extends Component<
                 label="Password"
                 isPassword={true}
                 onChange={this.handlePassword}
+                hasError={this.state.errors.password}
               />
-              {/* TODO: Handle Password Forgotten
-                <div className="text-xs text-right mb-4">
-                  Forgot your password?{" "}
-                  <button type="button" className="text-xs underline">click here</button>
-                </div>
-              */}
             </div>
             <div className="items-center py-2">
               <button type="submit" className="button button1">
