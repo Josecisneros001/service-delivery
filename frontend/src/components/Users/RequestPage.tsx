@@ -10,8 +10,17 @@ import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 import { WorkHours } from '../../scripts/APIs/WorkHours';
 import Snackbar from '../General/Snackbar';
+import Day from '../General/Calendar/Day'
+import { AvailabilityModel, defaultAvailability, defaultAvailabilityDay, toWorkHours, AvailabilityDay, daysN } from '../../interfaces/AvailabilityModel';
 
+const past = {
+  before: new Date(),
+}
 
+interface UserRequestProps {
+  availability: AvailabilityModel
+  onChange: Function
+}
 
 export interface UserRequestState {
   workHoursInfo: WorkHModel | null,
@@ -22,14 +31,15 @@ export interface UserRequestState {
   duration: number;
   snackBarMsg: string;
   showAlert: boolean;
-  [key: string]: WorkHModel | string | boolean | Date | number | null;
+  availability: AvailabilityModel,
+  [key: string]: WorkHModel | string | boolean | Date | number | AvailabilityModel | null;
 };
 
-class RequestPage extends Component<{ is_service_provider: boolean },UserRequestState, {}> {
+class RequestPage extends Component<{ is_service_provider: boolean },UserRequestState, UserRequestProps> {
     constructor(props: { is_service_provider: boolean }) {
         super(props);
         this.handleDayClick = this.handleDayClick.bind(this);
-        this.state = {workHoursInfo: null, address_info: '', invitationMessage: '', timestamp: "", selectedDay: new Date(), duration: 0, snackBarMsg: "", showAlert: false};
+        this.state = {workHoursInfo: null, address_info: '', invitationMessage: '', timestamp: "", selectedDay: new Date(), duration: 0, snackBarMsg: "", availability:defaultAvailability(), showAlert: false};
         this.handleSubmit = this.handleSubmit.bind(this);
       }
       configSnackbar = {
@@ -59,6 +69,13 @@ class RequestPage extends Component<{ is_service_provider: boolean },UserRequest
     handleTimestamp = (timestampValue: string) => {
       this.setState({timestamp: timestampValue});
     }
+
+    handleChange = (index: number, day: AvailabilityDay) => {
+      const currentAvailability = this.state.availability;
+      currentAvailability[daysN[index]] = day;
+      this.setState({availability: currentAvailability});
+      //this.props.onChange(currentAvailability);
+  }
 
     async handleSubmit(event: React.ChangeEvent<any>) {
       event.preventDefault();
@@ -94,7 +111,7 @@ class RequestPage extends Component<{ is_service_provider: boolean },UserRequest
       });
     }
 
-    // checar cuales fechas no están disponibles
+    // checar cuales fechas están disponibles
     async getWorkHrs() {
       const startDate = this.state.workHoursInfo?.day
     }
@@ -113,40 +130,45 @@ class RequestPage extends Component<{ is_service_provider: boolean },UserRequest
     }
 
 
-    
-
-
-
 
 
     render() {
         return (
-            <div className="flex flex-col">
-                <UsersNavbar/>
-                <div className="text-center text-4xl pt-7">Request Form</div>
-                <div className="flex-1 ">
-                <form onSubmit={this.handleSubmit} className="flex-1 flex flex-col text-2xl mx-40">
-                  <div className="flex flex-row items-center justify-around">
-                    <div className="flex flex-col w-1/3">
-                          <FormField orientation="col" label="Direction" onChange={this.handleAddressInfo}/>
-                          <FormTextArea  orientation="col" label="Invitation Message" onChange={this.handleMessage}/>
-                          Pricing Range
-                          <div className="pl-8 pt-12"><SliderRange/></div>
-                      </div>
-                      <DayPicker onDayClick={this.handleDayClick} selectedDays={this.state.selectedDay}/>
-                      {this.state.selectedDay ? (
-                        <p>You clicked {this.state.selectedDay.toLocaleDateString()}</p>
-                        ) : (
-                        <p>Please select a day.</p>
-                      )}
-                  </div>
-                  <div className="flex justify-center pt-20">
-                            <button type="submit" className="button button2">Confirm</button>
+          <>
+            <Snackbar {...this.configSnackbar} show={this.state.showAlert} hideEvent={this.hideSnackbar} message={this.state.snackBarMsg}/>
+              <div className="flex flex-col">
+                  <UsersNavbar/>
+                  <div className="text-center text-4xl pt-7">Request Form</div>
+                  <div className="flex-1 ">
+                  <form onSubmit={this.handleSubmit} className="flex-1 flex flex-col text-2xl mx-40">
+                    <div className="flex flex-row items-center justify-around">
+                      <div className="flex flex-col w-1/3">
+                            <FormField orientation="col" label="Direction" onChange={this.handleAddressInfo}/>
+                            <FormTextArea  orientation="col" label="Invitation Message" onChange={this.handleMessage}/>
+                            Pricing Range
+                            <div className="pl-8 pt-12"><SliderRange/></div>
                         </div>
+                        <div className="flex flex-row items-center space-x-7">
+                          <DayPicker onDayClick={this.handleDayClick} selectedDays={this.state.selectedDay} disabledDays={ past }/>
+                          {this.state.selectedDay ? (
+                            <div className="flex-1">
+                                {/* <Day label={this.state.selectedDay.toLocaleDateString()} index={undefined} availability={undefined} onChange={undefined}/>                                     */}
+                            </div>
+                            ) : (
+                            <p>Please select a day.</p>
+                          )}
+                        </div>
+                        
+                    </div>
+                    
+                    <div className="flex justify-center pt-20">
+                              <button type="submit" className="button button2">Confirm</button>
+                          </div>
 
-                </form>
-                </div>
-            </div>
+                  </form>
+                  </div>
+              </div>
+            </>
         );
     }
 }
