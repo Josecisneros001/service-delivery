@@ -6,6 +6,7 @@ import PrivateRoute from '../scripts/PrivateRoute';
 import UploadFilesForm from '../components/SignUp/UploadFilesForm/UploadFilesForm';
 import EditProfile from '../components/ServiceProviders/EditProfile/EditProfile';
 import Chats from '../components/Chats/Chats';
+import RequestPage from '../components/Users/RequestPage';
 import UserHomePage from '../components/Users/UserHomePage/UserHomePage';
 import MyReservations from '../components/Users/MyReservations/MyReservations';
 
@@ -32,6 +33,10 @@ export default class Users extends Component {
           <Route
             path="/my-reservations"
             element={<PrivateRoute is_service_provider={false} redirectTo="login"><MyReservations /></PrivateRoute>}
+          />
+          <Route
+            path="/request"
+            element={<PrivateRoute is_service_provider={false} redirectTo="login"><RequestPage /></PrivateRoute>}
           />
           <Route
             path="/"

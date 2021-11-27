@@ -68,3 +68,40 @@ export const toWorkHours = (av: AvailabilityModel, user_id: number) => {
   }
   return result;
 }
+
+export const toWorkHoursDay = (av: AvailabilityDay, user_id: number, day: number) => {
+  const result = { data: [] }  as WorkHoursMultiple;
+  let flag = false;
+  let flagStart = -1;
+  let flagDuration = 1;
+  for(const hour of hoursN) {
+    const hourDict = av[hour];
+    if(flag && hourDict) {
+      flagDuration += 1;
+    }
+    if(flag && !hourDict) {
+      result.data?.push({
+        user_id: user_id,
+        day: day,
+        hour: flagStart,
+        duration: flagDuration,
+      });
+      flag = false;
+    }
+    if(!flag && hourDict) {
+      flag = true;
+      flagStart = hour;
+      flagDuration = 1;
+    }
+  }
+  if(flag) {
+    result.data?.push({
+      user_id: user_id,
+      day: day,
+      hour: flagStart,
+      duration: flagDuration,
+    });
+    flag = false;
+  }
+  return result;
+}

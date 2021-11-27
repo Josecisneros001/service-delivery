@@ -25,7 +25,8 @@ const Reservation = (props: {
               {props.reservation.address_info}
             </div>
             <div className="text-lg pl-5">
-              {new Date(props.reservation.timestamp || '').toLocaleTimeString()} - {props.reservation.duration} Minutes
+              {new Date(props.reservation.timestamp + 'Z').toLocaleTimeString()} - {props.reservation.duration}
+              {((props.reservation?.duration || 1) > 1) ? " Hours" :  " Hour"}
             </div>
           </div>
         </div>

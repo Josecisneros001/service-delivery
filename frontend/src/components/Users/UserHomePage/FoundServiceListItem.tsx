@@ -44,7 +44,7 @@ const FoundServiceListItem = (props:FoundServiceProps) => {
 
                 {/* Request button */}
                 <NavLink
-                    to={`/users/requests/?service_id=${props.service.id}`}
+                    to={`/users/request/?srv_id=${props.service.id}`}
                     className="bg-gray-300 px-4 py-2 h-10 rounded-full border-2 border-gray-400"
                 >
                     Request
