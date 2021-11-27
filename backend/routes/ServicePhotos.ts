@@ -4,7 +4,7 @@ import type { ServicePhotos as Model } from "../models/ServicePhotos";
 import { ServicePhotos as Controller } from '../controllers/ServicePhotos';
 import { Services } from '../controllers/Services';
 import fs from 'fs';
-import { failResponse } from '../scripts/response';
+import { failResponse, successReponse } from '../scripts/response';
 import { v4 as uuidv4 } from 'uuid';
 import { jwtAuth } from '../middleware/jwtAuth';
 
@@ -32,7 +32,7 @@ ServicePhotos.get('/', async function (req: Request, res: Response, _next: NextF
   return res.status(200).json(response);
 });
 
-const filesUpload = upload.single('photo');
+const filesUpload = upload.array('photos', 4);
 ServicePhotos.post('/', async function (req: Request, res: Response, _next: NextFunction) {
   const service_id = (req.query.service_id || '').toString()
   if (service_id.length == 0) {
@@ -48,15 +48,20 @@ ServicePhotos.post('/', async function (req: Request, res: Response, _next: Next
     } else if (err) {
       return res.status(200).json(failResponse("Server error, Try Again", false));
     }
-    if (!req.file) {
+    if (!req.files) {
       return res.status(200).json(failResponse("Bad Request, Try Again", false));
     }
-    let reqObj = {} as {[key:string]: string};
-    reqObj["service_id"] = service_id;
-    reqObj["photo_url"] = req.file.path.replace(/\\/g, '/');
-    reqObj["description"] = req.body.description;
-    const response = await Controller.create(reqObj);
-    return res.status(200).json(response);
+    await Controller.deleteByService(parseInt(service_id));
+    let response = [] as any[];
+    for(const file of req.files as Express.Multer.File[]) {
+      let reqObj = {} as {[key:string]: string};
+      reqObj["service_id"] = service_id;
+      reqObj["photo_url"] = file.path.replace(/\\/g, '/');
+      reqObj["description"] = req.body.description;
+      const res = await Controller.create(reqObj);
+      response.push(res.data);
+    }
+    return res.status(200).json(successReponse("Success", response));
   });
 });
 

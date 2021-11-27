@@ -12,7 +12,7 @@ const UsersNavbarLogin = (props: { className?: string }) => {
     const { brand, links } = navigation;
 
     return (
-      <Navbar className={props.className} brand={brand} links={links} />
+      <Navbar isServiceProvider={false} className={props.className} brand={brand} links={links} />
     );
 }
 

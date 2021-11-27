@@ -12,6 +12,7 @@ export const ServicePhotos = {
      * Function that creates a record.
      */
     create: async function (params: Model): Promise<CustomResponse> {
+        params.description = params.description || '';
         const fields = ["service_id", "description", "photo_url"];
         const timestamp = new Date().toISOString();
         const query = buildInsertInto(params, dbTableName, fields, timestamp);
@@ -58,6 +59,20 @@ export const ServicePhotos = {
             return failResponse("Missing Parameters", false);
         }
         const query = `DELETE from ${dbTableName} where id = '${id}'`;
+        const result = await executeQuery(query);
+        if (result.status == 200) {
+            return successReponse("Success", false);
+        }
+        return failResponse("Bad Request", result);
+    },
+    /**
+     * Function that delete a record by id.
+    */
+    deleteByService: async function (service: number): Promise<CustomResponse> {
+        if (!service) {
+            return failResponse("Missing Parameters", false);
+        }
+        const query = `DELETE from ${dbTableName} where service_id = '${service}'`;
         const result = await executeQuery(query);
         if (result.status == 200) {
             return successReponse("Success", false);

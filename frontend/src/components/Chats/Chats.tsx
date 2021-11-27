@@ -25,6 +25,7 @@ interface ChatsState {
 		user: UsersModel;
 		lastMessage: ChatMessagesModel;
 	}[];
+	user?: UsersModel;
 }
 
 interface ActiveChatsTmp {
@@ -49,13 +50,12 @@ interface ClientToServerEvents {
 	message: (receiver: number) => void;
 }
 
-  
-class Chats extends Component<{is_service_provider: boolean},ChatsState,{}> {
+class Chats extends Component<{is_service_provider: boolean, location?: any},ChatsState,{}> {
 	private refMessageForm: React.RefObject<HTMLFormElement>;
 	private refChatTool: React.RefObject<HTMLInputElement>;
 	private fileInputRef: React.RefObject<HTMLInputElement>;
 	private socket: Socket<ServerToClientEvents, ClientToServerEvents> | null = null;
-  	constructor(props: {is_service_provider: boolean}) {
+  	constructor(props: {is_service_provider: boolean, location?: any}) {
 		super(props);
 		this.state = {
 			message: '',
@@ -64,6 +64,7 @@ class Chats extends Component<{is_service_provider: boolean},ChatsState,{}> {
 			snackBarMsg: '',
 			activeChat: null,
 			activeChats: [] as ChatsState["activeChats"],
+			user: undefined,
 		};
 		this.refChatTool = React.createRef();
 		this.fileInputRef = React.createRef();
@@ -86,6 +87,8 @@ class Chats extends Component<{is_service_provider: boolean},ChatsState,{}> {
 	}
 	
 	async componentDidMount() {
+		const responseUser = (await Users.getById(getCurrentUser(this.props.is_service_provider))).data as UsersModel;
+      	this.setState({user: responseUser});
 		const response = await ChatMessages.get(true, getCurrentUser(this.props.is_service_provider));
 		if(response.status !== 200) {
             this.setState({snackBarMsg: 'Something wrong happen, please try again.', showAlert: true});
@@ -134,6 +137,15 @@ class Chats extends Component<{is_service_provider: boolean},ChatsState,{}> {
 				}
 			});
 		}
+		const query = new URLSearchParams(window.location.search);
+		if(query.get("user_id")) {
+			const usr_id = parseInt(query.get("user_id") || '');
+			const usr = await Users.getById(usr_id);
+			if (usr.status === 200) {
+				this.openConversation(usr.data);
+			}
+		}
+		
 	}
 
 
@@ -283,6 +295,7 @@ class Chats extends Component<{is_service_provider: boolean},ChatsState,{}> {
 							{this.state.activeChat.messages.map((message)=>{
 								return (
 									<Message
+										key={message.id}
 										message={message.message || ''}
 										file={getFileUrl(message.attachment_url)}
 										timestamp={new Date(message.registered_on + 'Z')}
@@ -307,7 +320,7 @@ class Chats extends Component<{is_service_provider: boolean},ChatsState,{}> {
 					>
 						<div className="relative">
 							<svg className="text-gray-400 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
 							</svg>
 							{this.state.fileName 
 							? 	<span className="absolute top-0 right-0 connected text-red-500" >
@@ -361,8 +374,8 @@ class Chats extends Component<{is_service_provider: boolean},ChatsState,{}> {
 				<Snackbar {...this.configSnackbar} show={this.state.showAlert} hideEvent={this.hideSnackbar} message={this.state.snackBarMsg} />
 				{
 				this.props.is_service_provider
-				? <ServiceProviderNavbar className="flex-none" />
-				: <UsersNavbar className="flex-none" />
+				? <ServiceProviderNavbar className="flex-none" user={this.state.user} />
+				: <UsersNavbar className="flex-none" user={this.state.user} />
 				}
 				<div className="grid grid-cols-3 min-w-full border rounded flex-1">
 					<div className="col-span-1 bg-white border-r border-gray-300 flex flex-col">
@@ -371,8 +384,8 @@ class Chats extends Component<{is_service_provider: boolean},ChatsState,{}> {
 						</div>
 						<h2 className="ml-2 mb-2 text-gray-600 text-lg my-2 flex-none">Chats</h2>
 						<div className="overflow-auto" style={{maxHeight: "720px"}}>
-							{this.state.activeChats?.map((chat)=> {
-								return <UsersRow onClick={this.openConversation} user={chat.user} lastMessage={chat.lastMessage} />;
+							{this.state.activeChats?.map((chat, index)=> {
+								return <UsersRow onClick={this.openConversation} user={chat.user} lastMessage={chat.lastMessage}  key={index} />;
 							})}
 						</div>
 					</div>

@@ -11,7 +11,7 @@ const ServiceProviderNavbarLogin = (props: { className?: string }) => {
     const { brand, links } = navigation;
 
     return (
-      <Navbar className={props.className} brand={brand} links={links} />
+      <Navbar isServiceProvider={true} className={props.className} brand={brand} links={links} />
     );
 }
 

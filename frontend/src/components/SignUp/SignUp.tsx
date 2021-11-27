@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import './SignUp.css';
 import FormField from "../General/FormField/FormField";
-import SignUpState from '../../interfaces/SignUp/SignUpState';
+import SignUpState, { ErrorFields } from '../../interfaces/SignUp/SignUpState';
 import { Users } from '../../scripts/APIs/Users';
 import { Users as UsersModel } from '../../interfaces/models/Users';
 import { Navigate } from 'react-router';
@@ -16,14 +16,14 @@ class SignUp extends Component<{is_service_provider: boolean}, SignUpState> {
             password: '',
             password2: '',
             firstName: '',
-            middleName: '',
             lastName: '',
             phone: '',
             altPhone: '',
             recoveryEmail: '',
             snackBarMsg: "",
             showAlert: false,
-            isDone: false
+            isDone: false,
+            errors: {} as ErrorFields,
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -56,10 +56,6 @@ class SignUp extends Component<{is_service_provider: boolean}, SignUpState> {
         this.setState({firstName: firstNameValue})
     }
 
-    handleMiddleName = (middleNameValue: string) => {
-        this.setState({middleName: middleNameValue})
-      }
-
     handleLastName = (lastNameValue: string) => {
         this.setState({lastName: lastNameValue})
     }
@@ -77,46 +73,56 @@ class SignUp extends Component<{is_service_provider: boolean}, SignUpState> {
     }
     
     formValidations = () => {
-        const fields = ["firstName", "middleName", "lastName", "password", "email", "recoveryEmail", "phone", "altPhone"];
-        const fieldsName = ["First Name", "Middle Name", "Last Name", "Password", "Email", "Recovery Email", "Phone Number", "Alt Phone Number"];
+        const fields = ["firstName", "lastName", "password", "email", "recoveryEmail", "phone", "altPhone"];
+        const fieldsName = ["First Name", "Last Name", "Password", "Email", "Recovery Email", "Phone Number", "Alt Phone Number"];
         for(const index in fields) {
             const field = fields[index];
             const fieldName = fieldsName[index];
             if(!this.state[field]){
+                this.setErrorsTimeOut(field);
                 this.setState({snackBarMsg: `Missing Field - ${fieldName}`, showAlert: true});
                 return false;
             }
         }
         if (this.state.password !== this.state.password2) {
+            this.setErrorsTimeOut("password");
+            this.setErrorsTimeOut("password2");
             this.setState({snackBarMsg: "Passwords don't match", showAlert: true});
             return false;
         }
         if (this.state.phone.length  !== 10) {
+            this.setErrorsTimeOut("phone");
             this.setState({snackBarMsg: "Invalid Phone", showAlert: true});
             return false;
         }
         if (this.state.altPhone.length !== 10) {
+            this.setErrorsTimeOut("altPhone");
             this.setState({snackBarMsg: "Invalid Alt Phone", showAlert: true});
             return false;
         }
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!re.test(this.state.email)) {
+            this.setErrorsTimeOut("email");
             this.setState({snackBarMsg: "Invalid Email", showAlert: true});
             return false;
         }
         if (!re.test(this.state.recoveryEmail)) {
+            this.setErrorsTimeOut("recovEmail");
             this.setState({snackBarMsg: "Invalid Recov Email", showAlert: true});
             return false;
         }
         if  (this.state.email === this.state.recoveryEmail) {
+            this.setErrorsTimeOut("email");
+            this.setErrorsTimeOut("recovEmail");
             this.setState({snackBarMsg: "Email and RecoveryEmail need to be different.", showAlert: true});
             return false;
         }
         if  (this.state.phone === this.state.altPhone) {
+            this.setErrorsTimeOut("phone");
+            this.setErrorsTimeOut("altPhone");
             this.setState({snackBarMsg: "Phone and Alt Phone need to be different.", showAlert: true});
             return false;
         }
-        // TODO: EMAIL NO EXISTA.
         return true;
     }
 
@@ -126,7 +132,7 @@ class SignUp extends Component<{is_service_provider: boolean}, SignUpState> {
             return;
         }
         const params = {
-            first_name: `${this.state.firstName} ${this.state.middleName}`,
+            first_name: this.state.firstName,
             last_name: this.state.lastName,
             password: this.state.password,
             email: this.state.email,
@@ -148,6 +154,16 @@ class SignUp extends Component<{is_service_provider: boolean}, SignUpState> {
         }
         handleLogInCookies(responseSignIn.data.id, responseSignIn.data.token, this.props.is_service_provider);
         this.setState({isDone: true});
+    }
+
+    setErrorsTimeOut = (key: string) => {
+        let currentErrors = this.state.errors;
+        currentErrors[key] = true;
+        this.setState({errors: currentErrors});
+        setTimeout( () => {
+          currentErrors[key] = false;
+          this.setState({errors: currentErrors});
+        }, 5000);
     }
 
     render() {
@@ -174,35 +190,72 @@ class SignUp extends Component<{is_service_provider: boolean}, SignUpState> {
                     <div className='flex-1 px-20 space-y-3'>
                         <div className="font-semibold tracking-wider text-center lg:text-5xl py-10 sm:text-base">Welcome to <br/> Service Delivery!</div>
                         <form onSubmit={this.handleSubmit} className="flex-1 flex flex-col text-2xl">
-                        <div className="flex">
-                            <FormField orientation="col" label='First Name(s)' onChange={this.handleFirstName}/>
-                            <div className="w-1/6"/>
-                            <FormField orientation="col" label='Middle Name(s)' onChange={this.handleMiddleName} />
-                        </div>
-                        <div className="flex">
-                            <FormField orientation="col" label='Last Name(s)' onChange={this.handleLastName}/>
-                            <div className="w-1/6"/>
-                            <FormField orientation="col" label='Phone #' onChange={this.handlePhone}/>
-                        </div>
-                        <div className="flex">
-                            <FormField orientation="col" label='Email' onChange={this.handleEmail}/>
-                        </div>
-                        <div className="flex">
-                            <FormField orientation="col" label='Password' onChange={this.handlePassword}/>
-                            <div className="w-1/6"/>
-                            <FormField orientation="col" label='Confirm Password' onChange={this.handlePassword2}/>
-                        </div>
-                        <div className="flex">
-                            <FormField orientation="col" label='Recovery Email' onChange={this.handleRecoveryEmail}/>
-                        </div>
-                        <div className="flex">
-                            <FormField orientation="col" label='Alt Phone' onChange={this.handleAltPhone}/>
-                            <div className="w-1/4"/>
-                            <div className="w-1/3"/>
-                        </div>
-                        <div className="items-center">
-                            <button type="submit" className="button button2">Confirm</button>
-                        </div>
+                            <div className="flex">
+                                <FormField
+                                    orientation="col"
+                                    label='First Name(s)'
+                                    onChange={this.handleFirstName}
+                                    hasError={this.state.errors.firstName}
+                                />
+                                <div className="w-1/6"/>
+                                <FormField
+                                    orientation="col"
+                                    label='Last Name(s)'
+                                    onChange={this.handleLastName}
+                                    hasError={this.state.errors.lastName}
+                                />
+                            </div>
+                            <div className="flex">
+                                <FormField
+                                    orientation="col"
+                                    label='Phone #'
+                                    onChange={this.handlePhone}
+                                    hasError={this.state.errors.phone}
+                                />
+                                <div className="w-1/6"/>
+                                <FormField
+                                    orientation="col"
+                                    label='Alt Phone'
+                                    onChange={this.handleAltPhone}
+                                    hasError={this.state.errors.altPhone}
+                                />
+                            </div>
+                            <div className="flex">
+                                <FormField
+                                    orientation="col"
+                                    label='Password'
+                                    onChange={this.handlePassword}
+                                    isPassword={true}
+                                    hasError={this.state.errors.password}
+                                />
+                                <div className="w-1/6"/>
+                                <FormField
+                                    orientation="col"
+                                    label='Confirm Password'
+                                    onChange={this.handlePassword2}
+                                    isPassword={true}
+                                    hasError={this.state.errors.password2}
+                                />
+                            </div>
+                            <div className="flex">
+                                <FormField 
+                                    orientation="col"
+                                    label='Email'
+                                    onChange={this.handleEmail}
+                                    hasError={this.state.errors.email}
+                                />
+                            </div>
+                            <div className="flex">
+                                <FormField
+                                    orientation="col"
+                                    label='Recovery Email'
+                                    onChange={this.handleRecoveryEmail}
+                                    hasError={this.state.errors.recovEmail}
+                                />
+                            </div>
+                            <div className="items-center">
+                                <button type="submit" className="button button2">Confirm</button>
+                            </div>
                         </form>
                     </div>
                 </div>
