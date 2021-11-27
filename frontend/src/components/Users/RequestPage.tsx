@@ -9,7 +9,6 @@ import SliderRange from './SliderRange/SliderRange';
 import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 import { WorkHours } from '../../scripts/APIs/WorkHours';
-import AvailabilitySchedule from 'availability-schedule';
 import Snackbar from '../General/Snackbar';
 
 
@@ -97,10 +96,7 @@ class RequestPage extends Component<{ is_service_provider: boolean },UserRequest
 
     // checar cuales fechas no están disponibles
     async getWorkHrs() {
-      const schedule = new AvailabilitySchedule('2021-11-22T00:00:00Z', '2023-11-24T00:00:00Z');
-      schedule.addAvailability('2021-11-22T00:00:00Z', '2023-11-24T00:00:00Z');
-      const startDate = this.state.workHoursInfo?.day 
-      //schedule.removeAvailability();
+      const startDate = this.state.workHoursInfo?.day
     }
 
     formValidation = () => {
