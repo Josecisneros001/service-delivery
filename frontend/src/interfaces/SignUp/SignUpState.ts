@@ -1,3 +1,15 @@
+export interface ErrorFields {
+    firstName?: boolean;
+    lastName?: boolean;
+    phone?: boolean;
+    altPhone?: boolean;
+    email?: boolean;
+    password?: boolean;
+    password2?: boolean;
+    recovEmail?: boolean;
+    [key: string]: boolean | undefined;
+}
+
 export default interface UserSignUp {
     email: string;
     password: string;
@@ -7,9 +19,9 @@ export default interface UserSignUp {
     phone: string;
     recoveryEmail: string;
     altPhone: string;
-    middleName: string;
     showAlert: boolean;
     isDone: boolean;
     snackBarMsg: string;
-    [key: string]: string | boolean
+    errors: ErrorFields;
+    [key: string]: ErrorFields | string | boolean
 }
