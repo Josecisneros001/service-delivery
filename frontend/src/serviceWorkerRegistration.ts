@@ -51,6 +51,11 @@ export function register(config?: Config) {
       } else {
         // Is not localhost. Just register service worker
         registerValidSW(swUrl, config);
+        navigator.serviceWorker.ready.then(() => {
+          console.log(
+            'This web app is being served cache-first by a service worker.'
+          );
+        });
       }
     });
   }
