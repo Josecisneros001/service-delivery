@@ -71,9 +71,9 @@ const MyServices = () => {
           </NavLink>
         </div>
         <div className="flex w-full">
-            {servicesFound.map((serviceFound) => {
+            {servicesFound.map((serviceFound, index) => {
                 return (
-                    <ServiceCard  {...serviceFound} />
+                    <ServiceCard key={index} {...serviceFound} />
                 );
             })}
             {servicesFound.length === 0

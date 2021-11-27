@@ -28,12 +28,18 @@ const FoundServiceListItem = (props:FoundServiceProps) => {
                         src={getFileUrl(props.serviceProvider.profile_picture)}
                         alt="a"
                     />
-                    <div className="flex flex-1 flex-col">
+                    <div className="flex flex-initial flex-col border-r border-l px-2 mr-2">
+                        <span>{`${props.serviceProvider.first_name} ${props.serviceProvider.last_name}`}</span>
+                        <span>{`${props.serviceProvider.email}`}</span>
+                        <span>{`${props.serviceProvider.phone_number}`}</span>
+                    </div>
+                    <div className="flex flex-1 flex-col border-r">
                         <p>{props.service.description}</p>
                     </div>
-                    {props.servicePhotos.map((photos)=>{
+                    {props.servicePhotos.map((photos, index)=>{
                         return(
                             <img
+                                key={index}
                                 className="h-14 w-14 mx-4 flex-initial flex-end"
                                 src={getFileUrl(photos.photo_url)}
                                 alt="a"

@@ -93,11 +93,12 @@ const UserHomePage = (props: UserProfileProps) => {
                     <select 
                         className={`absolute top-18 right-0 z-50 block p-3 px-2 border-2 border-gray-400 w-44 ${errorSearch? 'border-red-600': ''}`}
                         onChange={event => {setSearchCategory(parseInt(event.target.value))}}
+                        value="-1"
                     >
-                        <option disabled selected value="-1">Category</option>
-                        {serviceCategories.map((category) => {
+                        <option disabled value="-1">Category</option>
+                        {serviceCategories.map((category, index) => {
                             return (
-                                <option value={category.id}>
+                                <option key={index} value={category.id}>
                                     {category.name}
                                 </option>);
                         })}
@@ -113,9 +114,9 @@ const UserHomePage = (props: UserProfileProps) => {
                     <Slider minRange={0} maxRange={10000} onChange={setRadius} />
                 </div>
                 <div className="flex w-full">
-                    {servicesFound.map((serviceFound) => {
+                    {servicesFound.map((serviceFound, index) => {
                         return (
-                            <FoundServiceListItem  {...serviceFound} />
+                            <FoundServiceListItem key={index}  {...serviceFound} />
                         );
                     })}
                 </div>
