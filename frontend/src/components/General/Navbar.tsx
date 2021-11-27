@@ -33,7 +33,13 @@ const Navbar = (props: {
         <nav className={`relative bg-blue-100 flex flex-row items-center justify-between p-5 ${props.className}`}>
             
             {/* TITLE OF PAGE */}
-            <a href={brand.to} className="flex-initial font-extrabold text-3xl ml-4 pr-4">{brand.name}</a>
+            <a href={brand.to} className="relative flex-initial text-3xl ml-4 pr-4">
+                <span className="font-extrabold">{brand.name}</span>
+                {props.isServiceProvider
+                ?   <div className="text-xl absolute -bottom-5 -right-20 "> Providers </div>
+                :   <div className="text-xl absolute -bottom-5 -right-10 "> Users </div>}
+            </a>
+            
 
             {/* LIST OF LINKS */}
             <ul className="flex-1 flex flex-nowrap h-full justify-end mr-4 sm:mr-8">
