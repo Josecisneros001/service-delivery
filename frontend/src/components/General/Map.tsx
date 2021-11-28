@@ -65,12 +65,9 @@ function Map(props: MapProps) {
       if (map) {
         setRadius((props?.radius || 0));
         if(props?.fixedCenter) {
-          if (prevProps?.fixedCenter) {
-            if(props.fixedCenter.lat !== prevProps.fixedCenter.lat && props.fixedCenter.lng !== prevProps.fixedCenter.lng) {
-              setCenter(props.fixedCenter);
-            }
-          } else {
+          if(props.fixedCenter.lat !== center.lat && center.lng !== props.fixedCenter.lng) {
             setCenter(props.fixedCenter);
+            setCoord(props.fixedCenter);
           }
         }
         if(props?.initialCenter) {

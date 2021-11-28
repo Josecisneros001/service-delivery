@@ -92,8 +92,10 @@ const UserHomePage = (props: UserProfileProps) => {
                     <div className="text-3xl w-full text-center py-3">Search Services</div>
                     <select 
                         className={`absolute top-18 right-0 z-50 block p-3 px-2 border-2 border-gray-400 w-44 ${errorSearch? 'border-red-600': ''}`}
-                        onChange={event => {setSearchCategory(parseInt(event.target.value))}}
-                        value="-1"
+                        onChange={(event) => {
+                            setSearchCategory(parseInt(event.target.value));
+                        }}
+                        value={searchCategory}
                     >
                         <option disabled value="-1">Category</option>
                         {serviceCategories.map((category, index) => {
@@ -111,9 +113,9 @@ const UserHomePage = (props: UserProfileProps) => {
                             Search
                     </button>
                     <Map radius={radius} onCenterChange={setCoord} />
-                    <Slider minRange={0} maxRange={10000} onChange={setRadius} />
+                    <Slider minRange={0} maxRange={30000} onChange={setRadius} />
                 </div>
-                <div className="flex w-full">
+                <div className="flex w-full flex-col">
                     {servicesFound.map((serviceFound, index) => {
                         return (
                             <FoundServiceListItem key={index}  {...serviceFound} />
