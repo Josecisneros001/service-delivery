@@ -45,7 +45,8 @@ const ServiceManipulation = (props: ServiceManipulationProps) => {
   const [category, setCategory] = useState(-1);
   const [desc, setDesc] = useState("");
   const [radius, setRadius] = React.useState(3000);
-  const [coord, setCoord] = React.useState({lat: 0, lng: 0});
+  const [coord, setCoord] = React.useState({lat: 25.6714,lng: -100.309});
+  const [initialCoord, setInitialCoord] = React.useState({lat: 25.6714,lng: -100.309});
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -96,7 +97,7 @@ const ServiceManipulation = (props: ServiceManipulationProps) => {
               setEdit(true);
               const photo_urls = srv.photo_urls.split(',');
               const photo_desc = srv.descriptions.split(',');
-              setCoord({lat: srv.location_lat, lng: srv.location_lng});
+              setInitialCoord({lat: srv.location_lat, lng: srv.location_lng});
               setRadius(srv.location_radius);
               setPreviews(photo_urls.map((path) => getFileUrl(path)));
               setService({
@@ -287,7 +288,7 @@ const ServiceManipulation = (props: ServiceManipulationProps) => {
           {/* LOCATION INPUT */}
           <label className="text-2xl">Location</label>
           <div className="w-full h-52 mb-10">
-            <Map radius={radius} onCenterChange={setCoord} />
+            <Map radius={radius} onCenterChange={setCoord} initialCenter={initialCoord} />
             <Slider minRange={0} maxRange={10000} onChange={setRadius} initialValue={radius} />
           </div>
   

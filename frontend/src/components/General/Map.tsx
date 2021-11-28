@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { GoogleMap, useJsApiLoader, Marker, Circle } from '@react-google-maps/api';
 
 interface MapProps {
-    fixedCenter?: {lat: number, lng: number}
+    fixedCenter?: {lat: number, lng: number};
+    initialCenter?:  {lat: number, lng: number},
     radius?: number;
     onCenterChange?: Function;
 }
@@ -12,7 +13,7 @@ const containerStyle = {
     height: '100%',
 };
   
-const center = {
+const centerDefault = {
     lat: 25.6714,
     lng: -100.309
 };
@@ -29,20 +30,30 @@ const options = {
 
 const MAP_API_KEY = process.env.REACT_APP_GOOGLE_KEY || '';
 
+function usePrevious(value: MapProps) {
+  const ref = useRef<MapProps>();
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+}
+
 function Map(props: MapProps) {
     const { isLoaded } = useJsApiLoader({
       id: 'google-map-script',
       googleMapsApiKey: MAP_API_KEY,
     });
-  
+    
+    const prevProps = usePrevious(props);
     const [map, setMap] = React.useState<google.maps.Map | null>(null);
-    const [coord, setCoord] = React.useState(center);
+    const [center, setCenter] = React.useState(centerDefault);
+    const [coord, setCoord] = React.useState(centerDefault);
     const [radius, setRadius] = React.useState(0);
     
     const onLoad = React.useCallback(function callback(map) {
       setMap(map);
       if(props.onCenterChange && !props.fixedCenter){
-        props.onCenterChange(center);
+        props.onCenterChange(coord);
       }
     }, [props])
   
@@ -54,7 +65,22 @@ function Map(props: MapProps) {
       if (map) {
         setRadius((props?.radius || 0));
         if(props?.fixedCenter) {
-          setCoord(props?.fixedCenter);
+          if (prevProps?.fixedCenter) {
+            if(props.fixedCenter.lat !== prevProps.fixedCenter.lat && props.fixedCenter.lng !== prevProps.fixedCenter.lng) {
+              setCenter(props.fixedCenter);
+            }
+          } else {
+            setCenter(props.fixedCenter);
+          }
+        }
+        if(props?.initialCenter) {
+          if (prevProps?.initialCenter) {
+            if(props.initialCenter.lat !== prevProps.initialCenter.lat && props.initialCenter.lng !== prevProps.initialCenter.lng) {
+              setCenter(props.initialCenter);
+            }
+          } else {
+            setCenter(props.initialCenter);
+          }
         }
       }
     }, [props, map]);
@@ -62,8 +88,8 @@ function Map(props: MapProps) {
     const onCenterChanged = () => {
       if (map && !props.fixedCenter) {
         const mapCenter = map.getCenter();
-        const lat = mapCenter?.lat() || center.lat;
-        const lng = mapCenter?.lng() || center.lng;
+        const lat = mapCenter?.lat() || centerDefault.lat;
+        const lng = mapCenter?.lng() || centerDefault.lng;
         setCoord({lat: lat, lng: lng});
         if(props.onCenterChange){
           props.onCenterChange({lat: lat, lng: lng})
