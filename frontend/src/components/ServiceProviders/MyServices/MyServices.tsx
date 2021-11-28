@@ -70,7 +70,7 @@ const MyServices = () => {
             Add Service
           </NavLink>
         </div>
-        <div className="flex w-full">
+        <div className="flex w-full flex-col">
             {servicesFound.map((serviceFound, index) => {
                 return (
                     <ServiceCard key={index} {...serviceFound} />
