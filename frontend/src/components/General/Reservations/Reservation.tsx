@@ -7,6 +7,7 @@ import DateSquare from "../DateSquare/DateSquare";
 import Map from "../Map";
 
 const Reservation = (props: {
+  isServiceProvider: boolean;
   client: Users;
   reservation: Appointments;
 }) => {
@@ -38,7 +39,7 @@ const Reservation = (props: {
               <span>{`${props.client.phone_number}`}</span>
             </div>
             <NavLink
-              to={`/service-providers/chats?user_id=${props.client.id}`}
+              to={`/${props.isServiceProvider? "service-providers": "users"}/chats?user_id=${props.client.id}`}
               className="flex-initial"
             >
               <img

@@ -120,9 +120,9 @@ const MyServices = () => {
       <div className="flex flex-col justify-center align-middle w-full sm:w-2/3 mx-auto">
         <div className="flex flex-col w-full">
           <div className="text-3xl w-full text-center py-3">Upcoming Reservations</div>
-          <Reservations reservations={reservations} />
+          <Reservations isServiceProvider={false} reservations={reservations} />
           <div className="text-3xl w-full text-center py-3">Past Reservations</div>
-          <Reservations reservations={reservationsPast} />
+          <Reservations isServiceProvider={false} reservations={reservationsPast} />
         </div>
       </div>
     </>

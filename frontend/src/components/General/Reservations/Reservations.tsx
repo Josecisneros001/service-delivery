@@ -3,6 +3,7 @@ import Card from "../Card";
 import { ReservationFound } from "../../../interfaces/ReservationFound";
 
 interface ReservationsProps {
+  isServiceProvider: boolean,
   reservations: ReservationFound[],
 }
 
@@ -21,6 +22,7 @@ const Reservations = (props: ReservationsProps) => {
             subtitle={reservation.serviceCategory.name}
           >
               <Reservation
+                isServiceProvider={props.isServiceProvider}
                 client={reservation.user}
                 reservation={reservation.reservation}
               />
